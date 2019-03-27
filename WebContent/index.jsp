@@ -241,13 +241,7 @@
 						data-url="login.html" target="_top"> <i class="iconfont icon-computer"
 							data-icon="icon-computer"></i> <cite>退出</cite></a></li>
 							
-						<li class="layui-nav-item" style=""><a href="javascript:;"
-						data-url="login.html" target="_top"> <i class="iconfont icon-computer"
-							data-icon="icon-computer"></i> <cite>菜单管理</cite></a></li>
-							
-							<li class="layui-nav-item" style=""><a href="javascript:;"
-						data-url="login.html" target="_top"> <i class="iconfont icon-computer"
-							data-icon="icon-computer"></i> <cite>菜单管理2</cite></a></li>
+
 				</ul>
 			</div>
 		</div>

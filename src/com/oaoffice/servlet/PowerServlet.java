@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.oaoffice.bean.*;
 import com.oaoffice.service.PowerService;
 import com.oaoffice.service.impl.PowerServiceImpl;
@@ -74,18 +75,24 @@ public class PowerServlet extends HttpServlet {
 				request.setAttribute("plist", list2);
 				request.getRequestDispatcher("roleupdate.jsp").forward(request, response);
 
-			}else if(oper.equals("insertajax")) {
-				String role_id=request.getParameter("roleid");
+			} else if (oper.equals("insertajax")) {
+				String role_id = request.getParameter("roleid");
 				String power_id = request.getParameter("powerid");
-				boolean flag=powerService.insert(role_id, power_id);
-				if(flag) {
+				boolean flag = powerService.insert(role_id, power_id);
+				if (flag) {
 					out.print("{\"msg\": \"1\"}");
 					return;
-				}else {
+				} else {
 					out.print("{\"msg\": \"2\"}");
 					return;
 				}
-				
+
+			} else if (oper.equals("searchAjax")) {
+				String name = request.getParameter("searchKey");
+				List<Power> list = powerService.search(name);
+				Gson gson =new  Gson();
+				String json = gson.toJson(list);
+				out.print(json);
 			}
 		} else {
 

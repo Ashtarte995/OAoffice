@@ -283,4 +283,54 @@ public class PowerDaoImpl implements PowerDao {
 		return num;
 	}
 
+	@Override
+	public List<Power> search(String str) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT  u.user_id,u.user_realname,quan.role_name,GROUP_CONCAT(quan.power_name)as power_name ");
+		sb.append(" FROM user u LEFT JOIN ");
+		sb.append(" (SELECT ur.user_id,rprp.role_name,rprp.power_name ");
+		sb.append(" FROM user_role ur LEFT JOIN ");
+		sb.append(" (SELECT rpr.role_id,rpr.role_name, p.power_name ");
+		sb.append(" from (SELECT r.role_name,pr.powerrole_id,r.role_id ");
+		sb.append(" from role r LEFT JOIN power_role pr ");
+		sb.append(" on r.role_id=pr.role_id) as rpr ");
+		sb.append(" LEFT JOIN power p ");
+		sb.append(" on rpr.powerrole_id =p.power_id) as rprp ");
+		sb.append(" ON ur.role_id =rprp.role_id)AS quan ");
+		sb.append(" ON u.user_id =quan.user_id ");
+		sb.append(" WHERE u.user_realname LIKE ? ");
+		sb.append(" GROUP BY u.user_id,u.user_realname,quan.role_name ");
+		String sql = sb.toString();
+
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		str="%"+str+"%";
+		List<Power> list = new ArrayList<Power>();
+		Power bean = null;
+
+		try { 
+			conn = DbFun.getConn();
+			pst = conn.prepareStatement(sql);
+			pst.setObject(1, str);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				bean = new Power();
+				bean.setUser_id(rs.getString("user_id"));
+				bean.setUser_realname(rs.getString("user_realname"));
+				bean.setRole_name(rs.getString("role_name"));
+				bean.setPower_name(rs.getString("power_name"));
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DbFun.close(rs, pst, conn);
+		}
+
+		return list;
+		
+	}
+
 }

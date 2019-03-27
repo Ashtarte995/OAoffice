@@ -69,4 +69,10 @@ public class PowerServiceImpl implements PowerService {
 		return false;
 	}
 
+	@Override
+	public List<Power> search(String str) {
+		// TODO Auto-generated method stub
+		return powerDao.search(str);
+	}
+
 }

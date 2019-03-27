@@ -36,7 +36,7 @@
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
-					url:"DeptServlet.do",
+					url:"PowerServlet.do",
 					dataType:"json",
 					async:true,
 					success:function(data){
@@ -50,21 +50,24 @@
 							
 							cont+="<tr>";
 							cont+="<td>";
-							cont+=s.dept_id ;
+							cont+=s.user_id ;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.dept_name;
+							cont+=s.user_realname;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.dept_description;
+							cont+=s.role_name;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+=s.power_name;
 							cont+="</td>";
 							
 														
 							cont+="<td>";
-							cont+="<button onclick=\"updateUser(${s.dept_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
-							cont+="<button onclick=\"deleteUser(${s.dept_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
+							cont+="<button onclick=\"updateUser(${s.user_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
 							cont+="</td>";
 							cont+="</tr>";
 						}
