@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	int user_id = (int) session.getAttribute("loginUser_id");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,29 +21,30 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	       function addUser(){
-	    	   location.href='userinsert.jsp';
+	        function addFloder(){
+	    	   location.href='floderinsert.jsp';
 	       }
-	       function deleteUser(id){
+	         function deleteFloder(id){
 	    	   //alert(id);
 	    	   if(confirm("确定要删除吗")){
-	    		   location.href='UserServlet.do?oper=delete&id='+id;  
+	    		   location.href='FloderServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
-	       function updateUser(id){
+	       
+	       function updateFloder(id){
 	    	   alert(id);
-	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
+	    	   location.href='FloderServlet.do?powercode=Floder_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
-	       function searchAjax(){
+	        function searchAjax(){
 	    	    alert(123);
 	    	    var searchKey=$("#searchKey").val();
 	    	    alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
-					url:"UserServlet.do",
+					url:"FloderServlet.do",
 					dataType:"json",
 					async:true,
 					success:function(data){
@@ -51,14 +55,22 @@
 						var cont="";
 						for(var i=0;i<ulist.length;i++){
 							var s=ulist[i];
-							
+							if(s.floder_isshare==1){
 							cont+="<tr>";
 							cont+="<td>";
-							cont+=s.user_id ;
+							cont+=s.floder_id ;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_name;
+							cont+=s.floder_name;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+=s.floder_content;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+=s.floder_path;
 							cont+="</td>";
 							
 							cont+="<td>";
@@ -66,48 +78,21 @@
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_pwd;
+							
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_sex;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.phonenumber;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_born;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_address;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_email;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.headpic;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.dept_id;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+="<button onclick=\"updateUser(${s.user_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
-							cont+="<button onclick=\"deleteUser(${s.user_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
+							cont+="<button onclick=\"updateFloder(${s.floder_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
+							cont+="<button onclick=\"deleteFloder(${s.floder_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
 							cont+="</td>";
 							cont+="</tr>";
+						}
 						}
 						$("#ulist").html(cont);
 						
 					}
 				});
-			} 
+			}  
 </script>
 </head>
 <body class="childrenBody">
@@ -116,69 +101,79 @@
 			<div class="layui-input-inline">
 				<input id="searchKey" name="searchKey"
 					class="layui-input search_input" type="text" />
-			   <!--  <input type="text" id="searchKey" name="searchKey" value=""
+				<!--  <input type="text" id="searchKey" name="searchKey" value=""
 					placeholder="请输入关键字" class="layui-input search_input"> -->
 			</div>
-			<a onclick="searchAjax()" class="layui-btn search_btn">查询</a>
+			<a onclick="searchAjax()" class="layui-btn search_btn">查询分享文件</a>
 		</div>
 		<div class="layui-inline">
-			<a onclick="addUser()"
-				class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
+			<a onclick="addFloder()"
+				class="layui-btn layui-btn-normal FlodersAdd_btn">添加文件夹</a>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
+			<col width="5%">
+			<col width="10%">
+			<col width="20%">
+			<col width="12%">
+			<col width="7%">
+			<col width="7%">
+			<col width="15%">
 			<thead>
-			<colgroup>
-				<col width="5%">
-				<col width="10%">
-				<col width="10%">
-				<col width="15%">
-				<col width="6%">
-				<col width="13%">
-				<col width="12%">
-				<col width="15%">
-				<col width="15%">
-				<col width="18%">
-				<col width="8%">
-				<col width="18%">
-		    </colgroup>
 				<tr>
 					<th>id</th>
-					<th>用户名</th>
-					<th>真实姓名</th>
-					<th>密码</th>
-					<th>性别</th>
-					<th>电话号码</th>
-					<th>出生日期</th>
-					<th>地址</th>
-					<th>邮箱</th>
-					<th>头像</th>
-					<th>部门id</th>
+					<th>文件名</th>
+					<th>文件内容</th>
+					<th>文件保存路径</th>
+					<!-- <th>是否分享</th> -->
+					<th>用户姓名</th>
+					<th>分享状态</th>
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody id=ulist class="users_content">
+			<tbody id=ulist class="Floders_content">
 				<c:forEach items="${ulist }" var="s">
-					<tr>
-						<td>${s.user_id }</td>
-						<td>${s.user_name }</td>
-						<td>${s.user_realname }</td>
-						<td>${s.user_pwd }</td>
-						<td>${s.user_sex }</td>
-						<td>${s.phonenumber }</td>
-						<td>${s.user_born }</td>
-						<td>${s.user_address }</td>
-						<td>${s.user_email }</td>
-						<td>${s.headpic }</td>
-						<td>${s.dept_id }</td>
-						<td>
-							<button onclick="updateUser(${s.user_id })"
-								class="layui-btn layui-btn-xs">修改</button>
-							<button onclick="deleteUser(${s.user_id })"
-								class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
-                         </td>
-                     </tr>
+					<c:set var="User_id" scope="session" value="${loginUser_id }" />
+
+					<c:if test="${s.user_id==User_id }">
+						<tr>
+							<td>${s.floder_id }</td>
+							<td>${s.floder_name }</td>
+							<td>${s.floder_content }</td>
+							<td>${s.floder_path }</td>
+							<td>${s.user_realname }</td>
+							<%-- <td>${s.user_id }</td> --%>
+							<td></td>
+							<td>
+								<button onclick="updateFloder(${s.floder_id })"
+									class="layui-btn layui-btn-xs">修改</button>
+								<button onclick="deleteFloder(${s.floder_id })"
+									class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
+							</td>
+						</tr>
+
+					</c:if>
+					<c:if test="${s.floder_isshare eq '1' }">
+						<tr>
+							<td>${s.floder_id }</td>
+							<td>${s.floder_name }</td>
+							<td>${s.floder_content }</td>
+							<td>${s.floder_path }</td>
+							<td>${s.user_realname }</td>
+							<td>正在分享</td>
+							<%-- <td>${s.user_id }</td> --%>
+							<td>
+								<%-- <button onclick="updateFloder(${s.floder_id })"
+									class="layui-btn layui-btn-xs">修改</button>
+								<button onclick="deleteFloder(${s.floder_id })"
+									class="layui-btn layui-btn-danger layui-btn-xs">删除</button> --%>
+								不可操作
+							</td>
+						</tr>
+
+					</c:if>
+
 				</c:forEach>
 
 			</tbody>

@@ -1,51 +1,40 @@
 package com.oaoffice.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.oaoffice.util.DbFun;
-import com.oaoffice.bean.User;
-import com.oaoffice.dao.UserDao;
+import com.oaoffice.bean.*;
+import com.oaoffice.dao.*;
 import com.oaoffice.util.PagingVO;
 
-public class UserDaoImpl implements UserDao{
-
+public class DothingDaoImpl implements DothingDao {
 
 	@SuppressWarnings("resource")
 	@Override
-	public Integer insert(User bean) {
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
+	public Integer insert(Dothing bean) {
+
 		StringBuilder sb = new StringBuilder();
-		sb.append(" Insert Into User(user_name,user_realname,user_pwd,user_sex,");
-		sb.append(" phonenumber,user_born,user_address,user_email,headpic,dept_id)");
-		sb.append("Values(?,?,?,?,?,?,?,?,?,?)");
+		sb.append(" Insert Into Dothing(dothing_describe,dothing_enddate,dothing_priority,dothing_result,");
+		sb.append(" user_id)");
+		sb.append("Values(?,?,?,?,?)");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-       
+
 		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getHeadpic());
-			pstmt.setObject(10, bean.getDept_id());
+			pstmt.setObject(1, bean.getDothing_describe());
+			pstmt.setObject(2, bean.getDothing_enddate());
+			pstmt.setObject(3, bean.getDothing_priority());
+			pstmt.setObject(4, bean.getDothing_result());
+			pstmt.setObject(5, bean.getUser_id());
 
 			num = pstmt.executeUpdate();
 
@@ -68,41 +57,28 @@ public class UserDaoImpl implements UserDao{
 
 		return num;
 	}
-	
+
 	@Override
-	public List<User> list() {
-		List<User> list = new ArrayList<User>();
+	public List<Dothing> list() {
+		List<Dothing> list = new ArrayList<Dothing>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User ");
+		sb.append(" select * from Dothing ");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
+
+			Dothing tmpbean = null;
 			while (rs.next()) {
-				tmpbean = new User();
-				tmpbean.setUser_id(rs.getInt("user_id"));
-				tmpbean.setUser_name(rs.getString("user_name"));
-				tmpbean.setUser_realname(rs.getString("user_realname"));
-				tmpbean.setUser_pwd(rs.getString("user_pwd"));
-				tmpbean.setUser_sex(rs.getString("user_sex"));
-				tmpbean.setPhonenumber(rs.getString("phonenumber"));
-				tmpbean.setUser_born(rs.getDate("user_born"));
-				tmpbean.setUser_address(rs.getString("user_address"));
-				tmpbean.setUser_email(rs.getString("user_email"));
-				tmpbean.setHeadpic(rs.getString("headpic"));
-				tmpbean.setDept_id(rs.getInt("dept_id"));
-				
+				tmpbean = new Dothing();
+				show(tmpbean, rs);
+
 				list.add(tmpbean);
 			}
 
@@ -119,7 +95,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer delete(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" delete from User where user_id=?");
+		sb.append(" delete from Dothing where dothing_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -146,22 +122,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public Integer update(User bean) {
+	public Integer update(Dothing bean) {
 		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
-		sb.append(" update User Set ");
-		sb.append(" user_name=? ");
-		sb.append(" ,user_realname=? ");
-		sb.append(" ,user_pwd=? ");
-		sb.append(" ,user_sex=? ");
-		sb.append(" ,phonenumber=? ");
-		sb.append(" ,user_born=? ");
-		sb.append(" ,user_address=? ");
-		sb.append(" ,user_email=? ");
-		sb.append(" ,selfassessment=? ");
-		sb.append(" ,headpic=? ");
-		sb.append(" ,dept_id=? ");
-		sb.append(" where user_id=?");
+		sb.append(" update Dothing Set ");
+		sb.append(" dothing_describe=? ");
+		sb.append(" ,dothing_enddate=? ");
+		sb.append(" ,dothing_priority=? ");
+		sb.append(" ,dothing_result=? ");
+		sb.append(" ,user_id=? ");
+		sb.append(" where dothing_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -169,22 +139,11 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs = null;
 
 		Integer num = 0;
-		//uname,upass,realName,gender,birthday	
+		// uname,upass,realName,gender,birthday
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getSelfassessment());
-			pstmt.setObject(10, bean.getHeadpic());
-			pstmt.setObject(11, bean.getDept_id());
-			pstmt.setObject(12, bean.getUser_id());
+			show(bean, pstmt);
 
 			num = pstmt.executeUpdate();
 
@@ -199,16 +158,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User load(Integer id) {
+	public Dothing load(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_id=?");
+		sb.append(" select * from Dothing");
+		sb.append(" Where dothing_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Dothing bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -217,18 +176,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				bean.setUser_id(rs.getInt("user_id"));
-				bean.setUser_name(rs.getString("user_name"));
-				bean.setUser_realname(rs.getString("user_realname"));
-				bean.setUser_pwd(rs.getString("user_pwd"));
-				bean.setUser_sex(rs.getString("user_sex"));
-				bean.setPhonenumber(rs.getString("phonenumber"));
-			    bean.setUser_born(rs.getDate("user_born"));
-				bean.setUser_address(rs.getString("user_address"));
-				bean.setUser_email(rs.getString("user_email"));
-				bean.setHeadpic(rs.getString("headpic"));
-				bean.setDept_id(rs.getInt("dept_id"));
+				bean = new Dothing();
+
+				show(rs, bean);
 			}
 
 		} catch (Exception e) {
@@ -244,21 +194,21 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer count() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select count(1) from User");
+		sb.append(" select count(1) from Dothing");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-        Integer num = 0;
+		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
-				num=rs.getInt(1);
+			if (rs.next()) {
+				num = rs.getInt(1);
 			}
 
 		} catch (Exception e) {
@@ -272,7 +222,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByName(String name) {
+	public Dothing loadByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -284,16 +234,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByNo(String no) {
+	public Dothing loadByNo(String no) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_name=?");
+		sb.append(" select * from Dothing");
+		sb.append(" Where dothing_describe=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Dothing bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -302,9 +252,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				
-				show(bean, rs);
+				bean = new Dothing();
+
+				show(rs, bean);
 
 			}
 
@@ -319,14 +269,14 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> listByName(String name) {
-		List<User> list = new ArrayList<User>();
+	public List<Dothing> listByName(String name) {
+		List<Dothing> list = new ArrayList<Dothing>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name like ?");
+		sb.append(" select * from Dothing");
+		sb.append(" where dothing_describe like ?");
 		String sql = sb.toString();
-		
-		name ="%" + name + "%";
+
+		name = "%" + name + "%";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -336,14 +286,14 @@ public class UserDaoImpl implements UserDao{
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setObject(1, name);
-			
+
 			rs = pstmt.executeQuery();
 
-			User tmpbean = null;
+			Dothing tmpbean = null;
 			while (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Dothing();
 				show(tmpbean, rs);
-				
+
 				list.add(tmpbean);
 			}
 
@@ -358,31 +308,29 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> queryAll(PagingVO page) {
-		int begin=(page.getCurentPageNo()-1)*page.getPageSize();
-		int end=page.getPageSize();
-		List<User> list = new ArrayList<User>();
+	public List<Dothing> queryAll(PagingVO page) {
+		int begin = (page.getCurentPageNo() - 1) * page.getPageSize();
+		int end = page.getPageSize();
+		List<Dothing> list = new ArrayList<Dothing>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User limit ?,?");
+		sb.append(" select * from Dothing limit ?,?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-	
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, begin);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
-			
+
+			Dothing tmpbean = null;
+
 			while (rs.next()) {
-				tmpbean = new User();
+				tmpbean = new Dothing();
 				show(tmpbean, rs);
 				list.add(tmpbean);
 			}
@@ -398,11 +346,11 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User getUser(User stu) {
-		User tmpbean = null;
+	public Dothing getDothing(Dothing stu) {
+		Dothing tmpbean = null;
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name=?");
+		sb.append(" select * from Dothing");
+		sb.append(" where dothing_describe=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -412,13 +360,12 @@ public class UserDaoImpl implements UserDao{
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, stu.getUser_name());
-			
+			pstmt.setObject(1, stu.getDothing_describe());
+
 			rs = pstmt.executeQuery();
 
-			
 			if (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Dothing();
 				show(tmpbean, rs);
 			}
 
@@ -432,21 +379,31 @@ public class UserDaoImpl implements UserDao{
 		return tmpbean;
 	}
 
-	
-	
-	private void show(User tmpbean, ResultSet rs) throws SQLException {
-		tmpbean.setUser_id(rs.getInt("user_id"));
-		tmpbean.setUser_name(rs.getString("user_name"));
-		tmpbean.setUser_realname(rs.getString("user_realname"));
-		tmpbean.setUser_pwd(rs.getString("user_pwd"));
-		tmpbean.setUser_sex(rs.getString("user_sex"));
-		tmpbean.setPhonenumber(rs.getString("phonenumber"));
-		tmpbean.setUser_born(rs.getDate("user_born"));
-		tmpbean.setUser_address(rs.getString("user_address"));
-		tmpbean.setUser_email(rs.getString("user_email"));
-		tmpbean.setSelfassessment(rs.getString("selfassessment"));
-		tmpbean.setHeadpic(rs.getString("headpic"));
-		tmpbean.setDept_id(rs.getInt("dept_id"));
+	private void show(Dothing bean, PreparedStatement pstmt) throws SQLException {
+		pstmt.setObject(1, bean.getDothing_describe());
+		pstmt.setObject(2, bean.getDothing_enddate());
+		pstmt.setObject(3, bean.getDothing_priority());
+		pstmt.setObject(4, bean.getDothing_result());
+		pstmt.setObject(5, bean.getUser_id());
+		pstmt.setObject(6, bean.getDothing_id());
 	}
-    
+
+	private void show(Dothing tmpbean, ResultSet rs) throws SQLException {
+		tmpbean.setDothing_id(rs.getInt("dothing_id"));
+		tmpbean.setDothing_describe(rs.getString("dothing_describe"));
+		tmpbean.setDothing_enddate(rs.getDate("dothing_enddate"));
+		tmpbean.setDothing_priority(rs.getString("dothing_priority"));
+		tmpbean.setDothing_result(rs.getString("dothing_result"));
+		tmpbean.setUser_id(rs.getInt("user_id"));
+	}
+
+	private void show(ResultSet rs, Dothing bean) throws SQLException {
+		bean.setDothing_id(rs.getInt("dothing_id"));
+		bean.setDothing_describe(rs.getString("dothing_describe"));
+		bean.setDothing_enddate(rs.getDate("dothing_enddate"));
+		bean.setDothing_priority(rs.getString("dothing_priority"));
+		bean.setDothing_result(rs.getString("dothing_result"));
+		bean.setUser_id(rs.getInt("user_id"));
+	}
+
 }

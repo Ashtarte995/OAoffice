@@ -1,51 +1,41 @@
 package com.oaoffice.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.oaoffice.util.DbFun;
-import com.oaoffice.bean.User;
-import com.oaoffice.dao.UserDao;
+import com.oaoffice.bean.*;
+import com.oaoffice.dao.*;
 import com.oaoffice.util.PagingVO;
 
-public class UserDaoImpl implements UserDao{
-
+public class BulletinDaoImpl implements BulletinDao {
 
 	@SuppressWarnings("resource")
 	@Override
-	public Integer insert(User bean) {
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
+	public Integer insert(Bulletin bean) {
+
 		StringBuilder sb = new StringBuilder();
-		sb.append(" Insert Into User(user_name,user_realname,user_pwd,user_sex,");
-		sb.append(" phonenumber,user_born,user_address,user_email,headpic,dept_id)");
-		sb.append("Values(?,?,?,?,?,?,?,?,?,?)");
+		sb.append(" Insert Into Bulletin(bulletin_title,bulletin_content,bulletin_buildtime,user_realname,");
+		sb.append(" user_id,role_id)");
+		sb.append("Values(?,?,?,?,?,?)");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-       
+
 		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getHeadpic());
-			pstmt.setObject(10, bean.getDept_id());
+			pstmt.setObject(1, bean.getBulletin_title());
+			pstmt.setObject(2, bean.getBulletin_content());
+			pstmt.setObject(3, bean.getBulletin_buildtime());
+			pstmt.setObject(4, bean.getUser_realname());
+			pstmt.setObject(5, bean.getUser_id());
+			pstmt.setObject(6, bean.getRole_id());
 
 			num = pstmt.executeUpdate();
 
@@ -68,41 +58,28 @@ public class UserDaoImpl implements UserDao{
 
 		return num;
 	}
-	
+
 	@Override
-	public List<User> list() {
-		List<User> list = new ArrayList<User>();
+	public List<Bulletin> list() {
+		List<Bulletin> list = new ArrayList<Bulletin>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User ");
+		sb.append(" select * from Bulletin ");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
+
+			Bulletin tmpbean = null;
 			while (rs.next()) {
-				tmpbean = new User();
-				tmpbean.setUser_id(rs.getInt("user_id"));
-				tmpbean.setUser_name(rs.getString("user_name"));
-				tmpbean.setUser_realname(rs.getString("user_realname"));
-				tmpbean.setUser_pwd(rs.getString("user_pwd"));
-				tmpbean.setUser_sex(rs.getString("user_sex"));
-				tmpbean.setPhonenumber(rs.getString("phonenumber"));
-				tmpbean.setUser_born(rs.getDate("user_born"));
-				tmpbean.setUser_address(rs.getString("user_address"));
-				tmpbean.setUser_email(rs.getString("user_email"));
-				tmpbean.setHeadpic(rs.getString("headpic"));
-				tmpbean.setDept_id(rs.getInt("dept_id"));
-				
+				tmpbean = new Bulletin();
+				show(tmpbean, rs);
+
 				list.add(tmpbean);
 			}
 
@@ -119,7 +96,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer delete(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" delete from User where user_id=?");
+		sb.append(" delete from Bulletin where Bulletin_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -146,22 +123,17 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public Integer update(User bean) {
+	public Integer update(Bulletin bean) {
 		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
-		sb.append(" update User Set ");
-		sb.append(" user_name=? ");
+		sb.append(" update Bulletin Set ");
+		sb.append(" bulletin_title=? ");
+		sb.append(" ,bulletin_content=? ");
+		sb.append(" ,bulletin_buildtime=? ");
 		sb.append(" ,user_realname=? ");
-		sb.append(" ,user_pwd=? ");
-		sb.append(" ,user_sex=? ");
-		sb.append(" ,phonenumber=? ");
-		sb.append(" ,user_born=? ");
-		sb.append(" ,user_address=? ");
-		sb.append(" ,user_email=? ");
-		sb.append(" ,selfassessment=? ");
-		sb.append(" ,headpic=? ");
-		sb.append(" ,dept_id=? ");
-		sb.append(" where user_id=?");
+		sb.append(" ,user_id=? ");
+		sb.append(" ,role_id=? ");
+		sb.append(" where bulletin_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -169,22 +141,11 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs = null;
 
 		Integer num = 0;
-		//uname,upass,realName,gender,birthday	
+		// uname,upass,realName,gender,birthday
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getSelfassessment());
-			pstmt.setObject(10, bean.getHeadpic());
-			pstmt.setObject(11, bean.getDept_id());
-			pstmt.setObject(12, bean.getUser_id());
+			show(bean, pstmt);
 
 			num = pstmt.executeUpdate();
 
@@ -197,18 +158,18 @@ public class UserDaoImpl implements UserDao{
 
 		return num;
 	}
-
+	
 	@Override
-	public User load(Integer id) {
+	public Bulletin load(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_id=?");
+		sb.append(" select * from Bulletin");
+		sb.append(" Where Bulletin_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Bulletin bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -217,18 +178,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				bean.setUser_id(rs.getInt("user_id"));
-				bean.setUser_name(rs.getString("user_name"));
-				bean.setUser_realname(rs.getString("user_realname"));
-				bean.setUser_pwd(rs.getString("user_pwd"));
-				bean.setUser_sex(rs.getString("user_sex"));
-				bean.setPhonenumber(rs.getString("phonenumber"));
-			    bean.setUser_born(rs.getDate("user_born"));
-				bean.setUser_address(rs.getString("user_address"));
-				bean.setUser_email(rs.getString("user_email"));
-				bean.setHeadpic(rs.getString("headpic"));
-				bean.setDept_id(rs.getInt("dept_id"));
+				bean = new Bulletin();
+
+				show(rs, bean);
 			}
 
 		} catch (Exception e) {
@@ -244,21 +196,21 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer count() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select count(1) from User");
+		sb.append(" select count(1) from Bulletin");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-        Integer num = 0;
+		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
-				num=rs.getInt(1);
+			if (rs.next()) {
+				num = rs.getInt(1);
 			}
 
 		} catch (Exception e) {
@@ -272,7 +224,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByName(String name) {
+	public Bulletin loadByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -284,16 +236,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByNo(String no) {
+	public Bulletin loadByNo(String no) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_name=?");
+		sb.append(" select * from Bulletin");
+		sb.append(" Where Bulletin_title=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Bulletin bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -302,9 +254,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				
-				show(bean, rs);
+				bean = new Bulletin();
+
+				show(rs, bean);
 
 			}
 
@@ -319,14 +271,14 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> listByName(String name) {
-		List<User> list = new ArrayList<User>();
+	public List<Bulletin> listByName(String name) {
+		List<Bulletin> list = new ArrayList<Bulletin>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name like ?");
+		sb.append(" select * from Bulletin");
+		sb.append(" where Bulletin_title like ?");
 		String sql = sb.toString();
-		
-		name ="%" + name + "%";
+
+		name = "%" + name + "%";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -336,14 +288,14 @@ public class UserDaoImpl implements UserDao{
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setObject(1, name);
-			
+
 			rs = pstmt.executeQuery();
 
-			User tmpbean = null;
+			Bulletin tmpbean = null;
 			while (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Bulletin();
 				show(tmpbean, rs);
-				
+
 				list.add(tmpbean);
 			}
 
@@ -358,31 +310,29 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> queryAll(PagingVO page) {
-		int begin=(page.getCurentPageNo()-1)*page.getPageSize();
-		int end=page.getPageSize();
-		List<User> list = new ArrayList<User>();
+	public List<Bulletin> queryAll(PagingVO page) {
+		int begin = (page.getCurentPageNo() - 1) * page.getPageSize();
+		int end = page.getPageSize();
+		List<Bulletin> list = new ArrayList<Bulletin>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User limit ?,?");
+		sb.append(" select * from Bulletin limit ?,?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-	
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, begin);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
-			
+
+			Bulletin tmpbean = null;
+
 			while (rs.next()) {
-				tmpbean = new User();
+				tmpbean = new Bulletin();
 				show(tmpbean, rs);
 				list.add(tmpbean);
 			}
@@ -398,11 +348,11 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User getUser(User stu) {
-		User tmpbean = null;
+	public Bulletin getBulletin(Bulletin stu) {
+		Bulletin tmpbean = null;
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name=?");
+		sb.append(" select * from Bulletin");
+		sb.append(" where Bulletin_title=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -412,13 +362,12 @@ public class UserDaoImpl implements UserDao{
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, stu.getUser_name());
-			
+			pstmt.setObject(1, stu.getBulletin_title());
+
 			rs = pstmt.executeQuery();
 
-			
 			if (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Bulletin();
 				show(tmpbean, rs);
 			}
 
@@ -432,21 +381,34 @@ public class UserDaoImpl implements UserDao{
 		return tmpbean;
 	}
 
-	
-	
-	private void show(User tmpbean, ResultSet rs) throws SQLException {
-		tmpbean.setUser_id(rs.getInt("user_id"));
-		tmpbean.setUser_name(rs.getString("user_name"));
-		tmpbean.setUser_realname(rs.getString("user_realname"));
-		tmpbean.setUser_pwd(rs.getString("user_pwd"));
-		tmpbean.setUser_sex(rs.getString("user_sex"));
-		tmpbean.setPhonenumber(rs.getString("phonenumber"));
-		tmpbean.setUser_born(rs.getDate("user_born"));
-		tmpbean.setUser_address(rs.getString("user_address"));
-		tmpbean.setUser_email(rs.getString("user_email"));
-		tmpbean.setSelfassessment(rs.getString("selfassessment"));
-		tmpbean.setHeadpic(rs.getString("headpic"));
-		tmpbean.setDept_id(rs.getInt("dept_id"));
+	private void show(Bulletin bean, PreparedStatement pstmt) throws SQLException {
+		pstmt.setObject(1, bean.getBulletin_title());
+		pstmt.setObject(2, bean.getBulletin_content());
+		pstmt.setObject(3, bean.getBulletin_buildtime());
+		pstmt.setObject(4, bean.getUser_realname());
+		pstmt.setObject(5, bean.getUser_id());
+		pstmt.setObject(6, bean.getRole_id());
+		pstmt.setObject(7, bean.getBulletin_id());
 	}
-    
+
+	private void show(Bulletin tmpbean, ResultSet rs) throws SQLException {
+		tmpbean.setBulletin_id(rs.getInt("bulletin_id"));
+		tmpbean.setBulletin_title(rs.getString("bulletin_title"));
+		tmpbean.setBulletin_content(rs.getString("bulletin_content"));
+		tmpbean.setBulletin_buildtime(rs.getDate("bulletin_buildtime"));
+		tmpbean.setUser_realname(rs.getString("user_realname"));
+		tmpbean.setUser_id(rs.getInt("user_id"));
+		tmpbean.setRole_id(rs.getInt("role_id"));
+	}
+
+	private void show(ResultSet rs, Bulletin bean) throws SQLException {
+		bean.setBulletin_id(rs.getInt("bulletin_id"));
+		bean.setBulletin_title(rs.getString("bulletin_title"));
+		bean.setBulletin_content(rs.getString("bulletin_content"));
+		bean.setBulletin_buildtime(rs.getDate("bulletin_buildtime"));
+		bean.setUser_realname(rs.getString("user_realname"));
+		bean.setUser_id(rs.getInt("user_id"));
+		bean.setRole_id(rs.getInt("role_id"));
+	}
+
 }

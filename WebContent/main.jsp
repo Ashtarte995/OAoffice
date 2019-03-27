@@ -31,7 +31,7 @@
 		</div>
 		
 		<div class="panel col">
-			<a href="javascript:;" data-url="calendar.html">
+			<a href="javascript:;" data-url="CalendarServlet.do">
 				<div class="panel_icon" style="background-color:#FF5722;">
 					<i class="iconfont" data-icon="&#xe628;">&#xe628;</i>
 				</div>
@@ -42,7 +42,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="dothing.html">
+			<a href="javascript:;" data-url="DothingServlet.do">
 				<div class="panel_icon" style="background-color:#009688;">
 					<i class="iconfont" data-icon="&#xe66b;">&#xe66b;</i>
 				</div>
@@ -53,7 +53,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/img/images.html">
+			<a href="javascript:;" data-url="businesscard.jsp">
 				<div class="panel_icon" style="background-color:#5FB878;">
 					<i class="iconfont" data-icon="&#xe600;">&#xe600;</i>
 				</div>
@@ -65,7 +65,7 @@
 		</div>
 		
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="FloderServlet.do">
 				<div class="panel_icon" style="background-color:#F7B824;">
 					<i class="iconfont" data-icon="&#xe60e;">&#xe60e;</i>
 				</div>
@@ -77,7 +77,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="message.html">
+			<a href="javascript:;" data-url="BulletinServlet.do">
 				<div class="panel_icon" style="background-color:#2F4056;">
 					<i class="iconfont" data-icon="&#xe88b;">&#xe88b;</i>
 				</div>
@@ -89,7 +89,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="vacate.html">
+			<a href="javascript:;" data-url="VacateServlet.do">
 				<div class="panel_icon" style="background-color:#DB7093	;">
 					<i class="iconfont" data-icon="&#xe66d;">&#xe66d;</i>
 				</div>
@@ -101,7 +101,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="meetingapply.html">
+			<a href="javascript:;" data-url="MeetingapplyServlet.do">
 				<div class="panel_icon" style="background-color:#DA70D6;">
 					<i class="iconfont" data-icon="&#xe695;">&#xe695;</i>
 				</div>
@@ -112,7 +112,7 @@
 			</a>
 		</div>
 		
-		<div class="panel col max_panel">
+		<!-- <div class="panel col max_panel">
 			<a href="javascript:;" data-url="meetingapply.html">
 				<div class="panel_icon" style="background-color:#800080;">
 					<i class="iconfont" data-icon="&#xe695;">&#xe695;</i>
@@ -122,10 +122,10 @@
 					<cite>二级会议审批</cite>
 				</div>
 			</a>
-		</div>
+		</div> -->
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="meeting.html">
+			<a href="javascript:;" data-url="MeetingServlet.do">
 				<div class="panel_icon" style="background-color:#800000;">
 					<i class="iconfont" data-icon="&#xe69b;">&#xe69b;</i>
 				</div>
@@ -137,7 +137,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="meetingroom.html">
+			<a href="javascript:;" data-url="MeetingRoomServlet.do">
 				<div class="panel_icon" style="background-color:#8B4513;">
 					<i class="iconfont" data-icon="&#xe646;">&#xe646;</i>
 				</div>

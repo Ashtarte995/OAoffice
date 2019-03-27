@@ -17,8 +17,7 @@ public class CalendarDaoImpl implements CalendarDao {
 	@SuppressWarnings("resource")
 	@Override
 	public Integer insert(Calendar bean) {
-		// Calendar_id,Calendar_name,Calendar_realname,Calendar_pwd,Calendar_sex,phonenumber,Calendar_born
-		// Calendar_address,Calendar_hobby,Calendar_email,selfassessment,headpic,dept_id
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(" Insert Into Calendar(calendar_title,calendar_starttime,calendar_endtime,calendar_remind,");
 		sb.append(" calendar_content,user_id)");
@@ -184,13 +183,7 @@ public class CalendarDaoImpl implements CalendarDao {
 			if (rs.next()) {
 				bean = new Calendar();
 
-				bean.setCalendar_id(rs.getInt("calendar_id"));
-				bean.setCalendar_title(rs.getString("Calendar_name"));
-				bean.setCalendar_starttime(rs.getDate("calendar_starttime"));
-				bean.setCalendar_endtime(rs.getDate("calendar_endtime"));
-				bean.setCalendar_remind(rs.getString("calendar_remind"));
-				bean.setCalendar_content(rs.getString("calendar_content"));
-				bean.setUser_id(rs.getInt("user_id"));
+				show(rs, bean);
 			}
 
 		} catch (Exception e) {
@@ -285,7 +278,7 @@ public class CalendarDaoImpl implements CalendarDao {
 		List<Calendar> list = new ArrayList<Calendar>();
 		StringBuilder sb = new StringBuilder();
 		sb.append(" select * from Calendar");
-		sb.append(" where Calendar_name like ?");
+		sb.append(" where Calendar_title like ?");
 		String sql = sb.toString();
 
 		name = "%" + name + "%";
@@ -403,7 +396,7 @@ public class CalendarDaoImpl implements CalendarDao {
 
 	private void show(Calendar tmpbean, ResultSet rs) throws SQLException {
 		tmpbean.setCalendar_id(rs.getInt("Calendar_id"));
-		tmpbean.setCalendar_title(rs.getString("calendar_name"));
+		tmpbean.setCalendar_title(rs.getString("calendar_title"));
 		tmpbean.setCalendar_starttime(rs.getDate("calendar_starttime"));
 		tmpbean.setCalendar_endtime(rs.getDate("calendar_endtime"));
 		tmpbean.setCalendar_remind(rs.getString("calendar_remind"));
@@ -413,7 +406,7 @@ public class CalendarDaoImpl implements CalendarDao {
 
 	private void show(ResultSet rs, Calendar bean) throws SQLException {
 		bean.setCalendar_id(rs.getInt("Calendar_id"));
-		bean.setCalendar_title(rs.getString("Calendar_name"));
+		bean.setCalendar_title(rs.getString("Calendar_title"));
 		bean.setCalendar_starttime(rs.getDate("calendar_starttime"));
 		bean.setCalendar_endtime(rs.getDate("calendar_endtime"));
 		bean.setCalendar_remind(rs.getString("calendar_remind"));

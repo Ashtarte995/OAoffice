@@ -18,29 +18,26 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	       function addUser(){
-	    	   location.href='userinsert.jsp';
+	       function addMeeting(){
+	    	   location.href='meetinginsert.jsp';
 	       }
-	       function deleteUser(id){
+	       function deleteMeeting(id){
 	    	   //alert(id);
 	    	   if(confirm("确定要删除吗")){
-	    		   location.href='UserServlet.do?oper=delete&id='+id;  
+	    		   location.href='MeetingServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
-	       function updateUser(id){
-	    	   alert(id);
-	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
-	    	   //location.href='studentupdate.jsp';
+	       function updateMeeting(id){
+	    	   location.href='MeetingServlet.do?oper=t_update&id='+id;
+	    	   //location.href='meetingupdate.jsp';
 	    	   
 	       }
 	       function searchAjax(){
-	    	    alert(123);
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
-					url:"UserServlet.do",
+					url:"MeetingServlet.do",
 					dataType:"json",
 					async:true,
 					success:function(data){
@@ -54,52 +51,36 @@
 							
 							cont+="<tr>";
 							cont+="<td>";
-							cont+=s.user_id ;
+							cont+=s.meeting_id ;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_name;
+							cont+=s.meeting_title;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_realname;
+							cont+=s.meeting_date;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_pwd;
+							cont+=s.meeting_start;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_sex;
+							cont+=s.meeting_end;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.phonenumber;
+							cont+=s.meeting_status;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_born;
+							cont+=s.meetingroom_name;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_address;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_email;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.headpic;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.dept_id;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+="<button onclick=\"updateUser(${s.user_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
-							cont+="<button onclick=\"deleteUser(${s.user_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
+							cont+="<button onclick=\"updateMeeting(${s.meeting_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
+							cont+="<button onclick=\"deleteMeeting(${s.meeting_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
 							cont+="</td>";
 							cont+="</tr>";
 						}
@@ -122,60 +103,38 @@
 			<a onclick="searchAjax()" class="layui-btn search_btn">查询</a>
 		</div>
 		<div class="layui-inline">
-			<a onclick="addUser()"
+			<a onclick="addMeeting()"
 				class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
 			<thead>
-			<colgroup>
-				<col width="5%">
-				<col width="10%">
-				<col width="10%">
-				<col width="15%">
-				<col width="6%">
-				<col width="13%">
-				<col width="12%">
-				<col width="15%">
-				<col width="15%">
-				<col width="18%">
-				<col width="8%">
-				<col width="18%">
-		    </colgroup>
 				<tr>
-					<th>id</th>
-					<th>用户名</th>
-					<th>真实姓名</th>
-					<th>密码</th>
-					<th>性别</th>
-					<th>电话号码</th>
-					<th>出生日期</th>
-					<th>地址</th>
-					<th>邮箱</th>
-					<th>头像</th>
-					<th>部门id</th>
+					<th>会议ID</th>
+					<th>会议主题</th>
+					<th>创建日期</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th>会议状态</th>
+					<th>会议室</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody id=ulist class="users_content">
 				<c:forEach items="${ulist }" var="s">
 					<tr>
-						<td>${s.user_id }</td>
-						<td>${s.user_name }</td>
-						<td>${s.user_realname }</td>
-						<td>${s.user_pwd }</td>
-						<td>${s.user_sex }</td>
-						<td>${s.phonenumber }</td>
-						<td>${s.user_born }</td>
-						<td>${s.user_address }</td>
-						<td>${s.user_email }</td>
-						<td>${s.headpic }</td>
-						<td>${s.dept_id }</td>
+						<td>${s.meeting_id }</td>
+						<td>${s.meeting_title }</td>
+						<td>${s.meeting_date }</td>
+						<td>${s.meeting_start }</td>
+						<td>${s.meeting_end }</td>
+						<td>${s.meeting_status }</td>
+						<td>${s.meetingroom_name }</td>
 						<td>
-							<button onclick="updateUser(${s.user_id })"
+							<button onclick="updateMeeting(${s.meeting_id })"
 								class="layui-btn layui-btn-xs">修改</button>
-							<button onclick="deleteUser(${s.user_id })"
+							<button onclick="deleteMeeting(${s.meeting_id })"
 								class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
                          </td>
                      </tr>

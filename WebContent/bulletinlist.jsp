@@ -18,29 +18,30 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	       function addUser(){
-	    	   location.href='userinsert.jsp';
+	        function addbulletin(){
+	    	   location.href='BulletinServlet.do?powercode=user_news&oper=t_add';
 	       }
-	       function deleteUser(id){
+	         function deletebulletin(id){
 	    	   //alert(id);
 	    	   if(confirm("确定要删除吗")){
-	    		   location.href='UserServlet.do?oper=delete&id='+id;  
+	    		   location.href='BulletinServlet.do?powercode=user_deletenews&oper=delete&id='+id;  
 	    	   }
 	       }
-	       function updateUser(id){
+	       
+	       function updatebulletin(id){
 	    	   alert(id);
-	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
+	    	   location.href='BulletinServlet.do?powercode=user_updatenews&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
-	       function searchAjax(){
+	        function searchAjax(){
 	    	    alert(123);
 	    	    var searchKey=$("#searchKey").val();
 	    	    alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
-					url:"UserServlet.do",
+					url:"BulletinServlet.do",
 					dataType:"json",
 					async:true,
 					success:function(data){
@@ -54,11 +55,19 @@
 							
 							cont+="<tr>";
 							cont+="<td>";
-							cont+=s.user_id ;
+							cont+=s.bulletin_id ;
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_name;
+							cont+=s.bulletin_title;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+=s.bulletin_content;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+=s.bulletin_buildtime;
 							cont+="</td>";
 							
 							cont+="<td>";
@@ -66,40 +75,8 @@
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.user_pwd;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_sex;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.phonenumber;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_born;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_address;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.user_email;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.headpic;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.dept_id;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+="<button onclick=\"updateUser(${s.user_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
-							cont+="<button onclick=\"deleteUser(${s.user_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
+							cont+="<button onclick=\"updatebulletin(${s.bulletin_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
+							cont+="<button onclick=\"deletebulletin(${s.bulletin_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
 							cont+="</td>";
 							cont+="</tr>";
 						}
@@ -107,7 +84,7 @@
 						
 					}
 				});
-			} 
+			}  
 </script>
 </head>
 <body class="childrenBody">
@@ -116,69 +93,53 @@
 			<div class="layui-input-inline">
 				<input id="searchKey" name="searchKey"
 					class="layui-input search_input" type="text" />
-			   <!--  <input type="text" id="searchKey" name="searchKey" value=""
+				<!--  <input type="text" id="searchKey" name="searchKey" value=""
 					placeholder="请输入关键字" class="layui-input search_input"> -->
 			</div>
 			<a onclick="searchAjax()" class="layui-btn search_btn">查询</a>
 		</div>
 		<div class="layui-inline">
-			<a onclick="addUser()"
-				class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
+			<a onclick="addbulletin()"
+				class="layui-btn layui-btn-normal bulletinsAdd_btn">发布消息</a>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
-			<thead>
-			<colgroup>
+		    <colgroup>
 				<col width="5%">
 				<col width="10%">
-				<col width="10%">
-				<col width="15%">
-				<col width="6%">
-				<col width="13%">
+				<col width="20%">
 				<col width="12%">
+				<col width="7%">
 				<col width="15%">
-				<col width="15%">
-				<col width="18%">
-				<col width="8%">
-				<col width="18%">
 		    </colgroup>
+			<thead>
 				<tr>
 					<th>id</th>
-					<th>用户名</th>
-					<th>真实姓名</th>
-					<th>密码</th>
-					<th>性别</th>
-					<th>电话号码</th>
-					<th>出生日期</th>
-					<th>地址</th>
-					<th>邮箱</th>
-					<th>头像</th>
-					<th>部门id</th>
+					<th>公告主题</th>
+					<th>公告内容</th>
+					<th>公告创建时间</th>
+					<th>发起人名字</th>
+					<!-- <th>发起人id</th> -->
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody id=ulist class="users_content">
+			<tbody id=ulist class="bulletins_content">
 				<c:forEach items="${ulist }" var="s">
 					<tr>
-						<td>${s.user_id }</td>
-						<td>${s.user_name }</td>
+						<td>${s.bulletin_id }</td>
+						<td>${s.bulletin_title }</td>
+						<td>${s.bulletin_content }</td>
+						<td>${s.bulletin_buildtime }</td>
 						<td>${s.user_realname }</td>
-						<td>${s.user_pwd }</td>
-						<td>${s.user_sex }</td>
-						<td>${s.phonenumber }</td>
-						<td>${s.user_born }</td>
-						<td>${s.user_address }</td>
-						<td>${s.user_email }</td>
-						<td>${s.headpic }</td>
-						<td>${s.dept_id }</td>
+						<%-- <td>${s.user_id }</td> --%>
 						<td>
-							<button onclick="updateUser(${s.user_id })"
+							<button onclick="updatebulletin(${s.bulletin_id })"
 								class="layui-btn layui-btn-xs">修改</button>
-							<button onclick="deleteUser(${s.user_id })"
+							<button onclick="deletebulletin(${s.bulletin_id })"
 								class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
-                         </td>
-                     </tr>
+						</td>
+					</tr>
 				</c:forEach>
 
 			</tbody>

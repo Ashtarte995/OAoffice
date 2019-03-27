@@ -13,17 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.oaoffice.bean.Calendar;
-import com.oaoffice.service.CalendarService;
-import com.oaoffice.service.impl.CalendarServiceImpl;
+import com.oaoffice.bean.Dothing;
+import com.oaoffice.service.DothingService;
+import com.oaoffice.service.impl.DothingServiceImpl;
 import com.oaoffice.util.Datetransform;
 
-public class CalendarServlet extends HttpServlet {
+public class DothingServlet extends HttpServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	CalendarService calendarService = new CalendarServiceImpl();
+	DothingService dothingService = new DothingServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,49 +45,46 @@ public class CalendarServlet extends HttpServlet {
 			if (oper.equals("add")) {
 				// 获取表单数据
 				String name = request.getParameter("name");
-				Date start = Datetransform.parse(request.getParameter("start"), "yyyy-MM-dd");
 				Date end = Datetransform.parse(request.getParameter("end"), "yyyy-MM-dd");
-				String remind = request.getParameter("remind");
-				String content = request.getParameter("content");
+				String priority = request.getParameter("priority");
+				String result = request.getParameter("result");
 				int user_id = Integer.parseInt(request.getParameter("user_id"));
-				Calendar calendar = new Calendar(name, start, end, remind, content, user_id);
-				calendarService.insert(calendar);
+				Dothing dothing = new Dothing(name, end,priority, result, user_id);
+				dothingService.insert(dothing);
 				out.println("{\"status\":\"1\"}");
 				
 			} else if (oper.equals("delete")) {
 				String id = request.getParameter("id");
 				System.out.println(id);
-				calendarService.delete(Integer.parseInt(id));
-				List<Calendar> ulist = calendarService.list();
+				dothingService.delete(Integer.parseInt(id));
+				List<Dothing> ulist = dothingService.list();
 				request.setAttribute("ulist", ulist);
-				request.getRequestDispatcher("calendarlist.jsp").forward(request, response);
+				request.getRequestDispatcher("dothinglist.jsp").forward(request, response);
 			} else if (oper.equals("t_update")) {
 				String id = request.getParameter("id");
 				System.out.println(id);
-				Calendar calendar = calendarService.load(Integer.parseInt(id));
-				request.setAttribute("calendar", calendar);
-				request.getRequestDispatcher("calendarupdate.jsp").forward(request, response);
+				Dothing dothing = dothingService.load(Integer.parseInt(id));
+				request.setAttribute("dothing", dothing);
+				request.getRequestDispatcher("dothingupdate.jsp").forward(request, response);
 
 			} else if (oper.equals("updateAjax")) {
 
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
-				Date start = Datetransform.parse(request.getParameter("start"), "yyyy-MM-dd");
 				Date end = Datetransform.parse(request.getParameter("end"), "yyyy-MM-dd");
-				String remind = request.getParameter("remind");
-				String content = request.getParameter("content");
-				System.out.println("www"+id);
+				String priority = request.getParameter("priority");
+				String result = request.getParameter("result");
 				int user_id = Integer.parseInt(request.getParameter("user_id"));
-				Calendar calendar = new Calendar(name, start, end, remind, content, user_id);
-				calendar.setCalendar_id(Integer.parseInt(id));
-				calendarService.update(calendar);
+				Dothing dothing = new Dothing(name, end,priority, result, user_id);
+				dothing.setDothing_id(Integer.parseInt(id));
+				dothingService.update(dothing);
 				out.println("{\"status\":\"1\"}");
 
 			} else if (oper.equals("searchAjax")) {
 				System.out.println("qqqqq");
 				String searchkey = request.getParameter("searchKey");
 				if (searchkey != null && !searchkey.equals("")) {
-					List<Calendar> list = calendarService.listByName(searchkey);
+					List<Dothing> list = dothingService.listByName(searchkey);
 					Gson gson = new Gson();
 					Map<String, Object> map = new HashMap<>();
 					map.put("list", list);
@@ -95,16 +92,16 @@ public class CalendarServlet extends HttpServlet {
 					String json = gson.toJson(map);
 					out.print(json);
 				} else {
-					List<Calendar> ulist = calendarService.list();
+					List<Dothing> ulist = dothingService.list();
 					request.setAttribute("ulist", ulist);
-					request.getRequestDispatcher("calendarlist.jsp").forward(request, response);
+					request.getRequestDispatcher("dothinglist.jsp").forward(request, response);
 				}
 			}
 		}
 		else {
-		List<Calendar> ulist = calendarService.list();
+		List<Dothing> ulist = dothingService.list();
 		request.setAttribute("ulist", ulist);
-		request.getRequestDispatcher("calendarlist.jsp").forward(request, response);
+		request.getRequestDispatcher("dothinglist.jsp").forward(request, response);
 		}
 	}
 

@@ -1,51 +1,42 @@
 package com.oaoffice.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.oaoffice.util.DbFun;
-import com.oaoffice.bean.User;
-import com.oaoffice.dao.UserDao;
+import com.oaoffice.bean.*;
+import com.oaoffice.dao.*;
 import com.oaoffice.util.PagingVO;
 
-public class UserDaoImpl implements UserDao{
-
+public class VacateDaoImpl implements VacateDao {
 
 	@SuppressWarnings("resource")
 	@Override
-	public Integer insert(User bean) {
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
+	public Integer insert(Vacate bean) {
+
 		StringBuilder sb = new StringBuilder();
-		sb.append(" Insert Into User(user_name,user_realname,user_pwd,user_sex,");
-		sb.append(" phonenumber,user_born,user_address,user_email,headpic,dept_id)");
-		sb.append("Values(?,?,?,?,?,?,?,?,?,?)");
+		sb.append(" Insert Into Vacate(vacate_sharttime,vacate_time,vacate_reason,user_id,");
+		sb.append(" approver,vacate_state,role_id)");
+		sb.append("Values(?,?,?,?,?,?,?)");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-       
+
 		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getHeadpic());
-			pstmt.setObject(10, bean.getDept_id());
+			pstmt.setObject(1, bean.getVacate_sharttime());
+			pstmt.setObject(2, bean.getVacate_time());
+			pstmt.setObject(3, bean.getVacate_reason());
+			pstmt.setObject(4, bean.getUser_id());
+			pstmt.setObject(5, bean.getApprover());
+			pstmt.setObject(6, bean.getVacate_state());
+			pstmt.setObject(7, bean.getRole_id());
 
 			num = pstmt.executeUpdate();
 
@@ -68,41 +59,48 @@ public class UserDaoImpl implements UserDao{
 
 		return num;
 	}
-	
+
 	@Override
-	public List<User> list() {
-		List<User> list = new ArrayList<User>();
+	public List<Vacate> list() {
+		List<Vacate> list = new ArrayList<Vacate>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User ");
+		sb.append(" SELECT");
+		sb.append("	b.vacate_id,");
+		sb.append("	b.vacate_sharttime,");
+		sb.append("	b.vacate_time,");
+		sb.append("	b.vacate_reason,");
+		sb.append("	b.user_id,");
+		sb.append("	b.approver,");
+		sb.append("	b.vacate_state,");
+		sb.append("	b.role_id,");
+		sb.append("	a.user_realname");
+		sb.append(" FROM");
+		sb.append("	user as a"); 
+		sb.append("	LEFT JOIN vacate b ON a.user_id = b.user_id ");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//user_id,user_name,user_realname,user_pwd,user_sex,phonenumber,user_born
-		//user_address,user_hobby,user_email,selfassessment,headpic,dept_id
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
+
+			Vacate tmpbean = null;
 			while (rs.next()) {
-				tmpbean = new User();
+				tmpbean = new Vacate();
+				tmpbean.setVacate_id(rs.getInt("vacate_id"));
+				tmpbean.setVacate_sharttime(rs.getDate("vacate_sharttime"));
+				tmpbean.setVacate_time(rs.getString("vacate_time"));
+				tmpbean.setVacate_reason(rs.getString("vacate_reason"));
 				tmpbean.setUser_id(rs.getInt("user_id"));
-				tmpbean.setUser_name(rs.getString("user_name"));
+				tmpbean.setApprover(rs.getString("approver"));
+				tmpbean.setVacate_state(rs.getString("vacate_state"));
+				tmpbean.setRole_id(rs.getInt("role_id"));
 				tmpbean.setUser_realname(rs.getString("user_realname"));
-				tmpbean.setUser_pwd(rs.getString("user_pwd"));
-				tmpbean.setUser_sex(rs.getString("user_sex"));
-				tmpbean.setPhonenumber(rs.getString("phonenumber"));
-				tmpbean.setUser_born(rs.getDate("user_born"));
-				tmpbean.setUser_address(rs.getString("user_address"));
-				tmpbean.setUser_email(rs.getString("user_email"));
-				tmpbean.setHeadpic(rs.getString("headpic"));
-				tmpbean.setDept_id(rs.getInt("dept_id"));
-				
+
 				list.add(tmpbean);
 			}
 
@@ -119,7 +117,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer delete(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" delete from User where user_id=?");
+		sb.append(" delete from Vacate where Vacate_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -146,22 +144,18 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public Integer update(User bean) {
+	public Integer update(Vacate bean) {
 		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
-		sb.append(" update User Set ");
-		sb.append(" user_name=? ");
-		sb.append(" ,user_realname=? ");
-		sb.append(" ,user_pwd=? ");
-		sb.append(" ,user_sex=? ");
-		sb.append(" ,phonenumber=? ");
-		sb.append(" ,user_born=? ");
-		sb.append(" ,user_address=? ");
-		sb.append(" ,user_email=? ");
-		sb.append(" ,selfassessment=? ");
-		sb.append(" ,headpic=? ");
-		sb.append(" ,dept_id=? ");
-		sb.append(" where user_id=?");
+		sb.append(" update Vacate Set ");
+		sb.append(" vacate_sharttime=? ");
+		sb.append(" ,vacate_time=? ");
+		sb.append(" ,vacate_reason=? ");
+		sb.append(" ,user_id=? ");
+		sb.append(" ,approver=? ");
+		sb.append(" ,vacate_state=? ");
+		sb.append(" ,role_id=? ");
+		sb.append(" where vacate_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -169,22 +163,11 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs = null;
 
 		Integer num = 0;
-		//uname,upass,realName,gender,birthday	
+		// uname,upass,realName,gender,birthday
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, bean.getUser_name());
-			pstmt.setObject(2, bean.getUser_realname());
-			pstmt.setObject(3, bean.getUser_pwd());
-			pstmt.setObject(4, bean.getUser_sex());
-			pstmt.setObject(5, bean.getPhonenumber());
-			pstmt.setObject(6, bean.getUser_born());
-			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getSelfassessment());
-			pstmt.setObject(10, bean.getHeadpic());
-			pstmt.setObject(11, bean.getDept_id());
-			pstmt.setObject(12, bean.getUser_id());
+			show(bean, pstmt);
 
 			num = pstmt.executeUpdate();
 
@@ -197,18 +180,30 @@ public class UserDaoImpl implements UserDao{
 
 		return num;
 	}
-
+	
 	@Override
-	public User load(Integer id) {
+	public Vacate load(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_id=?");
+		sb.append(" SELECT");
+		sb.append("	b.vacate_id,");
+		sb.append("	b.vacate_sharttime,");
+		sb.append("	b.vacate_time,");
+		sb.append("	b.vacate_reason,");
+		sb.append("	b.user_id,");
+		sb.append("	b.approver,");
+		sb.append("	b.vacate_state,");
+		sb.append("	b.role_id,");
+		sb.append("	a.user_realname");
+		sb.append(" FROM");
+		sb.append("	user as a"); 
+		sb.append("	LEFT JOIN vacate b ON a.user_id = b.user_id ");
+		sb.append(" Where Vacate_id=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Vacate bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -217,18 +212,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				bean.setUser_id(rs.getInt("user_id"));
-				bean.setUser_name(rs.getString("user_name"));
-				bean.setUser_realname(rs.getString("user_realname"));
-				bean.setUser_pwd(rs.getString("user_pwd"));
-				bean.setUser_sex(rs.getString("user_sex"));
-				bean.setPhonenumber(rs.getString("phonenumber"));
-			    bean.setUser_born(rs.getDate("user_born"));
-				bean.setUser_address(rs.getString("user_address"));
-				bean.setUser_email(rs.getString("user_email"));
-				bean.setHeadpic(rs.getString("headpic"));
-				bean.setDept_id(rs.getInt("dept_id"));
+				bean = new Vacate();
+
+				show(rs, bean);
 			}
 
 		} catch (Exception e) {
@@ -244,21 +230,21 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Integer count() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select count(1) from User");
+		sb.append(" select count(1) from Vacate");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-        Integer num = 0;
+		Integer num = 0;
 
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
-				num=rs.getInt(1);
+			if (rs.next()) {
+				num = rs.getInt(1);
 			}
 
 		} catch (Exception e) {
@@ -272,7 +258,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByName(String name) {
+	public Vacate loadByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -284,16 +270,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User loadByNo(String no) {
+	public Vacate loadByNo(String no) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" Where user_name=?");
+		sb.append(" select * from Vacate");
+		sb.append(" Where Vacate_sharttime=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User bean = null;
+		Vacate bean = null;
 
 		try {
 			conn = DbFun.getConn();
@@ -302,9 +288,9 @@ public class UserDaoImpl implements UserDao{
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new User();
-				
-				show(bean, rs);
+				bean = new Vacate();
+
+				show(rs, bean);
 
 			}
 
@@ -319,14 +305,26 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> listByName(String name) {
-		List<User> list = new ArrayList<User>();
+	public List<Vacate> listByName(String name) {
+		List<Vacate> list = new ArrayList<Vacate>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name like ?");
+		sb.append(" SELECT");
+		sb.append("	b.vacate_id,");
+		sb.append("	b.vacate_sharttime,");
+		sb.append("	b.vacate_time,");
+		sb.append("	b.vacate_reason,");
+		sb.append("	b.user_id,");
+		sb.append("	b.approver,");
+		sb.append("	b.vacate_state,");
+		sb.append("	b.role_id,");
+		sb.append("	a.user_realname");
+		sb.append(" FROM");
+		sb.append("	user as a"); 
+		sb.append("	LEFT JOIN vacate b ON a.user_id = b.user_id ");
+		sb.append(" where Vacate_sharttime like ?");
 		String sql = sb.toString();
-		
-		name ="%" + name + "%";
+
+		name = "%" + name + "%";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -336,14 +334,14 @@ public class UserDaoImpl implements UserDao{
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setObject(1, name);
-			
+
 			rs = pstmt.executeQuery();
 
-			User tmpbean = null;
+			Vacate tmpbean = null;
 			while (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Vacate();
 				show(tmpbean, rs);
-				
+
 				list.add(tmpbean);
 			}
 
@@ -358,31 +356,29 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<User> queryAll(PagingVO page) {
-		int begin=(page.getCurentPageNo()-1)*page.getPageSize();
-		int end=page.getPageSize();
-		List<User> list = new ArrayList<User>();
+	public List<Vacate> queryAll(PagingVO page) {
+		int begin = (page.getCurentPageNo() - 1) * page.getPageSize();
+		int end = page.getPageSize();
+		List<Vacate> list = new ArrayList<Vacate>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User limit ?,?");
+		sb.append(" select * from Vacate limit ?,?");
 		String sql = sb.toString();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-	
-		
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, begin);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
-			
-			User tmpbean = null;
-			
+
+			Vacate tmpbean = null;
+
 			while (rs.next()) {
-				tmpbean = new User();
+				tmpbean = new Vacate();
 				show(tmpbean, rs);
 				list.add(tmpbean);
 			}
@@ -398,11 +394,11 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User getUser(User stu) {
-		User tmpbean = null;
+	public Vacate getVacate(Vacate stu) {
+		Vacate tmpbean = null;
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
-		sb.append(" where user_name=?");
+		sb.append(" select * from Vacate");
+		sb.append(" where Vacate_sharttime=?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -412,13 +408,12 @@ public class UserDaoImpl implements UserDao{
 		try {
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setObject(1, stu.getUser_name());
-			
+			pstmt.setObject(1, stu.getVacate_sharttime());
+
 			rs = pstmt.executeQuery();
 
-			
 			if (rs.next()) {
-				tmpbean =new User();
+				tmpbean = new Vacate();
 				show(tmpbean, rs);
 			}
 
@@ -432,21 +427,39 @@ public class UserDaoImpl implements UserDao{
 		return tmpbean;
 	}
 
-	
-	
-	private void show(User tmpbean, ResultSet rs) throws SQLException {
-		tmpbean.setUser_id(rs.getInt("user_id"));
-		tmpbean.setUser_name(rs.getString("user_name"));
-		tmpbean.setUser_realname(rs.getString("user_realname"));
-		tmpbean.setUser_pwd(rs.getString("user_pwd"));
-		tmpbean.setUser_sex(rs.getString("user_sex"));
-		tmpbean.setPhonenumber(rs.getString("phonenumber"));
-		tmpbean.setUser_born(rs.getDate("user_born"));
-		tmpbean.setUser_address(rs.getString("user_address"));
-		tmpbean.setUser_email(rs.getString("user_email"));
-		tmpbean.setSelfassessment(rs.getString("selfassessment"));
-		tmpbean.setHeadpic(rs.getString("headpic"));
-		tmpbean.setDept_id(rs.getInt("dept_id"));
+	private void show(Vacate bean, PreparedStatement pstmt) throws SQLException {
+		pstmt.setObject(1, bean.getVacate_sharttime());
+		pstmt.setObject(2, bean.getVacate_time());
+		pstmt.setObject(3, bean.getVacate_reason());
+		pstmt.setObject(4, bean.getUser_id());
+		pstmt.setObject(5, bean.getApprover());
+		pstmt.setObject(6, bean.getVacate_state());
+		pstmt.setObject(7, bean.getRole_id());
+		pstmt.setObject(8, bean.getVacate_id());
 	}
-    
+
+	private void show(Vacate tmpbean, ResultSet rs) throws SQLException {
+		tmpbean.setVacate_id(rs.getInt("vacate_id"));
+		tmpbean.setVacate_sharttime(rs.getDate("vacate_sharttime"));
+		tmpbean.setVacate_time(rs.getString("vacate_time"));
+		tmpbean.setVacate_reason(rs.getString("vacate_reason"));
+		tmpbean.setUser_id(rs.getInt("user_id"));
+		tmpbean.setApprover(rs.getString("approver"));
+		tmpbean.setVacate_state(rs.getString("vacate_state"));
+		tmpbean.setRole_id(rs.getInt("role_id"));
+		tmpbean.setUser_realname(rs.getString("user_realname"));
+	}
+
+	private void show(ResultSet rs, Vacate bean) throws SQLException {
+		bean.setVacate_id(rs.getInt("vacate_id"));
+		bean.setVacate_sharttime(rs.getDate("vacate_sharttime"));
+		bean.setVacate_time(rs.getString("vacate_time"));
+		bean.setVacate_reason(rs.getString("vacate_reason"));
+		bean.setUser_id(rs.getInt("user_id"));
+		bean.setApprover(rs.getString("approver"));
+		bean.setVacate_state(rs.getString("vacate_state"));
+		bean.setRole_id(rs.getInt("role_id"));
+		bean.setUser_realname(rs.getString("user_realname"));
+	}
+
 }

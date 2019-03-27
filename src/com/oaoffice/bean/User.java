@@ -16,6 +16,14 @@ public class User {
 	private String selfassessment;
 	private String headpic;
 	private Integer dept_id;
+	
+	// 冗余字段
+	private Integer role_id;
+
+	public User(String user_pwd) {
+		super();
+		this.user_pwd = user_pwd;
+	}
 
 	public User(String user_name, String user_realname, String user_sex, String phonenumber, Date user_born,
 			String user_address, String user_hobby, String user_email, String selfassessment, String headpic) {
@@ -188,5 +196,15 @@ public class User {
 	public void setDept_id(Integer dept_id) {
 		this.dept_id = dept_id;
 	}
+
+	public Integer getRole_id() {
+		return role_id;
+	}
+
+	public void setRole_id(Integer role_id) {
+		this.role_id = role_id;
+	}
+	
+	
 
 }

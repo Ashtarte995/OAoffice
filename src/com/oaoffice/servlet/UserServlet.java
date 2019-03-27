@@ -11,8 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.oaoffice.service.PowerService;
+import com.oaoffice.service.impl.PowerServiceImpl;
 import com.google.gson.Gson;
+import com.oaoffice.bean.Power;
 import com.oaoffice.bean.User;
 import com.oaoffice.service.UserService;
 import com.oaoffice.service.impl.UserServiceImpl;
@@ -24,6 +28,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	UserService userService = new UserServiceImpl();
+	PowerService powerService = new PowerServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +45,7 @@ public class UserServlet extends HttpServlet {
 
 		String oper = request.getParameter("oper");
 		PrintWriter out = response.getWriter();
-        System.out.println("aaaa");
+		System.out.println("aaaa");
 		if (oper != null) {
 			if (oper.equals("add")) {
 				// 获取表单数据
@@ -60,6 +65,9 @@ public class UserServlet extends HttpServlet {
 				String id = request.getParameter("id");
 				System.out.println(id);
 				userService.delete(Integer.parseInt(id));
+				List<User> ulist = userService.list();
+				request.setAttribute("ulist", ulist);
+				request.getRequestDispatcher("userlist.jsp").forward(request, response);
 			} else if (oper.equals("t_update")) {
 				String id = request.getParameter("id");
 				System.out.println(id);
@@ -84,7 +92,7 @@ public class UserServlet extends HttpServlet {
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
 			} else if (oper.equals("userinfo")) {
-				String id = request.getParameter("id");
+				// String id = request.getParameter("id");
 				String uname = request.getParameter("uname");
 				String realname = request.getParameter("realname");
 				String gender = request.getParameter("gender");
@@ -93,14 +101,25 @@ public class UserServlet extends HttpServlet {
 				String city = request.getParameter("city");
 				String hobby = request.getParameter("hobby");
 				String email = request.getParameter("email");
-				String selfassessment = request.getParameter("selfassessment");		
+				String selfassessment = request.getParameter("selfassessment");
+				System.out.println(selfassessment + "22222");
 				String headpic = request.getParameter("headpic");
-				User user = new User(uname, realname, gender, phonenumber, born, city,hobby ,email,selfassessment ,headpic);
-				user.setUser_id(Integer.parseInt(id));
+				User user = userService.loadByNo(uname);
+				user.setUser_realname(realname);
+				user.setUser_sex(gender);
+				user.setPhonenumber(phonenumber);
+				user.setUser_born(born);
+				user.setUser_address(city);
+				user.setUser_hobby(hobby);
+				user.setUser_email(email);
+				user.setSelfassessment(selfassessment);
+				user.setHeadpic(headpic);
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
-			}else if (oper.equals("searchAjax")) {
-				 System.out.println("qqqqq");
+			} else if (oper.equals("t_userinfo")) {
+				request.getRequestDispatcher("userInfo.jsp").forward(request, response);
+			} else if (oper.equals("searchAjax")) {
+				System.out.println("qqqqq");
 				String searchkey = request.getParameter("searchKey");
 				if (searchkey != null && !searchkey.equals("")) {
 					List<User> list = userService.listByName(searchkey);
@@ -110,13 +129,76 @@ public class UserServlet extends HttpServlet {
 					map.put("msg", "success");
 					String json = gson.toJson(map);
 					out.print(json);
-				}else {
+				} else {
 					List<User> ulist = userService.list();
 					request.setAttribute("ulist", ulist);
 					request.getRequestDispatcher("userlist.jsp").forward(request, response);
 				}
-			} 
-		}else {
+			} else if (oper.equals("loginAjax")) {
+				String logname = request.getParameter("logname");
+				String logpass = request.getParameter("logpass");
+				User bean = userService.loadByNo(logname);
+				// System.out.println(bean.getUser_id() + "qweasdzxc");
+				if (bean != null) {
+					boolean flag = bean.getUser_name().equals(logname) && bean.getUser_pwd().equals(logpass);
+					if (flag) {
+						// 把请求域范围扩大到会话范围session
+						// 获取session对象
+						HttpSession session = request.getSession();
+						session.setAttribute("loginUser", bean.getUser_realname());
+						session.setAttribute("loginUser_name", bean.getUser_name());
+						session.setAttribute("loginUser_id", bean.getUser_id());
+						session.setAttribute("loginUser_pwd", bean.getUser_pwd());
+						session.setAttribute("loginUser_sex", bean.getUser_sex());
+						session.setAttribute("loginPhonenumber", bean.getPhonenumber());
+						session.setAttribute("loginUser_born", bean.getUser_born());
+						session.setAttribute("loginUser_address", bean.getUser_address());
+						session.setAttribute("loginUser_hobby", bean.getUser_hobby());
+						session.setAttribute("loginUser_email", bean.getUser_email());
+						session.setAttribute("loginSelfassessment", bean.getSelfassessment());
+						session.setAttribute("loginHeadpic", bean.getHeadpic());
+
+						System.out.println("loginSelfassessment="+bean.getUser_id());
+						System.out.println("loginSelfassessment="+bean.getSelfassessment());
+
+						List<Power> allpowerlist = powerService.list();
+						session.setAttribute("allpowerlist", allpowerlist);
+
+						// 获取权限信息
+						List<Power> powerlist = powerService.getPower(logname);
+						System.out.println("Role_id=" + powerlist.get(0).getRole_id());
+						session.setAttribute("role_id", powerlist.get(0).getRole_id());
+						session.setAttribute("powerlist", powerlist);
+						out.println("{\"status\":\"1\"}");
+					} else {
+						out.print("{\"status\":\"0\",\"msg\":\"login fail\"}");
+					}
+				}
+			} else if (oper.equals("logout")) {
+				HttpSession session = request.getSession();
+				session.removeAttribute("loginUser");
+				session.removeAttribute("loginUser_name");
+				session.removeAttribute("loginUser_id");
+				session.removeAttribute("powerlist");
+				session.invalidate();
+				response.sendRedirect("login.jsp");
+			} else if (oper.equals("changePwdAjax")) {
+				String id = request.getParameter("id");
+				String name = request.getParameter("name");
+				System.out.println("bbbb" + id);
+				String pwd = request.getParameter("pwd");
+				User user = userService.loadByNo(name);
+				user.setUser_pwd(pwd);
+				userService.update(user);
+				out.println("{\"status\":\"1\"}");
+			} else if (oper.equals("loginout")) {
+				HttpSession session = request.getSession();
+				session.removeAttribute("loginUser_name");
+				session.removeAttribute("loginUser_pwd");
+				session.invalidate();
+				response.sendRedirect("login.jsp");
+			}
+		} else {
 			List<User> ulist = userService.list();
 			request.setAttribute("ulist", ulist);
 			request.getRequestDispatcher("userlist.jsp").forward(request, response);

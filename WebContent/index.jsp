@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>layui后台管理模板</title>
+<title>OA办公管理系统</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -24,7 +25,7 @@
 		<!-- 顶部 -->
 		<div class="layui-header header">
 			<div class="layui-main">
-				<a href="#" class="logo">OA管理系统</a>
+				<a href="#" class="logo">OA办公管理系统</a>
 				<!-- 天气信息 -->
 				<div class="weather">
 					<div id="tp-weather-widget"></div>
@@ -74,29 +75,24 @@
 					<li class="layui-nav-item showNotice" id="showNotice"><a
 						href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
 					</li>
-					<!-- <li class="layui-nav-item"><a href="javascript:;"
-						data-url="page/user/changePwd.html"><i
-							class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
-					</li>
-					<li class="layui-nav-item"><a href="javascript:;"><i
-							class="iconfont icon-loginout"></i> 退出</a></li> -->
 					<li class="layui-nav-item lockcms"><a href="javascript:;"><i
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
 					<li class="layui-nav-item"><a href="javascript:;"> <img
 							src="images/face.jpg" class="layui-circle" width="35" height="35">
-							<cite>admin</cite>
+							<cite>${loginUser }</cite>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;" data-url="userInfo.html"><i
+								<a href="javascript:;" data-url="userInfo.jsp"><i
 									class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人信息</cite></a>
 							</dd>
 							<dd>
-								<a href="javascript:;" data-url="changePwd.html"><i
+								<a href="javascript:;" data-url="changepwd.jsp"><i
 									class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a>
 							</dd>
 							<dd>
-								<a href="javascript:;"><i class="iconfont icon-loginout"></i><cite>退出</cite></a>
+								<a href="UserServlet.do?powercode=logout&oper=logout" data-url=""><i
+									class="iconfont icon-loginout"></i><cite>退出</cite></a>
 							</dd>
 						</dl></li>
 				</ul>
@@ -107,7 +103,7 @@
 			<div class="user-photo">
 				<a class="img" title="我的头像"><img src="images/face.jpg"></a>
 				<p>
-					你好！<span class="userName">admin</span>, 欢迎登录
+					你好！<span class="userName">${loginUser }</span>, 欢迎登录
 				</p>
 			</div>
 			<div class="navBar layui-side-scroll" style="height: 478px;">
@@ -117,53 +113,76 @@
 							data-icon="icon-computer"></i> <cite>首页</cite></a></li>
 
 					<li class="layui-nav-item" style=""><a href="javascript:;"><i
-							class="layui-icon icon-xitongpeizhi" data-icon="icon-xitongpeizhi"></i><cite>个人办公</cite><span
+							class="layui-icon icon-xitongpeizhi"
+							data-icon="icon-xitongpeizhi"></i><cite>个人办公</cite><span
 							class="layui-nav-more"></span></a>
-						
+
 						<dl class="layui-nav-child">
-							<dd class="">
+							<%-- <dd class="">
 								<a href="javascript:;" data-url="userInfo.jsp"> <i class="layui-icon"
 									data-icon=""> </i><cite>个人信息</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="calendar.html"> <i class="layui-icon"
+								<a href="javascript:;" data-url="CalendarServlet.do"> <i class="layui-icon"
 									data-icon=""></i><cite>日程安排</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="dothing.html"> <i class="layui-icon"
+								<a href="javascript:;" data-url="DothingServlet.do"> <i class="layui-icon"
 									data-icon=""> </i><cite>代办事宜</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url=""> <i class="layui-icon"
+								<a href="javascript:;" data-url="BulletinServlet.do"> <i class="layui-icon"
+									data-icon=""></i><cite>消息提醒</cite></a>
+							</dd>
+							<dd class="">
+								<a href="javascript:;" data-url="businesscard.jsp"> <i class="layui-icon"
 									data-icon=""></i><cite>名片夹</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url=""> <i class="layui-icon"
+								<a href="javascript:;" data-url="FloderServlet.do"> <i class="layui-icon"
 									data-icon=""> </i><cite>个人文件夹</cite></a>
-							</dd>
-							<dd class="">
-								<a href="javascript:;" data-url="message.html"> <i class="layui-icon"
-									data-icon=""></i><cite>消息提醒</cite></a>
-							</dd>
+							</dd> --%>
+
+							<c:forEach items="${allpowerlist }" var="power">
+								<c:if test="${power.power_ismenu eq '1'}">
+                                    <dd class="">
+										<a href="javascript:;" data-url="${power.power_url }"> <i
+											class="layui-icon" data-icon=""> 
+											</i><cite>${power.power_name }</cite></a>
+									</dd>
+								</c:if>
+							</c:forEach>
+
 						</dl></li>
 
 
 					<li class="layui-nav-item" style=""><a href="javascript:;"><i
-							class="layui-icon icon-gongzuoliucheng" data-icon="icon-gongzuoliucheng"></i><cite>工作流程</cite><span
+							class="layui-icon icon-gongzuoliucheng"
+							data-icon="icon-gongzuoliucheng"></i><cite>工作流程</cite><span
 							class="layui-nav-more"></span></a>
 						<dl class="layui-nav-child">
-							<dd class="">
-								<a href="javascript:;" data-url="vacate.html"> <i class="layui-icon"
-									data-icon=""> </i><cite>请假申请</cite></a>
+							<%-- <dd class="">
+								<a href="javascript:;" data-url="VacateServlet.do"> <i
+									class="layui-icon" data-icon=""> </i><cite>请假申请</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="meetingapply.html"> <i class="layui-icon"
-									data-icon=""></i><cite>会议申请</cite></a>
+								<a href="javascript:;" data-url="MeetingapplyServlet.do"> <i
+									class="layui-icon" data-icon=""></i><cite>会议申请</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="meetingapply.html"> <i class="layui-icon"
-									data-icon=""></i><cite>二级会议审批</cite></a>
-							</dd>
+								<a href="javascript:;" data-url="meetingapply.html"> <i
+									class="layui-icon" data-icon=""></i><cite>二级会议审批</cite></a>
+							</dd> --%>
+							<c:forEach items="${allpowerlist }" var="power">
+								<c:if test="${power.power_ismenu eq '2'}">
+                                    <dd class="">
+										<a href="javascript:;" data-url="${power.power_url }"> <i
+											class="layui-icon" data-icon=""> 
+											</i><cite>${power.power_name }</cite></a>
+									</dd>
+								</c:if>
+							</c:forEach>
+							
 						</dl></li>
 
 
@@ -171,32 +190,51 @@
 							class="iconfont icon-text" data-icon="icon-text"></i><cite>行政办公</cite><span
 							class="layui-nav-more"></span></a>
 						<dl class="layui-nav-child">
-							<dd class="">
-								<a href="javascript:;" data-url="meeting.html"> <i class="layui-icon"
-									data-icon="  "> </i><cite>会议管理</cite></a>
+							<%-- <dd class="">
+								<a href="javascript:;" data-url="meeting.html"> <i
+									class="layui-icon" data-icon="  "> </i><cite>会议管理</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="meetingroom.html"> <i class="layui-icon"
-									data-icon=""></i><cite>会议室管理</cite></a>
-							</dd>
+								<a href="javascript:;" data-url="meetingroom.html"> <i
+									class="layui-icon" data-icon=""></i><cite>会议室管理</cite></a>
+							</dd> --%>
+							<c:forEach items="${allpowerlist }" var="power">
+								<c:if test="${power.power_ismenu eq '3'}">
+                                    <dd class="">
+										<a href="javascript:;" data-url="${power.power_url }"> <i
+											class="layui-icon" data-icon=""> 
+											</i><cite>${power.power_name }</cite></a>
+									</dd>
+								</c:if>
+							</c:forEach>
 						</dl></li>
 
 					<li class="layui-nav-item" style=""><a href="javascript:;"><i
 							class="layui-icon" data-icon=""></i><cite>系统管理</cite><span
 							class="layui-nav-more"></span></a>
 						<dl class="layui-nav-child">
-							<dd class="">
-								<a href="javascript:;" data-url="UserServlet.do"> <i class="layui-icon"
-									data-icon=""> </i><cite>用户管理</cite></a>
+							<%-- <dd class="">
+								<a href="javascript:;" data-url="UserServlet.do"> <i
+									class="layui-icon" data-icon=""> </i><cite>用户管理</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="dept.html"> <i class="layui-icon"
-									data-icon=""></i><cite>部门管理</cite></a>
+								<a href="javascript:;" data-url="dept.html"> <i
+									class="layui-icon" data-icon=""></i><cite>部门管理</cite></a>
 							</dd>
 							<dd class="">
 								<a href="javascript:;" data-url=""> <i class="layui-icon"
 									data-icon=""></i><cite>角色及权限管理</cite></a>
-							</dd>
+							</dd> --%>
+							
+							<c:forEach items="${allpowerlist }" var="power">
+								<c:if test="${power.power_ismenu eq '4'}">
+                                    <dd class="">
+										<a href="javascript:;" data-url="${power.power_url }"> <i
+											class="layui-icon" data-icon=""> 
+											</i><cite>${power.power_name }</cite></a>
+									</dd>
+								</c:if>
+							</c:forEach>
 						</dl></li>
 
 

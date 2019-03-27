@@ -3,17 +3,40 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta charset="UTF-8" /> 
 <title>login</title>
 <link rel="stylesheet" type="text/css" href="static/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="static/css/demo.css" />
 <!--必要样式-->
 <link rel="stylesheet" type="text/css" href="static/css/component.css" />
-<!--[if IE]>
-<script src="static/js/html5.js"></script>
-<![endif]-->
+<script type="text/javascript" src="js/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript">
+	function loginAjax() {
+		var logname = $("#logname").val();
+		var logpass = $("#logpass").val();
+		//采用Ajax方式进行访问服务器
+		$.ajax({
+			type : "get",
+			data : {
+				"logname" : logname,
+				"logpass" : logpass,
+				"oper" : "loginAjax"
+			},
+			url : "UserServlet.do",
+			dataType:"json",
+			async : true,
+			success : function(data) {
+				if (data.status=="1") {
+					alert("登录成功");
+					//进入首页
+					location.href = "index.jsp";
+				} else {
+					alert(data.msg);
+				}
+			}
+		});
+	}
+</script>
 </head>
 <body>
 		<div class="container demo-1">
@@ -22,16 +45,17 @@
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
 						<h3>OA办公管理系统</h3>
-						<form action="#" name="f" method="post">
+						<form action="UserServlet.do" name="f" method="post">
 							<div class="input_outer">
 								<span class="u_user"></span>
-								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+								<input id="logname" name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+								<input id="logpass" name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+							<div class="mb2">
+							<a onclick="loginAjax()" class="act-but submit" style="color: #FFFFFF">登录</a></div>
 						</form>
 					</div>
 				</div>
