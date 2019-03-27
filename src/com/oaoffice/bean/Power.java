@@ -2,16 +2,13 @@ package com.oaoffice.bean;
 
 public class Power {
 	private int power_id;
-	private String power_name;
 	private String power_url;
 	private String power_ismenu;
 	private int power_pid;
 	private String key;
 
 	// 冗余字段
-	private int user_id;
 	private String user_name;
-	private String user_realname;
 	private int role_id;
 
 	public Power() {
@@ -28,13 +25,6 @@ public class Power {
 		this.key = key;
 	}
 
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
 
 	public String getUser_name() {
 		return user_name;
@@ -44,13 +34,6 @@ public class Power {
 		this.user_name = user_name;
 	}
 
-	public String getUser_realname() {
-		return user_realname;
-	}
-
-	public void setUser_realname(String user_realname) {
-		this.user_realname = user_realname;
-	}
 
 	public int getPower_id() {
 		return power_id;
@@ -60,13 +43,6 @@ public class Power {
 		this.power_id = power_id;
 	}
 
-	public String getPower_name() {
-		return power_name;
-	}
-
-	public void setPower_name(String power_name) {
-		this.power_name = power_name;
-	}
 
 	public String getPower_url() {
 		return power_url;
@@ -110,4 +86,33 @@ public class Power {
 	
 	
 
+	private String user_id;
+	private String user_realname;
+	private String role_name;
+	private String power_name;
+	
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getUser_realname() {
+		return user_realname;
+	}
+	public void setUser_realname(String user_realname) {
+		this.user_realname = user_realname;
+	}
+	public String getRole_name() {
+		return role_name;
+	}
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
+	}
+	public String getPower_name() {
+		return power_name;
+	}
+	public void setPower_name(String power_name) {
+		this.power_name = power_name;
+	}
 }

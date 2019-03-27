@@ -161,7 +161,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="dept.html">
+			<a href="javascript:;" data-url="DeptServlet.do">
 				<div class="panel_icon" style="background-color:#40E0D0;">
 					<i class="iconfont" data-icon="&#xe605;">&#xe605;</i>
 				</div>
@@ -173,7 +173,7 @@
 		</div>
 		
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="PowerServlet.do">
 				<div class="panel_icon" style="background-color:#00008B;">
 					<i class="iconfont" data-icon="&#xe610;">&#xe610;</i>
 				</div>
