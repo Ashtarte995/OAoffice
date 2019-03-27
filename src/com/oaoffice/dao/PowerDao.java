@@ -28,4 +28,6 @@ public interface PowerDao {
 	Integer delete(String role_id, String power_id);
 
 	Integer insert(String role_id, String power_id);
+	
+	List<Power> search(String str);
 }

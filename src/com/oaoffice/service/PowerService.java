@@ -29,4 +29,7 @@ public interface PowerService {
 	
 	boolean insert(String role_id, String power_id);
 	
+	List<Power> search(String str);
+	
+	
 }
