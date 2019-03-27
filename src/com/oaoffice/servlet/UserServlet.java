@@ -109,6 +109,7 @@ public class UserServlet extends HttpServlet {
 					map.put("list", list);
 					map.put("msg", "success");
 					String json = gson.toJson(map);
+					//System.out.println(json);
 					out.print(json);
 				}else {
 					List<User> ulist = userService.list();

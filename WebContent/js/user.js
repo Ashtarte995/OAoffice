@@ -76,7 +76,7 @@ layui.config({
 function loadProvince() {
     var proHtml = '';
     for (var i = 0; i < areaData.length; i++) {
-        proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+        proHtml += '<option value="' + areaData[i].provinceName + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
     }
     //初始化省数据
     $form.find('select[name=province]').append(proHtml);

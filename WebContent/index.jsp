@@ -190,7 +190,7 @@
 									data-icon=""> </i><cite>用户管理</cite></a>
 							</dd>
 							<dd class="">
-								<a href="javascript:;" data-url="dept.html"> <i class="layui-icon"
+								<a href="javascript:;" data-url="DeptServlet.do"> <i class="layui-icon"
 									data-icon=""></i><cite>部门管理</cite></a>
 							</dd>
 							<dd class="">
