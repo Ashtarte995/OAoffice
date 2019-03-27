@@ -162,12 +162,12 @@ public class UserServlet extends HttpServlet {
 						System.out.println("loginSelfassessment="+bean.getUser_id());
 						System.out.println("loginSelfassessment="+bean.getSelfassessment());
 
-						List<Power> allpowerlist = powerService.list();
+						List<Power> allpowerlist = powerService.list1();
 						session.setAttribute("allpowerlist", allpowerlist);
 
 						// 获取权限信息
 						List<Power> powerlist = powerService.getPower(logname);
-						System.out.println("Role_id=" + powerlist.get(0).getRole_id());
+						//System.out.println("Role_id=" + powerlist.get(0).getRole_id());
 						session.setAttribute("role_id", powerlist.get(0).getRole_id());
 						session.setAttribute("powerlist", powerlist);
 						out.println("{\"status\":\"1\"}");

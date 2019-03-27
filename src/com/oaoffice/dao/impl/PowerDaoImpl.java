@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.oaoffice.bean.Bulletin;
 import com.oaoffice.bean.Power;
 import com.oaoffice.bean.Power_Role;
 import com.oaoffice.bean.Role;
@@ -61,7 +62,7 @@ public class PowerDaoImpl implements PowerDao {
 				tmpbean.setPower_name(rs.getString("power_name"));
 				tmpbean.setPower_url(rs.getString("power_url"));
 				tmpbean.setPower_pid(rs.getInt("power_pid"));
-				tmpbean.setPower_ismenu(rs.getString("power_ismenu"));
+				tmpbean.setPower_ismenu(rs.getInt("power_ismenu"));
 				tmpbean.setKey(rs.getString("key"));
 				tmpbean.setRole_id(rs.getInt("role_id"));
 				list.add(tmpbean);
@@ -346,6 +347,45 @@ public class PowerDaoImpl implements PowerDao {
 			DbFun.close(null, pst, conn);
 		}
 		return num;
+	}
+
+	@Override
+	public List<Power> list1() {
+		List<Power> list = new ArrayList<Power>();
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select * from Power ");
+		String sql = sb.toString();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DbFun.getConn();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			Power tmpbean = null;
+			while (rs.next()) {
+				tmpbean = new Power();
+				tmpbean.setPower_id(rs.getInt("power_id"));
+				tmpbean.setPower_name(rs.getString("power_name"));
+				tmpbean.setPower_url(rs.getString("power_url"));
+				tmpbean.setPower_ismenu(rs.getInt("power_ismenu"));
+				tmpbean.setPower_pid(rs.getInt("power_pid"));
+				tmpbean.setKey(rs.getString("key"));
+				
+				list.add(tmpbean);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DbFun.close(rs, pstmt, conn);
+		}
+
+		return list;
 	}
 
 }

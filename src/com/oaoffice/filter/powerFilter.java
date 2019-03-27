@@ -79,6 +79,42 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
+			}else if (uri.contains("MeetingServlet.do")) {
+				if (!isUser_meeting(list)) {
+					request.setAttribute("message", "对不起你没有权限！");
+					request.getRequestDispatcher("/message.jsp").forward(request, response);
+					return;
+
+				} else {
+					chain.doFilter(req, resp);
+				}
+			}else if (uri.contains("MeetingRoomServlet.do")) {
+				if (!isUser_meetingroom(list)) {
+					request.setAttribute("message", "对不起你没有权限！");
+					request.getRequestDispatcher("/message.jsp").forward(request, response);
+					return;
+
+				} else {
+					chain.doFilter(req, resp);
+				}
+			}else if (uri.contains("DeptServlet.do")) {
+				if (!isUser_dept(list)) {
+					request.setAttribute("message", "对不起你没有权限！");
+					request.getRequestDispatcher("/message.jsp").forward(request, response);
+					return;
+
+				} else {
+					chain.doFilter(req, resp);
+				}
+			}else if (uri.contains("PowerServlet.do")) {
+				if (!isUser_poro(list)) {
+					request.setAttribute("message", "对不起你没有权限！");
+					request.getRequestDispatcher("/message.jsp").forward(request, response);
+					return;
+
+				} else {
+					chain.doFilter(req, resp);
+				}
 			}else {
 
 				// if (list != null && powercode != null) {
@@ -103,6 +139,54 @@ public class powerFilter implements Filter {
 		boolean flag = false;
 		for (Power power : list) {
 			if (power.getKey().equals("user")) {
+				// 有用户管理权限
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	public boolean isUser_dept(List<Power> list) {
+		boolean flag = false;
+		for (Power power : list) {
+			if (power.getKey().equals("user_dept")) {
+				// 有用户管理权限
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	public boolean isUser_poro(List<Power> list) {
+		boolean flag = false;
+		for (Power power : list) {
+			if (power.getKey().equals("user_poro")) {
+				// 有用户管理权限
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	public boolean isUser_meeting(List<Power> list) {
+		boolean flag = false;
+		for (Power power : list) {
+			if (power.getKey().equals("user_meeting")) {
+				// 有用户管理权限
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	public boolean isUser_meetingroom(List<Power> list) {
+		boolean flag = false;
+		for (Power power : list) {
+			if (power.getKey().equals("user_meetingroom")) {
 				// 有用户管理权限
 				flag = true;
 				break;

@@ -93,6 +93,13 @@
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
+		    <colgroup>
+				<col width="5%">
+				<col width="10%">
+				<col width="10%">
+				<col width="50%">
+				<col width="18%">
+		    </colgroup>
 			<thead>
 				<tr>
 					<th>id</th>

@@ -3,9 +3,13 @@ package com.oaoffice.bean;
 public class Power {
 	private int power_id;
 	private String power_url;
-	private String power_ismenu;
+	private int power_ismenu;
 	private int power_pid;
 	private String key;
+	private String user_id;
+	private String user_realname;
+	private String role_name;
+	private String power_name;
 
 	// 冗余字段
 	private String user_name;
@@ -15,7 +19,7 @@ public class Power {
 		super();
 	}
 
-	public Power(int power_id, String power_name, String power_url, String power_ismenu, int power_pid, String key) {
+	public Power(int power_id, String power_name, String power_url, int power_ismenu, int power_pid, String key) {
 		super();
 		this.power_id = power_id;
 		this.power_name = power_name;
@@ -25,7 +29,6 @@ public class Power {
 		this.key = key;
 	}
 
-
 	public String getUser_name() {
 		return user_name;
 	}
@@ -33,7 +36,6 @@ public class Power {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-
 
 	public int getPower_id() {
 		return power_id;
@@ -43,7 +45,6 @@ public class Power {
 		this.power_id = power_id;
 	}
 
-
 	public String getPower_url() {
 		return power_url;
 	}
@@ -52,11 +53,13 @@ public class Power {
 		this.power_url = power_url;
 	}
 
-	public String getPower_ismenu() {
+	
+
+	public int getPower_ismenu() {
 		return power_ismenu;
 	}
 
-	public void setPower_ismenu(String power_ismenu) {
+	public void setPower_ismenu(int power_ismenu) {
 		this.power_ismenu = power_ismenu;
 	}
 
@@ -83,35 +86,35 @@ public class Power {
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
-	
-	
 
-	private String user_id;
-	private String user_realname;
-	private String role_name;
-	private String power_name;
-	
 	public String getUser_id() {
 		return user_id;
 	}
+
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+
 	public String getUser_realname() {
 		return user_realname;
 	}
+
 	public void setUser_realname(String user_realname) {
 		this.user_realname = user_realname;
 	}
+
 	public String getRole_name() {
 		return role_name;
 	}
+
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
 	}
+
 	public String getPower_name() {
 		return power_name;
 	}
+
 	public void setPower_name(String power_name) {
 		this.power_name = power_name;
 	}

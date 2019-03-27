@@ -213,7 +213,7 @@
 							class="layui-icon" data-icon=""></i><cite>系统管理</cite><span
 							class="layui-nav-more"></span></a>
 						<dl class="layui-nav-child">
-							 <dd class="">
+							<%--  <dd class="">
 								<a href="javascript:;" data-url="UserServlet.do"> <i
 									class="layui-icon" data-icon=""> </i><cite>用户管理</cite></a>
 							</dd>
@@ -229,7 +229,7 @@
 							<dd class="">
 								<a href="javascript:;" data-url=""> <i class="layui-icon"
 									data-icon=""></i><cite>角色及权限管理</cite></a>
-							</dd> 
+							</dd> --%>  
 							
 							<c:forEach items="${allpowerlist }" var="power">
 								<c:if test="${power.power_ismenu eq '4'}">

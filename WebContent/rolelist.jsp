@@ -99,7 +99,7 @@
 						<td>${s.role_name }</td>
 						<td>
 							<button onclick="updateUser(${s.role_id })"
-								class="layui-btn layui-btn-xs">修改职位</button>
+								class="layui-btn layui-btn-xs">修改权限</button>
 						</td>
 					</tr>
 				</c:forEach>

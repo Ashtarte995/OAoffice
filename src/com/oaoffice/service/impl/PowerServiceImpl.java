@@ -71,7 +71,13 @@ public class PowerServiceImpl implements PowerService {
 	@Override
 	public List<Power> getPower(String uname) {
 		// TODO Auto-generated method stub
-		return null;
+		return powerDao.getPower(uname);
+	}
+
+	@Override
+	public List<Power> list1() {
+		// TODO Auto-generated method stub
+		return powerDao.list1();
 	}
 
 }

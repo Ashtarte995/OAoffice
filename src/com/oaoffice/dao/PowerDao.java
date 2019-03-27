@@ -12,6 +12,8 @@ public interface PowerDao {
 	public List<Power> getPower(String uname);
 
 	List<Power> list();// 返回所有行的数据
+	
+	List<Power> list1();// 返回所有行的数据
 
 	User_Role loadByid(String id);
 
