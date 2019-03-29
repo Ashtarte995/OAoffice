@@ -184,8 +184,8 @@ public class MeetingDaoImpl implements MeetingDao {
 
 				bean.setMeeting_title(rs.getString("Meeting_title"));
 				bean.setMeeting_date(rs.getDate("Meeting_date"));
-				bean.setMeeting_start(rs.getDate("Meeting_start"));
-				bean.setMeeting_end(rs.getDate("Meeting_end"));
+				bean.setMeeting_start(rs.getTime("Meeting_start"));
+				bean.setMeeting_end(rs.getTime("Meeting_end"));
 				bean.setMeeting_status(rs.getString("Meeting_status"));
 				bean.setMeetingroom_id(rs.getInt("Meetingroom_id"));
 				bean.setMeeting_id(rs.getInt("Meeting_id"));
@@ -405,8 +405,8 @@ public class MeetingDaoImpl implements MeetingDao {
 		tmpbean.setMeeting_id(rs.getInt("Meeting_id"));
 		tmpbean.setMeeting_title(rs.getString("Meeting_title"));
 		tmpbean.setMeeting_date(rs.getDate("Meeting_date"));
-		tmpbean.setMeeting_start(rs.getDate("Meeting_start"));
-		tmpbean.setMeeting_end(rs.getDate("Meeting_end"));
+		tmpbean.setMeeting_start(rs.getTime("Meeting_start"));
+		tmpbean.setMeeting_end(rs.getTime("Meeting_end"));
 		tmpbean.setMeeting_status(rs.getString("Meeting_status"));
 		tmpbean.setMeetingroom_id(rs.getInt("Meetingroom_id"));
 		tmpbean.setMeetingroom_name(rs.getString("Meetingroom_name"));
