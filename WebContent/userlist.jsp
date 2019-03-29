@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.oaoffice.util.PagingVO"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,9 @@
 <link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css">
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	       function addUser(){
 	    	   location.href='userinsert.jsp';
@@ -28,13 +32,13 @@
 	    	   }
 	       }
 	       function updateUser(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	       function searchAjax(){
-	    	    alert(123);
+	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
 	    	    alert(searchKey);
 				$.ajax({
@@ -90,11 +94,7 @@
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+=s.headpic;
-							cont+="</td>";
-							
-							cont+="<td>";
-							cont+=s.dept_id;
+							cont+=s.dept_name;
 							cont+="</td>";
 							
 							cont+="<td>";
@@ -102,6 +102,7 @@
 							cont+="<button onclick=\"deleteUser(${s.user_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
 							cont+="</td>";
 							cont+="</tr>";
+							
 						}
 						$("#ulist").html(cont);
 						
@@ -116,7 +117,7 @@
 			<div class="layui-input-inline">
 				<input id="searchKey" name="searchKey"
 					class="layui-input search_input" type="text" />
-			   <!--  <input type="text" id="searchKey" name="searchKey" value=""
+				<!--  <input type="text" id="searchKey" name="searchKey" value=""
 					placeholder="请输入关键字" class="layui-input search_input"> -->
 			</div>
 			<a onclick="searchAjax()" class="layui-btn search_btn">查询</a>
@@ -128,21 +129,21 @@
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
-			<thead>
 			<colgroup>
 				<col width="5%">
-				<col width="10%">
-				<col width="10%">
-				<col width="15%">
+				<col width="9%">
+				<col width="9%">
+				<col width="8%">
 				<col width="6%">
-				<col width="13%">
 				<col width="12%">
-				<col width="15%">
-				<col width="15%">
+				<col width="12%">
 				<col width="18%">
+				<col width="15%">
+				<%-- <col width="18%"> --%>
 				<col width="8%">
 				<col width="18%">
-		    </colgroup>
+			</colgroup>
+			<thead>
 				<tr>
 					<th>id</th>
 					<th>用户名</th>
@@ -153,8 +154,8 @@
 					<th>出生日期</th>
 					<th>地址</th>
 					<th>邮箱</th>
-					<th>头像</th>
-					<th>部门id</th>
+					<!-- <th>头像</th> -->
+					<th>部门</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -170,21 +171,55 @@
 						<td>${s.user_born }</td>
 						<td>${s.user_address }</td>
 						<td>${s.user_email }</td>
-						<td>${s.headpic }</td>
-						<td>${s.dept_id }</td>
+						<%-- <td><img src="images/${s.headpic }" width="30" height="30" /></td> --%>
+						<td>${s.dept_name }</td>
 						<td>
 							<button onclick="updateUser(${s.user_id })"
 								class="layui-btn layui-btn-xs">修改</button>
 							<button onclick="deleteUser(${s.user_id })"
 								class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
-                         </td>
-                     </tr>
+						</td>
+					</tr>
 				</c:forEach>
-
 			</tbody>
 		</table>
 	</div>
-	<div id="page"></div>
+	<div id="page" style="text-align:center;">
+		<ul class="pagination">
+			<li><a href="UserServlet.do?curentPageNo=${page.upPageNo }&pageSize=${page.pageSize }">上一页</a></li>
+            <%
+				PagingVO pagevo = (PagingVO) request.getAttribute("page");
+				for (int i = 0; pagevo != null && i < pagevo.getTotalCount(); i++) {
+			%>
+			<li><a href="UserServlet.do?curentPageNo=<%=i + 1%>&pageSize=5"><%=i + 1%></a>
+			</li>
+			<%
+				}
+			%>
+			<li><a href="UserServlet.do?curentPageNo=${page.nextPageNo }&pageSize=${page.pageSize }">下一页</a>
+			</li>
+		</ul>
+
+	</div> 
+
+	<%-- <div id="demo0">
+		<div class="layui-box layui-laypage layui-laypage-default"
+			id="layui-laypage-1">
+			<a href="UserServlet.do?curentPageNo=${page.upPageNo }&pageSize=${page.pageSize }" class="layui-laypage-prev " >上一页</a> 
+			<!--  <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em> </span> -->
+			<%
+				PagingVO pagevo = (PagingVO) request.getAttribute("page");
+				for (int i = 0; pagevo != null && i < pagevo.getTotalCount(); i++) {
+			%>
+			<a href="UserServlet.do?curentPageNo=<%=i + 1%>&pageSize=5" data-page="<%=i + 1%>"><em class="layui-laypage-em"></em><em><%=i + 1%></em></a>
+			<%
+				}
+			%>
+			<a href="UserServlet.do?curentPageNo=${page.nextPageNo }&pageSize=${page.pageSize }" class="layui-laypage-next" >下一页</a>
+		</div>
+		总页数${page.totalCount }
+	</div> --%>
+
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/allUsers.js"></script>
 </body>

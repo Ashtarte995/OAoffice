@@ -29,4 +29,6 @@ public interface UserService {
 	List<User> queryAll(PagingVO page);//分页查询
 
 	User getUser(User stu);
+
+	boolean checkUser(String uname);
 }

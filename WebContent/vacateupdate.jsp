@@ -24,7 +24,7 @@
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
 		var approver = $("#approver").val();
-		var state = $("#state").val();
+		var state = $('input[type=radio][id=state]:checked').val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -63,47 +63,48 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">什么时候请假</label>
 				<div class="layui-input-block">
-					<input name="start" id="start" type="text" value="${vacate.vacate_sharttime }" disabled
-						placeholder="请输入请假时间" lay-verify="required" class="layui-input">
+					<input name="start" id="start" type="text"
+						value="${vacate.vacate_sharttime }" disabled placeholder="请输入请假时间"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">请假多久</label>
 				<div class="layui-input-block">
 					<input name="time" id="time" type="text"
-						value="${vacate.vacate_time}" disabled placeholder="请输入公告内容" lay-verify="required"
-						class="layui-input">
+						value="${vacate.vacate_time}" disabled placeholder="请输入公告内容"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">请假原因</label>
 				<div class="layui-input-block">
-					<input name="reason" id="reason" type="text" value="${vacate.vacate_reason }" disabled
-						placeholder="请输入请假原因" lay-verify="required" class="layui-input">
+					<input name="reason" id="reason" type="text"
+						value="${vacate.vacate_reason }" disabled placeholder="请输入请假原因"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">请假人</label>
 				<div class="layui-input-block">
 					<input name="user_id" id="user_id" type="text"
-						value="${vacate.user_id }" disabled placeholder="" lay-verify="required"
-						class="layui-input">
+						value="${vacate.user_id }" disabled placeholder=""
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">审批人</label>
 				<div class="layui-input-block">
-					<input name="approver" id="approver" type="tel"
-						value="${vacate.approver }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
+					<input name="approver" id="approver" type="text"
+						value="${loginUser }" placeholder="" lay-verify="required"
+						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">审批请假结果</label>
+				<label class="layui-form-label">审批结果</label>
 				<div class="layui-input-block">
-					<input name="state" id="state" type="tel"
-						value="${vacate.vacate_state }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
+					<input type="radio" name="state" id="state" value="不同意" title="不同意" checked>
+					<input type="radio" name="state" id="state" value="同意" title="同意">
 				</div>
 			</div>
 		</div>

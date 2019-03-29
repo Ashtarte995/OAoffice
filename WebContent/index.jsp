@@ -78,7 +78,7 @@
 					<li class="layui-nav-item lockcms"><a href="javascript:;"><i
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
 					<li class="layui-nav-item"><a href="javascript:;"> <img
-							src="images/face.jpg" class="layui-circle" width="35" height="35">
+							src="images/${loginHeadpic }" class="layui-circle" width="35" height="35">
 							<cite>${loginUser }</cite>
 					</a>
 						<dl class="layui-nav-child">
@@ -101,7 +101,7 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像"><img src="images/face.jpg"></a>
+				<a class="img" title="我的头像"><img src="images/${loginHeadpic }" width="110" height="110"></a>
 				<p>
 					你好！<span class="userName">${loginUser }</span>, 欢迎登录
 				</p>
@@ -280,9 +280,6 @@
 						</dl></li> -->
 					<!-- <span class="layui-nav-bar"
 						style="top: 23px; height: 0px; opacity: 0;"></span> -->
-						<li class="layui-nav-item" style=""><a href="javascript:;"
-						data-url="login.html" target="_top"> <i class="iconfont icon-computer"
-							data-icon="icon-computer"></i> <cite>退出</cite></a></li>
 							
 
 				</ul>
@@ -307,15 +304,15 @@
 	<!-- 锁屏 -->
 	<div class="admin-header-lock" id="lock-box" style="display: none;">
 		<div class="admin-header-lock-img">
-			<img src="images/face.jpg" />
+			<img src="images/${loginHeadpic }" />
 		</div>
-		<div class="admin-header-lock-name" id="lockUserName">请叫我马哥</div>
+		<div class="admin-header-lock-name" id="lockUserName">${loginUser }</div>
 		<div class="input_btn">
 			<input type="password" class="admin-header-lock-input layui-input"
 				placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />
 			<button class="layui-btn" id="unlock">解锁</button>
 		</div>
-		<p>请输入“123456”，否则不会解锁成功哦！！！</p>
+		<!-- <p>请输入“123456”，否则不会解锁成功哦！！！</p> -->
 	</div>
 	<!-- 移动导航 -->
 	<div class="site-tree-mobile layui-hide">

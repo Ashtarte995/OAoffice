@@ -19,11 +19,13 @@ public class User {
 	
 	// 冗余字段
 	private Integer role_id;
+	private String dept_name;
 
 	public User(String user_pwd) {
 		super();
 		this.user_pwd = user_pwd;
 	}
+	
 
 	public User(String user_name, String user_realname, String user_sex, String phonenumber, Date user_born,
 			String user_address, String user_hobby, String user_email, String selfassessment, String headpic) {
@@ -204,7 +206,15 @@ public class User {
 	public void setRole_id(Integer role_id) {
 		this.role_id = role_id;
 	}
-	
-	
 
+
+	public String getDept_name() {
+		return dept_name;
+	}
+
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	
 }

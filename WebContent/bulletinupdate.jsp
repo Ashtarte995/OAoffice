@@ -76,15 +76,17 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">创建时间</label>
 				<div class="layui-input-block">
-					<input name="start" id="start" type="text" value="${bulletin.bulletin_buildtime }"
-						placeholder="请输入创建时间" lay-verify="required" class="layui-input">
+					<input name="start" id="start" type="text" value=""
+						placeholder="请输入创建时间" lay-verify="required|date"
+						onclick="layui.laydate({elem: this,max: laydate.now()})"
+						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">发起人名字</label>
 				<div class="layui-input-block">
 					<input name="realname" id="realname" type="tel"
-						value="${bulletin.user_realname }" placeholder="请输入名字"
+						value="${loginUser }" placeholder="请输入名字"
 						lay-verify="required|phone" class="layui-input">
 				</div>
 			</div>

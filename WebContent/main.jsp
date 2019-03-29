@@ -59,7 +59,7 @@
 				</div>
 				<div class="panel_word imgAll">
 					<span></span>
-					<cite>名片夹</cite>
+					<cite>个人名片</cite>
 				</div>
 			</a>
 		</div>

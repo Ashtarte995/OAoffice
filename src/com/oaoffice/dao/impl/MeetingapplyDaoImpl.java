@@ -17,8 +17,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(" Insert Into Meetingapply(meetingapply_time,meetingapply_reason,user_id,");
-		sb.append(" approver,meetingapply_state,role_id)");
-		sb.append("Values(?,?,?,?,?,?)");
+		sb.append(" approver,meetingapply_state,role_id,twoapprover,twomeetingapply_state)");
+		sb.append("Values(?,?,?,?,?,?,?,?)");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -36,6 +36,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 			pstmt.setObject(4, bean.getApprover());
 			pstmt.setObject(5, bean.getMeetingapply_state());
 			pstmt.setObject(6, bean.getRole_id());
+			pstmt.setObject(7, bean.getTwoapprover());
+			pstmt.setObject(8, bean.getTwomeetingapply_state());
 
 			num = pstmt.executeUpdate();
 
@@ -71,6 +73,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		sb.append("	b.approver,");
 		sb.append("	b.meetingapply_state,");
 		sb.append("	b.role_id,");
+		sb.append("	b.twoapprover,");
+		sb.append("	b.twomeetingapply_state,");
 		sb.append("	a.user_realname");
 		sb.append(" FROM");
 		sb.append("	user as a"); 
@@ -97,7 +101,9 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 				tmpbean.setMeetingapply_state(rs.getString("meetingapply_state"));
 				tmpbean.setRole_id(rs.getInt("role_id"));
 				tmpbean.setUser_realname(rs.getString("user_realname"));
-
+				tmpbean.setTwoapprover(rs.getString("twoapprover"));
+				tmpbean.setTwomeetingapply_state(rs.getString("twomeetingapply_state"));
+				
 				list.add(tmpbean);
 			}
 
@@ -151,6 +157,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		sb.append(" ,approver=? ");
 		sb.append(" ,meetingapply_state=? ");
 		sb.append(" ,role_id=? ");
+		sb.append(" ,twoapprover=? ");
+		sb.append(" ,twomeetingapply_state=? ");
 		sb.append(" where meetingapply_id=?");
 		String sql = sb.toString();
 
@@ -188,7 +196,9 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		sb.append("	b.approver,");
 		sb.append("	b.meetingapply_state,");
 		sb.append("	b.role_id,");
-		sb.append("	a.user_realname");
+		sb.append("	a.user_realname,");
+		sb.append(" b.twoapprover ,");
+		sb.append(" b.twomeetingapply_state ");
 		sb.append(" FROM");
 		sb.append("	user as a"); 
 		sb.append("	LEFT JOIN meetingapply b ON a.user_id = b.user_id ");
@@ -311,6 +321,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		sb.append("	b.approver,");
 		sb.append("	b.meetingapply_state,");
 		sb.append("	b.role_id,");
+		sb.append("	b.twoapprover,");
+		sb.append("	b.twomeetingapply_state,");
 		sb.append("	a.user_realname");
 		sb.append(" FROM");
 		sb.append("	user as a"); 
@@ -428,7 +440,9 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		pstmt.setObject(4, bean.getApprover());
 		pstmt.setObject(5, bean.getMeetingapply_state());
 		pstmt.setObject(6, bean.getRole_id());
-		pstmt.setObject(7, bean.getMeetingapply_id());
+		pstmt.setObject(7, bean.getTwoapprover());
+		pstmt.setObject(8, bean.getTwomeetingapply_state());
+		pstmt.setObject(9, bean.getMeetingapply_id());
 	}
 
 	private void show(Meetingapply tmpbean, ResultSet rs) throws SQLException {
@@ -440,6 +454,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		tmpbean.setMeetingapply_state(rs.getString("meetingapply_state"));
 		tmpbean.setRole_id(rs.getInt("role_id"));
 		tmpbean.setUser_realname(rs.getString("user_realname"));
+		tmpbean.setTwoapprover(rs.getString("twoapprover"));
+		tmpbean.setTwomeetingapply_state(rs.getString("twomeetingapply_state"));
 	}
 
 	private void show(ResultSet rs, Meetingapply bean) throws SQLException {
@@ -451,6 +467,8 @@ public class MeetingapplyDaoImpl implements MeetingapplyDao {
 		bean.setMeetingapply_state(rs.getString("meetingapply_state"));
 		bean.setRole_id(rs.getInt("role_id"));
 		bean.setUser_realname(rs.getString("user_realname"));
+		bean.setTwoapprover(rs.getString("twoapprover"));
+		bean.setTwomeetingapply_state(rs.getString("twomeetingapply_state"));
 	}
 
 }

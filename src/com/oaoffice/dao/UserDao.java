@@ -31,4 +31,5 @@ public interface UserDao {
 	List<User> queryAll(PagingVO page);//分页查询
 
 	User getUser(User stu);
+
 }

@@ -73,7 +73,12 @@ public class UserDaoImpl implements UserDao{
 	public List<User> list() {
 		List<User> list = new ArrayList<User>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User ");
+		sb.append("SELECT"); 
+		sb.append("	a.*,");
+		sb.append(" b.dept_name");
+		sb.append(" FROM" ); 
+		sb.append("	USER AS a");
+		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -102,6 +107,7 @@ public class UserDaoImpl implements UserDao{
 				tmpbean.setUser_email(rs.getString("user_email"));
 				tmpbean.setHeadpic(rs.getString("headpic"));
 				tmpbean.setDept_id(rs.getInt("dept_id"));
+				tmpbean.setDept_name(rs.getString("dept_name"));
 				
 				list.add(tmpbean);
 			}
@@ -157,6 +163,7 @@ public class UserDaoImpl implements UserDao{
 		sb.append(" ,phonenumber=? ");
 		sb.append(" ,user_born=? ");
 		sb.append(" ,user_address=? ");
+		sb.append(" ,user_hobby=? ");
 		sb.append(" ,user_email=? ");
 		sb.append(" ,selfassessment=? ");
 		sb.append(" ,headpic=? ");
@@ -180,11 +187,12 @@ public class UserDaoImpl implements UserDao{
 			pstmt.setObject(5, bean.getPhonenumber());
 			pstmt.setObject(6, bean.getUser_born());
 			pstmt.setObject(7, bean.getUser_address());
-			pstmt.setObject(8, bean.getUser_email());
-			pstmt.setObject(9, bean.getSelfassessment());
-			pstmt.setObject(10, bean.getHeadpic());
-			pstmt.setObject(11, bean.getDept_id());
-			pstmt.setObject(12, bean.getUser_id());
+			pstmt.setObject(8, bean.getUser_hobby());
+			pstmt.setObject(9, bean.getUser_email());
+			pstmt.setObject(10, bean.getSelfassessment());
+			pstmt.setObject(11, bean.getHeadpic());
+			pstmt.setObject(12, bean.getDept_id());
+			pstmt.setObject(13, bean.getUser_id());
 
 			num = pstmt.executeUpdate();
 
@@ -201,7 +209,12 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public User load(Integer id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
+		sb.append("SELECT"); 
+		sb.append("	a.*,");
+		sb.append(" b.dept_name");
+		sb.append(" FROM" ); 
+		sb.append("	USER AS a");
+		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
 		sb.append(" Where user_id=?");
 		String sql = sb.toString();
 
@@ -229,6 +242,7 @@ public class UserDaoImpl implements UserDao{
 				bean.setUser_email(rs.getString("user_email"));
 				bean.setHeadpic(rs.getString("headpic"));
 				bean.setDept_id(rs.getInt("dept_id"));
+				bean.setDept_name(rs.getString("dept_name"));
 			}
 
 		} catch (Exception e) {
@@ -303,8 +317,20 @@ public class UserDaoImpl implements UserDao{
 
 			if (rs.next()) {
 				bean = new User();
-				
-				show(bean, rs);
+	
+				bean.setUser_id(rs.getInt("user_id"));
+				bean.setUser_name(rs.getString("user_name"));
+				bean.setUser_realname(rs.getString("user_realname"));
+				bean.setUser_pwd(rs.getString("user_pwd"));
+				bean.setUser_sex(rs.getString("user_sex"));
+				bean.setPhonenumber(rs.getString("phonenumber"));
+			    bean.setUser_born(rs.getDate("user_born"));
+				bean.setUser_address(rs.getString("user_address"));
+				bean.setUser_hobby(rs.getString("user_hobby"));
+				bean.setUser_email(rs.getString("user_email"));
+				bean.setSelfassessment(rs.getString("selfassessment"));
+				bean.setHeadpic(rs.getString("headpic"));
+				bean.setDept_id(rs.getInt("dept_id"));
 
 			}
 
@@ -322,7 +348,12 @@ public class UserDaoImpl implements UserDao{
 	public List<User> listByName(String name) {
 		List<User> list = new ArrayList<User>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User");
+		sb.append("SELECT"); 
+		sb.append("	a.*,");
+		sb.append(" b.dept_name");
+		sb.append(" FROM" ); 
+		sb.append("	USER AS a");
+		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
 		sb.append(" where user_name like ?");
 		String sql = sb.toString();
 		
@@ -363,7 +394,14 @@ public class UserDaoImpl implements UserDao{
 		int end=page.getPageSize();
 		List<User> list = new ArrayList<User>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from User limit ?,?");
+		sb.append("SELECT"); 
+		sb.append("	a.*,");
+		sb.append(" b.dept_name");
+		sb.append(" FROM" ); 
+		sb.append("	USER AS a");
+		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
+		sb.append(" ORDER BY a.user_id ");
+		sb.append(" limit ?,?");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -447,6 +485,7 @@ public class UserDaoImpl implements UserDao{
 		tmpbean.setSelfassessment(rs.getString("selfassessment"));
 		tmpbean.setHeadpic(rs.getString("headpic"));
 		tmpbean.setDept_id(rs.getInt("dept_id"));
+		tmpbean.setDept_name(rs.getString("dept_name"));
 	}
     
 }

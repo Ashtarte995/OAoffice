@@ -21,14 +21,15 @@
 		var id = $("#id").val();
 		var uname = $("#uname").val();
 		var realname = $("#realname").val();
-		var gender = $("#gender").val();
+		var gender = $('input[type=radio][id=gender]:checked').val();
 		var phonenumber = $("#phonenumber").val();
 		var born = $("#born").val();
 		var city = $("#city").val();
-		var hobby = $("#hobby").val();
+		var hobby = $("input[name='like1']:checked").val();
 		var email = $("#email").val();
 		var selfassessment = $("#selfassessment").val();
-		var headpic = $("#headpic").val();
+		var headpic = $("#headpic").val()
+		alert(headpic);
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -53,23 +54,45 @@
 				if (data.status == "1") {
 					alert("修改成功");
 					//进入
-					location.href = "UserServlet.do?powercode=user_update&oper=t_userinfo";
+					//location.href = "UserServlet.do?powercode=user_update&oper=t_userinfo";
 				} else {
 					alert("修改失败");
 				}
 			}
 		});
 	}
+
+	function uploadFunction() {
+		var formData = new FormData();
+		formData.append('file', $('#file')[0].files[0]);
+		$.ajax({
+			url : 'UploadServlet.do',
+			type : 'POST',
+			cache : false,
+			data : formData,
+			dataType : "json",
+			processData : false,
+			contentType : false
+		}).done(function(res) {
+			console.log(res);
+			if (res.status == "1") {
+				$("#headpic").attr("value",res.fpath);
+				$("#pic").attr("src", "images/" + res.fpath);
+			}
+		});
+	}
 </script>
 </head>
 <body class="childrenBody">
-	<form action="UserServlet.do" role="form" method="post" class="layui-form">
-	<input name="id" id="id" type=hidden value="${loginUser_id }">
+	<form action="UserServlet.do" role="form" method="post"
+		class="layui-form">
+		<input name="id" id="id" type=hidden value="${loginUser_id }">
 		<div class="user_left">
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户名</label>
 				<div class="layui-input-block">
-					<input name="uname" id="uname" type="text" value="${loginUser_name }" disabled
+					<input name="uname" id="uname" type="text"
+						value="${loginUser_name }" disabled
 						class="layui-input layui-disabled">
 				</div>
 			</div>
@@ -77,15 +100,17 @@
 				<label class="layui-form-label">真实姓名</label>
 				<div class="layui-input-block">
 					<input name="realname" id="realname" type="text"
-						value="${loginUser }" placeholder="请输入真实姓名"
-						lay-verify="required" class="layui-input">
+						value="${loginUser }" placeholder="请输入真实姓名" lay-verify="required"
+						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item" pane="">
 				<label class="layui-form-label">性别</label>
 				<div class="layui-input-block">
-					<input name="gender" id="gender" type="radio" name="sex" value="男" title="男" <c:if test="${loginUser_sex eq '男' }">checked</c:if>> 
-					<input name="gender" id="gender" type="radio" name="sex" value="女" title="女" <c:if test="${loginUser_sex eq '女' }">checked</c:if>>
+					<input name="gender" id="gender" type="radio" name="sex" value="男"
+						title="男" <c:if test="${loginUser_sex eq '男' }">checked</c:if>>
+					<input name="gender" id="gender" type="radio" name="sex" value="女"
+						title="女" <c:if test="${loginUser_sex eq '女' }">checked</c:if>>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -109,33 +134,39 @@
 				<label class="layui-form-label">家庭住址</label>
 				<div class="layui-input-inline">
 					<select name="province" lay-filter="province">
-						<option name="city" id="city" value="${loginUser_address }">请选择省</option>
+						<option name="city" id="city" value="${loginUser_address }">请选择市</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="city" id="city" lay-filter="city" disabled>
-						<option value="">请选择市</option>
+					<select name="area" id="area" lay-filter="city">
+						<option value="">请选择县</option>
 					</select>
 				</div>
-				<div class="layui-input-inline">
+				<!-- <div class="layui-input-inline">
 					<select name="area" id="area" lay-filter="area" disabled>
 						<option value="">请选择县/区</option>
 					</select>
-				</div>
+				</div> -->
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">兴趣爱好</label>
 				<div class="layui-input-block">
-					<input id="hobby" type="checkbox" name="like1[javascript]" title="Javascript">
-					<input id="hobby" type="checkbox" name="like1[html]" title="HTML(5)">
-					<input id="hobby" type="checkbox" name="like1[css]" title="CSS(3)"> 
-					<input id="hobby" type="checkbox" name="like1[php]" title="PHP"> 
-					<input id="hobby" type="checkbox" name="like1[.net]" title=".net"> 
-					<input id="hobby" type="checkbox" name="like1[ASP]" title="ASP"> 
-					<input id="hobby" type="checkbox" name="like1[C#]" title="C#"> 
-					<input id="hobby" type="checkbox" name="like1[Angular]" title="Angular"> 
-					<input id="hobby" type="checkbox" name="like1[VUE]" title="VUE"> 
-					<input id="hobby" type="checkbox" name="like1[XML]" title="XML">
+					<input id="hobby" type="checkbox" name="like1" title="运动"
+						value="运动" <c:if test="${loginUser_hobby eq '运动' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="旅游"
+						value="旅游" <c:if test="${loginUser_hobby eq '旅游' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="阅读"
+						value="阅读" <c:if test="${loginUser_hobby eq '阅读' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="玩游戏"
+						value="玩游戏"
+						<c:if test="${loginUser_hobby eq '玩游戏' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="听音乐"
+						value="听音乐"
+						<c:if test="${loginUser_hobby eq '听音乐' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="饮食"
+						value="饮食" <c:if test="${loginUser_hobby eq '饮食' }">checked</c:if>>
+					<input id="hobby" type="checkbox" name="like1" title="影视"
+						value="影视" <c:if test="${loginUser_hobby eq '影视' }">checked</c:if>>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -149,16 +180,20 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">自我评价</label>
 				<div class="layui-input-block">
-					<textarea name="selfassessment" id="selfassessment" value="${loginSelfassessment }"	
-					placeholder="请输入内容" class="layui-textarea"></textarea>
+					<textarea name="selfassessment" id="selfassessment"
+						value="${loginSelfassessment }" placeholder="请输入内容"
+						class="layui-textarea">${loginSelfassessment }</textarea>
 				</div>
 			</div>
 		</div>
+
 		<div class="user_right">
-			<input type="file" name="dddd" value="${loginHeadpic }"  class="layui-upload-file"
-				lay-title="掐指一算，我要换一个头像了"> <img src="" class="layui-circle"
-				id="userFace">
+			<input type="file" id="file" name="file" >
+			<button type="button" onclick="uploadFunction()">上传</button>
+			<img id="pic" src="images/${loginHeadpic }" width="100" height="100">
+			<input name="headpic" id="headpic" type=hidden>
 		</div>
+
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">
 				<button onclick="userinfo()" type="button" class="layui-btn">提交</button>

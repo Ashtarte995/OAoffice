@@ -88,7 +88,7 @@
 		</div>
 		<div class="layui-inline">
 			<a onclick="addMeetingRoom()"
-				class="layui-btn layui-btn-normal usersAdd_btn">添加用户</a>
+				class="layui-btn layui-btn-normal usersAdd_btn">添加会议室</a>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">

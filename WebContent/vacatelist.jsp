@@ -40,13 +40,13 @@
 	       }
 	       
 	       function updatevacate(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='VacateServlet.do?powercode=user_vacateapproval&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
-	    	    alert(123);
+	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
 	    	    alert(searchKey);
 				$.ajax({

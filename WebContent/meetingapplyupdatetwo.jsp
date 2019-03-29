@@ -17,13 +17,15 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	function updateAjax() {
+	function updateAjaxTwo() {
 		var id = $("#id").val();
 		var time = $("#time").val();
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
-		var approver = $("#approver").val();
-		var state = $('input[type=radio][id=state]:checked').val();
+		/* var approver = $("#approver").val();
+		var state = $("#state").val(); */
+		var twoapprover = $("#twoapprover").val();
+		var twostate = $('input[type=radio][id=twostate]:checked').val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -32,20 +34,22 @@
 				"time" : time,
 				"reason" : reason,
 				"user_id" : user_id,
-				"approver" : approver,
-				"state" : state,
-				"oper" : "updateAjax"
+				/* "approver" : approver,
+				"state" : state,  */
+				"twoapprover" : twoapprover,
+				"twostate" : twostate,
+				"oper" : "updateAjaxTwo"
 			},
 			url : "MeetingapplyServlet.do",
 			dataType : "json",
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("审批成功");
+					alert("修改成功");
 					//进入首页
 					location.href = "MeetingapplyServlet.do";
 				} else {
-					alert("审批失败");
+					alert("修改失败");
 				}
 			}
 		});
@@ -57,49 +61,58 @@
 		class="layui-form">
 		<input type=hidden name="oper" value="add" /> <input name="id"
 			id="id" type=hidden value="${meetingapply.meetingapply_id }">
+		<%-- <input name="approver"
+			id="approver" type=hidden value="${meetingapply.apporver }">
+			<input name="state"
+			id="state" type=hidden value="${meetingapply.state }"> --%>
 		<div class="user_left">
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议申请时间</label>
 				<div class="layui-input-block">
-					<input name="time" id="time" type="text" value="${meetingapply.meetingapply_time }"
-					disabled placeholder="请输入请假时间" lay-verify="required" class="layui-input">
+					<input name="time" id="time" type="text"
+						value="${meetingapply.meetingapply_time }" disabled
+						placeholder="请输入请假时间" lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议申请原因</label>
 				<div class="layui-input-block">
-					<input name="reason" id="reason" type="text" value="${meetingapply.meetingapply_reason }"
-					disabled placeholder="请输入请假原因" lay-verify="required" class="layui-input">
+					<input name="reason" id="reason" type="text"
+						value="${meetingapply.meetingapply_reason }" disabled
+						placeholder="请输入请假原因" lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">申请人id</label>
 				<div class="layui-input-block">
 					<input name="user_id" id="user_id" type="text"
-						value="${meetingapply.user_id }" disabled placeholder="请输入id" lay-verify="required"
+						value="${meetingapply.user_id }" disabled placeholder="请输入id"
+						lay-verify="required" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">审批人(二级)</label>
+				<div class="layui-input-block">
+					<input name="twoapprover" id="twoapprover" type="tel"
+						value="${loginUser }" placeholder="" lay-verify="required|phone"
 						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">审批人</label>
+				<label class="layui-form-label">审批结果(二级)</label>
 				<div class="layui-input-block">
-					<input name="approver" id="approver" type="tel"
-						value="${loginUser }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">审批结果</label>
-				<div class="layui-input-block">
-					<input type="radio" name="state" id="state" value="不同意" title="不同意" checked>
-					<input type="radio" name="state" id="state" value="同意" title="同意">
+					<input type="radio" name="twostate" id="twostate" value="不同意"
+						title="不同意" checked> <input type="radio" name="twostate"
+						id="twostate" value="同意" title="同意">
+
 				</div>
 			</div>
 		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">
-				<button onclick="updateAjax()" type="button" class="layui-btn">提交</button>
+				<button onclick="updateAjaxTwo()" type="button" class="layui-btn">提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>

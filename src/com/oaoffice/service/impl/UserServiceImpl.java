@@ -2,7 +2,6 @@ package com.oaoffice.service.impl;
 
 import java.util.List;
 
-
 import com.oaoffice.bean.User;
 import com.oaoffice.dao.UserDao;
 import com.oaoffice.dao.impl.UserDaoImpl;
@@ -84,4 +83,18 @@ public class UserServiceImpl implements UserService{
 		return userdao.getUser(stu);
 	}
 
+	@Override
+	public boolean checkUser(String uname) {
+		User stu=new User();
+		stu.setUser_name(uname);
+		User s=userdao.getUser(stu);
+		if(s!=null) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 }
+
+

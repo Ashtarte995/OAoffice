@@ -39,13 +39,13 @@
 				<div class="layui-input-block">
 					<input name="start" id="start" type="text" value=""
 						placeholder="请输入创建时间" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()} class="layui-input">
+						onclick="layui.laydate({elem: this,max: laydate.now()})" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">发起人名字</label>
 				<div class="layui-input-block">
-					<input name="realname" id="realname" type="tel" value=""
+					<input name="realname" id="realname" type="tel" value="${loginUser }"
 						placeholder="请输入名字" lay-verify="required|phone"
 						class="layui-input">
 				</div>

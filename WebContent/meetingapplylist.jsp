@@ -40,13 +40,19 @@
 	       }
 	       
 	       function updatemeetingapply(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='MeetingapplyServlet.do?powercode=user_meetingapproval&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
+	       function updatemeetingapplytwo(id){
+	    	   //alert(id);
+	    	   location.href='MeetingapplyServlet.do?powercode=user_two&oper=t_updateTwo&id='+id;
+	    	   //location.href='studentupdate.jsp';
+	    	   
+	       }
 	        function searchAjax(){
-	    	    alert(123);
+	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
 	    	    alert(searchKey);
 				$.ajax({
@@ -91,8 +97,18 @@
 							cont+="</td>";
 							
 							cont+="<td>";
-							cont+="<button onclick=\"updatemeetingapply(${s.meetingapply_id })\"  class=\"layui-btn layui-btn-xs\">修改</button>";
-							cont+="<button onclick=\"deletemeetingapply(${s.meetingapply_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>";
+							cont+=s.twoapprover;
+							cont+="</td>";
+							
+							
+							cont+="<td>";
+							cont+=s.twomeetingapply_state;
+							cont+="</td>";
+							
+							cont+="<td>";
+							cont+="<button onclick=\"updatemeetingapply(${s.meetingapply_id })\"  class=\"layui-btn layui-btn-xs\">审批</button>";
+							/* cont+="<button onclick=\"deletemeetingapply(${s.meetingapply_id })\" class=\"layui-btn layui-btn-danger layui-btn-xs\">删除</button>"; */
+							cont+="<button onclick=\"updatemeetingapplytwo(${s.meetingapply_id })\" class=\"layui-btn layui-btn-xs\">二级审批</button>";
 							cont+="</td>";
 							cont+="</tr>";
 						}
@@ -131,7 +147,7 @@
 				<col width="10%">
 				<col width="8%">
 				<col width="17%">
-		    </colgroup> 
+			</colgroup>
 			<thead>
 				<tr>
 					<th>id</th>
@@ -170,7 +186,7 @@
 					if (ulist != null) {
 						for (int i = 0; i < ulist.size(); i++) {
 							Meetingapply meetingapply = ulist.get(i);
-							if (role_id == 3&&meetingapply.getMeetingapply_id()!=0) {
+							if (role_id == 3 && meetingapply.getMeetingapply_id() != 0) {
 				%>
 				<tr>
 					<td><%=meetingapply.getMeetingapply_id()%></td>
@@ -179,20 +195,45 @@
 					<td><%=meetingapply.getUser_realname()%></td>
 					<td><%=meetingapply.getApprover()%></td>
 					<td><%=meetingapply.getMeetingapply_state()%></td>
-					<td><%=meetingapply.getApprover()%></td>
-					<td><%=meetingapply.getMeetingapply_state()%></td>
+					<td><%=meetingapply.getTwoapprover()%></td>
+					<td><%=meetingapply.getTwomeetingapply_state()%></td>
 					<td>
 						<button
 							onclick="updatemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
 							class="layui-btn layui-btn-xs">审批</button>
 						<button
-							onclick="updatemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
-							class="layui-btn layui-btn-xs">二级审批</button>
-						<%-- <button
+							onclick="updatemeetingapplytwo(<%=meetingapply.getMeetingapply_id()%>)"
+							class="layui-btn layui-btn-xs">二级审批</button> <%-- <button
 							onclick="deletemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
 							class="layui-btn layui-btn-danger layui-btn-xs">删除</button> --%>
 					</td>
 				</tr>
+				<%
+					} else if (role_id == 4 && meetingapply.getMeetingapply_id() != 0&&meetingapply.getMeetingapply_state().equals("同意")) {
+				%>
+				<tr>
+					<td><%=meetingapply.getMeetingapply_id()%></td>
+					<td><%=meetingapply.getMeetingapply_time()%></td>
+					<td><%=meetingapply.getMeetingapply_reason()%></td>
+					<td><%=meetingapply.getUser_realname()%></td>
+					<td><%=meetingapply.getApprover()%></td>
+					<td><%=meetingapply.getMeetingapply_state()%></td>
+					<td><%=meetingapply.getTwoapprover()%></td>
+					<td><%=meetingapply.getTwomeetingapply_state()%></td>
+					<td>
+						<button
+							onclick="updatemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
+							class="layui-btn layui-btn-xs">审批</button>
+						<button
+							onclick="updatemeetingapplytwo(<%=meetingapply.getMeetingapply_id()%>)"
+							class="layui-btn layui-btn-xs">二级审批</button> <%-- <button
+							onclick="deletemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
+							class="layui-btn layui-btn-danger layui-btn-xs">删除</button> --%>
+					</td>
+				</tr>
+
+
+
 				<%
 					} else if (meetingapply.getUser_id() == user_id) {
 				%>
@@ -204,16 +245,15 @@
 					<td><%=realname%></td>
 					<td><%=meetingapply.getApprover()%></td>
 					<td><%=meetingapply.getMeetingapply_state()%></td>
-					<td><%=meetingapply.getApprover()%></td>
-					<td><%=meetingapply.getMeetingapply_state()%></td>
+					<td><%=meetingapply.getTwoapprover()%></td>
+					<td><%=meetingapply.getTwomeetingapply_state()%></td>
 					<td>
 						<button
 							onclick="updatemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
 							class="layui-btn layui-btn-xs">审批</button>
 						<button
-							onclick="updatemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
-							class="layui-btn layui-btn-xs">二级审批</button>
-						<%-- <button
+							onclick="updatemeetingapplytwo(<%=meetingapply.getMeetingapply_id()%>)"
+							class="layui-btn layui-btn-xs">二级审批</button> <%-- <button
 							onclick="deletemeetingapply(<%=meetingapply.getMeetingapply_id()%>)"
 							class="layui-btn layui-btn-danger layui-btn-xs">删除</button> --%>
 					</td>

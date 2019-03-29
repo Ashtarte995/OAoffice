@@ -22,7 +22,7 @@
 		var name = $("#name").val();
 		var content = $("#content").val();
 		var path = $("#path").val();
-		var share = $("#share").val();
+		var share = $('input[type=radio][id=share]:checked').val();
 		var user_id = $("#user_id").val();
 		if(<%=user_id%>!=user_id){
 			alert("您的id不正确不可以添加文件夹");
@@ -85,9 +85,11 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否分享</label>
 				<div class="layui-input-block">
-					<input name="share" id="share" type="tel" value=""
+					<!-- <input name="share" id="share" type="tel" value=""
 						placeholder="是否分享0不分享1分享" lay-verify="required|phone"
-						class="layui-input">
+						class="layui-input"> -->
+					<input type="radio" name="share" id="share" value="0" title="不分享" checked>
+					<input type="radio" name="share" id="share" value="1" title="分享">
 				</div>
 			</div>
 			<div class="layui-form-item">

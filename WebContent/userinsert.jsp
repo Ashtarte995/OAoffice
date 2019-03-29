@@ -14,6 +14,31 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script type="text/javascript">
+   function checkUname(){
+	    var uname = $("#uname").val();
+		//采用Ajax方式进行访问服务器
+		$.ajax({
+			type : "get",
+			data : {
+				"uname" : uname,
+				"oper" : "checkAjax"
+			},
+			url : "UserServlet.do",
+			dataType:"json",
+			async : true,
+			success : function(data) {
+				var flag=data.isCheck;
+				if (flag=="1") {
+				    $("#msg").html("用户已经存在,不能添加");
+				} else {
+					$("#msg").html("用户不存在,可以添加");
+				}
+			}
+		});
+   }
+
+</script>
 </head>
 <body class="childrenBody">
 	<form action="UserServlet.do" role="form" method="post"
@@ -23,8 +48,9 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户名</label>
 				<div class="layui-input-block">
-					<input name="uname" id="uname" type="text" value=""
+					<input onblur="checkUname()" name="uname" id="uname" type="text" value=""
 						placeholder="请输入用户名" lay-verify="required" class="layui-input">
+				<div id=msg></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -100,11 +126,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="user_right">
+		<!-- <div class="user_right">
 			<input name="headpic" id="headpic" type="file" name="dddd"
 				class="layui-upload-file" lay-title="换个头像"> <img src=""
 				class="layui-circle" id="userFace">
-		</div>
+		</div> -->
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">

@@ -22,7 +22,7 @@
 		var name = $("#name").val();
 		var content = $("#content").val();
 		var path = $("#path").val();
-		var share = $("#share").val();
+		var share = $('input[type=radio][id=share]:checked').val();
 		var user_id = $("#user_id").val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
@@ -80,10 +80,10 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">是否分享（0不分享1分享）</label>
+				<label class="layui-form-label">是否分享</label>
 				<div class="layui-input-block">
-					<input name="share" id="share" type="tel" value="${floder.floder_isshare }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
+					<input type="radio" name="share" id="share" value="0" title="不分享" checked>
+					<input type="radio" name="share" id="share" value="1" title="分享">
 				</div>
 			</div>
 			<div class="layui-form-item">

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.oaoffice.bean.Meetingapply;
+import com.oaoffice.bean.User;
 import com.oaoffice.bean.Vacate;
 import com.oaoffice.service.MeetingapplyService;
 import com.oaoffice.service.impl.MeetingapplyServiceImpl;
@@ -50,7 +51,9 @@ public class MeetingapplyServlet extends HttpServlet {
 				int user_id = Integer.parseInt(request.getParameter("user_id"));
 				String approver =" ";
 				String state = " ";
-				Meetingapply meetingapply = new Meetingapply(time,reason,user_id,approver,state);
+				String twoapprover =" ";
+				String twostate = " ";
+				Meetingapply meetingapply = new Meetingapply(time,reason,user_id,approver,state,twoapprover,twostate);
 				meetingapplyService.insert(meetingapply);
 				out.println("{\"status\":\"1\"}");
 				//List<Meetingapply> ulist = meetingapplyService.list();
@@ -79,8 +82,32 @@ public class MeetingapplyServlet extends HttpServlet {
 				int user_id= Integer.parseInt(request.getParameter("user_id"));
 				String approver = request.getParameter("approver");
 				String state = request.getParameter("state");
-				Meetingapply meetingapply = new Meetingapply(time,reason,user_id,approver,state);
+				String twoapprover =" ";
+				String twostate = " ";
+				Meetingapply meetingapply = new Meetingapply(time,reason,user_id,approver,state,twoapprover,twostate);
 				meetingapply.setMeetingapply_id(Integer.parseInt(id));
+				meetingapplyService.update(meetingapply);
+				out.println("{\"status\":\"1\"}");
+
+			}else if (oper.equals("t_updateTwo")) {
+				String id = request.getParameter("id");
+				System.out.println(id);
+				Meetingapply meetingapply = meetingapplyService.load(Integer.parseInt(id));
+				request.setAttribute("meetingapply", meetingapply);
+				request.getRequestDispatcher("meetingapplyupdatetwo.jsp").forward(request, response);
+
+			}else if (oper.equals("updateAjaxTwo")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                /*Date time = Datetransform.parse(request.getParameter("time"), "yyyy-MM-dd");
+				String reason = request.getParameter("reason");
+				int user_id= Integer.parseInt(request.getParameter("user_id"));
+				String approver = request.getParameter("approver");
+				String state = request.getParameter("state");*/
+				String twoapprover = request.getParameter("twoapprover");
+				String twostate = request.getParameter("twostate");
+				Meetingapply meetingapply = meetingapplyService.load(id);
+				meetingapply.setTwoapprover(twoapprover);
+				meetingapply.setTwomeetingapply_state(twostate);
 				meetingapplyService.update(meetingapply);
 				out.println("{\"status\":\"1\"}");
 
