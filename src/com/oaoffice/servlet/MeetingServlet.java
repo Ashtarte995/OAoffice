@@ -52,9 +52,11 @@ public class MeetingServlet extends HttpServlet {
                 System.out.println(start);
 				Meeting vMeeting = new Meeting(title, date, start, end, status, roomid);
 				meetingService.insert(vMeeting);
+				tolist(request, response);
 			} else if (oper.equals("delete")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				meetingService.delete(id);
+				tolist(request, response);
 			} else if (oper.equals("t_update")) {
 				String id = request.getParameter("id");
 				System.out.println(id);
@@ -97,12 +99,16 @@ public class MeetingServlet extends HttpServlet {
 			}
 
 		} else {
-			List<Meeting> ulist = new ArrayList<>();
-			ulist = meetingService.list();
-			request.setAttribute("ulist", ulist);
-			request.getRequestDispatcher("meetinglist.jsp").forward(request, response);
+			tolist(request, response);
 		}
 
+	}
+
+	private void tolist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Meeting> ulist = new ArrayList<>();
+		ulist = meetingService.list();
+		request.setAttribute("ulist", ulist);
+		request.getRequestDispatcher("meetinglist.jsp").forward(request, response);
 	}
 
 	@Override

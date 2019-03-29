@@ -33,7 +33,7 @@
 				<div class="layui-input-block">
 					<input name="date" id="date" type="text" value=""
 						placeholder="请输入会议日期" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()})"
+						onclick="layui.laydate({elem: this})"
 						class="layui-input">
 				</div>
 			</div>
@@ -42,7 +42,7 @@
 				<div class="layui-input-block">
 					<input name="datestart" id="datestart" type="text" value=""
 						placeholder="请输入开始时间" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()})"
+						onclick="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss'})"
 						class="layui-input">
 				</div>
 			</div>
@@ -51,11 +51,11 @@
 				<div class="layui-input-block">
 					<input name="dateend" id="dateend" type="text" value=""
 						placeholder="请输入结束时间" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()})"
+						onclick="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss'})"
 						class="layui-input">
 				</div>
 			</div>
-			
+
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议状态</label>
 				<div class="layui-input-block">
@@ -71,16 +71,17 @@
 				</div>
 			</div>
 
-		<div class="layui-form-item" style="margin-left: 5%;">
-			<div class="layui-input-block">
-				<button type="submit" class="layui-btn">提交</button>
-				<!-- <button class="layui-btn" lay-submit="" lay-filter="changeUser">立即提交</button> -->
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<div class="layui-form-item" style="margin-left: 5%;">
+				<div class="layui-input-block">
+					<button type="submit" class="layui-btn">提交</button>
+					<!-- <button class="layui-btn" lay-submit="" lay-filter="changeUser">立即提交</button> -->
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
 			</div>
-		</div>
 	</form>
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/address.js"></script>
+	<script type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="js/user.js"></script>
 </body>
 </html>

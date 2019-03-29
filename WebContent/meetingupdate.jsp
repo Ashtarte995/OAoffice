@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,7 @@
 		var dateend = $("#dateend").val();
 		var status = $("#status").val();
 		var roomid = $("#roomid").val();
-		
+
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "post",
@@ -59,76 +59,79 @@
 <body class="childrenBody">
 	<form action="MeetingServlet.do" role="form" method="post"
 		class="layui-form">
-		<input type=hidden name="oper" value="updateAjax" />
-		<input name="id" id="id" type=hidden value="${vMeeting.meeting_id }">
+		<input type=hidden name="oper" value="updateAjax" /> <input name="id"
+			id="id" type=hidden value="${vMeeting.meeting_id }">
 		<div class="user_left">
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议名称</label>
 				<div class="layui-input-block">
-					<input name="uname" id="uname" type="text" value="${vMeeting.meeting_title }"
-						placeholder="请输入会议名称" lay-verify="required" class="layui-input">
+					<input name="uname" id="uname" type="text"
+						value="${vMeeting.meeting_title }" placeholder="请输入会议名称"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议日期</label>
 				<div class="layui-input-block">
-					<input name="date" id="date" type="text" value="${vMeeting.meeting_date }"
-						placeholder="请输入会议日期" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: '2099-06-16 23:59:59'})"
+					<input name="date" id="date" type="text"
+						value="${vMeeting.meeting_date }" placeholder="请输入会议日期"
+						lay-verify="required|date"
+						onclick="layui.laydate({elem: this})"
 						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">开始时间</label>
 				<div class="layui-input-block">
-					<input name="datestart" id="datestart" type="text" value="${vMeeting.meeting_start }"
-						placeholder="请输入开始时间" lay-verify="required|date" 
-						onclick="laydate.render({elem:this,type: 'time'});"
+					<input name="datestart" id="datestart" type="text"
+						value="${vMeeting.meeting_start }" placeholder="请输入开始时间"
+						lay-verify="required|date"
+						onclick="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss'})"
 						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">结束时间</label>
 				<div class="layui-input-block">
-					<input name="dateend" id="dateend" type="text" value="${vMeeting.meeting_end }"
-						placeholder="请输入结束时间" lay-verify="required|date"
-						onclick="layui.laytime({elem: this,max: '23:59:59'})"
+					<input name="dateend" id="dateend" type="text"
+						value="${vMeeting.meeting_end }" placeholder="请输入结束时间"
+						lay-verify="required|date"
+						onclick="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss'})"
 						class="layui-input">
 				</div>
 			</div>
-			
+
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议状态</label>
 				<div class="layui-input-block">
-					<input name="status" id="status" type="text" value="${vMeeting.meeting_status }"
-						placeholder="请输入会议状态" lay-verify="required" class="layui-input">
+					<input name="status" id="status" type="text"
+						value="${vMeeting.meeting_status }" placeholder="请输入会议状态"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议室ID</label>
 				<div class="layui-input-block">
-					<input name="roomid" id="roomid" type="text" value="${vMeeting.meetingroom_id }"
-						placeholder="请输入会议室ID" lay-verify="required" class="layui-input">
+					<input name="roomid" id="roomid" type="text"
+						value="${vMeeting.meetingroom_id }" placeholder="请输入会议室ID"
+						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 
-		<div class="layui-form-item" style="margin-left: 5%;">
-			<div class="layui-input-block">
-				<button onclick="updateAjax()" type="button"
-								class="layui-btn">提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<div class="layui-form-item" style="margin-left: 5%;">
+				<div class="layui-input-block">
+					<button onclick="updateAjax()" type="button" class="layui-btn">提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
 			</div>
-		</div>
 	</form>
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/address.js"></script>
 	<script type="text/javascript" src="js/user.js"></script>
+	<script type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript">
-	laydate.render({
-		  elem: '#datestart'
-		  ,type: 'time'
-		});
+		
 	</script>
 </body>
 </html>
