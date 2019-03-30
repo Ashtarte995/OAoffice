@@ -17,6 +17,27 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
+	$(function(){
+		var hobby2 = document.getElementsByName("like1");
+		var hobby3 = [];
+			<%
+			String[] str=(String[])session.getAttribute("loginUser_hobby");
+			for(String key :str){
+			%>
+			hobby3.push("<%=key%>");
+			<%
+			}
+		    %>
+		alert(hobby3.length);
+		for(var i = 0;i<hobby3.length;i++){
+			for(var j = 0 ;j<hobby2.length;j++){
+				if(hobby2[j].value==hobby3[i]){
+					hobby[j].checked=true;
+				}
+			}
+		}
+		
+	});
 	function userinfo() {
 		var id = $("#id").val();
 		var uname = $("#uname").val();
@@ -26,6 +47,15 @@
 		var born = $("#born").val();
 		var city = $("#city").val();
 		var hobby = $("input[name='like1']:checked").val();
+		alert(hobby);
+		var hobby2 = document.getElementsByName("like1");
+		var hobby3 = [];
+		for(k in hobby2){
+			if (hobby2[k].checked){
+				hobby3.push(hobby2[k].value);
+			}
+		}
+		alert(hobby3);
 		var email = $("#email").val();
 		var selfassessment = $("#selfassessment").val();
 		var headpic = $("#headpic").val()
@@ -41,7 +71,7 @@
 				"phonenumber" : phonenumber,
 				"born" : born,
 				"city" : city,
-				"hobby" : hobby,
+				"hobby" : hobby3,
 				"email" : email,
 				"selfassessment" : selfassessment,
 				"headpic" : headpic,
@@ -49,12 +79,13 @@
 			},
 			url : "UserServlet.do?powercode=user_update",
 			dataType : "json",
+			traditional: true,
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
 					alert("修改成功");
-					//进入
-					//location.href = "UserServlet.do?powercode=user_update&oper=t_userinfo";
+					
+					//location.href = "UserServlet.do?";
 				} else {
 					alert("修改失败");
 				}
@@ -139,7 +170,7 @@
 				</div>
 				<div class="layui-input-inline">
 					<select name="area" id="area" lay-filter="city">
-						<option value="">请选择县</option>
+						<option value="area">请选择县</option>
 					</select>
 				</div>
 				<!-- <div class="layui-input-inline">
@@ -152,21 +183,19 @@
 				<label class="layui-form-label">兴趣爱好</label>
 				<div class="layui-input-block">
 					<input id="hobby" type="checkbox" name="like1" title="运动"
-						value="运动" <c:if test="${loginUser_hobby eq '运动' }">checked</c:if>>
+						value="运动" >
 					<input id="hobby" type="checkbox" name="like1" title="旅游"
-						value="旅游" <c:if test="${loginUser_hobby eq '旅游' }">checked</c:if>>
+						value="旅游" >
 					<input id="hobby" type="checkbox" name="like1" title="阅读"
-						value="阅读" <c:if test="${loginUser_hobby eq '阅读' }">checked</c:if>>
+						value="阅读" >
 					<input id="hobby" type="checkbox" name="like1" title="玩游戏"
-						value="玩游戏"
-						<c:if test="${loginUser_hobby eq '玩游戏' }">checked</c:if>>
+						value="玩游戏" >			
 					<input id="hobby" type="checkbox" name="like1" title="听音乐"
-						value="听音乐"
-						<c:if test="${loginUser_hobby eq '听音乐' }">checked</c:if>>
+						value="听音乐" >
 					<input id="hobby" type="checkbox" name="like1" title="饮食"
-						value="饮食" <c:if test="${loginUser_hobby eq '饮食' }">checked</c:if>>
+						value="饮食" >
 					<input id="hobby" type="checkbox" name="like1" title="影视"
-						value="影视" <c:if test="${loginUser_hobby eq '影视' }">checked</c:if>>
+						value="影视" >
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -191,7 +220,7 @@
 			<input type="file" id="file" name="file" >
 			<button type="button" onclick="uploadFunction()">上传</button>
 			<img id="pic" src="images/${loginHeadpic }" width="100" height="100">
-			<input name="headpic" id="headpic" type=hidden>
+			<input name="headpic" id="headpic" type=hidden value="${loginHeadpic }">
 		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">

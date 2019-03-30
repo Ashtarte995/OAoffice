@@ -108,10 +108,15 @@ public class UserServlet extends HttpServlet {
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
 				String city = request.getParameter("city");
-				String hobby = request.getParameter("hobby");
+				String[] hobby = request.getParameterValues("hobby");
+				StringBuffer hobby2= new StringBuffer();
+				for (String string : hobby) {
+					hobby2.append(string+" ");
+				}
+			
 				String email = request.getParameter("email");
 				String selfassessment = request.getParameter("selfassessment");
-				System.out.println(hobby + "22222");
+
 				String headpic = request.getParameter("headpic");
 				User user = userService.loadByNo(uname);
 				user.setUser_realname(realname);
@@ -119,7 +124,7 @@ public class UserServlet extends HttpServlet {
 				user.setPhonenumber(phonenumber);
 				user.setUser_born(born);
 				user.setUser_address(city);
-				user.setUser_hobby(hobby);
+				user.setUser_hobby(hobby2.toString());
 				user.setUser_email(email);
 				user.setSelfassessment(selfassessment);
 				user.setHeadpic(headpic);
@@ -162,7 +167,8 @@ public class UserServlet extends HttpServlet {
 						session.setAttribute("loginPhonenumber", bean.getPhonenumber());
 						session.setAttribute("loginUser_born", bean.getUser_born());
 						session.setAttribute("loginUser_address", bean.getUser_address());
-						session.setAttribute("loginUser_hobby", bean.getUser_hobby());
+						String[] hobby = bean.getUser_hobby().split("\\s+");
+						session.setAttribute("loginUser_hobby", hobby);
 						session.setAttribute("loginUser_email", bean.getUser_email());
 						session.setAttribute("loginSelfassessment", bean.getSelfassessment());
 						session.setAttribute("loginHeadpic", bean.getHeadpic());
@@ -171,6 +177,7 @@ public class UserServlet extends HttpServlet {
 						System.out.println("loginSelfassessment=" + bean.getSelfassessment());
 
 						List<Power> allpowerlist = powerService.list1();
+						
 						session.setAttribute("allpowerlist", allpowerlist);
 
 						// 获取权限信息
