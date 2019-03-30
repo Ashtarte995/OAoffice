@@ -46,8 +46,6 @@
 		var phonenumber = $("#phonenumber").val();
 		var born = $("#born").val();
 		var city = $("#city").val();
-		var hobby = $("input[name='like1']:checked").val();
-		alert(hobby);
 		var hobby2 = document.getElementsByName("like1");
 		var hobby3 = [];
 		for(k in hobby2){
