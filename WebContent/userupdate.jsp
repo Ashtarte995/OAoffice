@@ -22,12 +22,16 @@
 		var uname = $("#uname").val();
 		var realname = $("#realname").val();
 		var pwd = $("#pwd").val();
-		var gender = $("#gender").val();
+		var gender = $('input[type=radio][id=gender]:checked').val();
 		var phonenumber = $("#phonenumber").val();
 		var born = $("#born").val();
-		var city = $("#city").val();
+		
+		var province=$('#province option:selected').text();
+		var city=$('#city option:selected').text();
+		var area=$('#area option:selected').text();
+
 		var email = $("#email").val();
-		var dept_id = $("#dept_id").val();
+		var dept_id = $('#dept_id option:selected').val();
 		var headpic = $("#headpic").val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
@@ -40,7 +44,9 @@
 				"gender" : gender,
 				"phonenumber" : phonenumber,
 				"born" : born,
+				"province" : province,
 				"city" : city,
+				"area" : area,
 				"email" : email,
 				"dept_id" : dept_id,
 				"headpic" : headpic,
@@ -116,21 +122,22 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">家庭住址</label>
 				<div class="layui-input-inline">
-					<select name="province" lay-filter="province">
-						<option name="city" id="city" value="${user.user_address }">请选择市</option>
+					<select name="province" id="province" lay-filter="province">
+						<option value="">请选择省</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
 					<select name="city" id="city" lay-filter="city" disabled>
-						<option value="">请选择县/区</option>
+						<option value="">请选择市</option>
 					</select>
 				</div>
-				<!-- <div class="layui-input-inline">
+				<div class="layui-input-inline">
 					<select name="area" id="area" lay-filter="area" disabled>
 						<option value="">请选择县/区</option>
 					</select>
-				</div> -->
+				</div>
 			</div>
+
 			<div class="layui-form-item">
 				<label class="layui-form-label">邮箱</label>
 				<div class="layui-input-block">
@@ -142,16 +149,21 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">部门id</label>
 				<div class="layui-input-block">
-					<input name="dept_id" id="dept_id" type="text" value="${user.dept_id }"
-						placeholder="请输入部门id" lay-verify="required" class="layui-input">
+					<%-- <input name="dept_id" id="dept_id" type="text" value="${user.dept_id }"
+						placeholder="请输入部门id" lay-verify="required" class="layui-input"> --%>
+					<select name="dept_id" id="dept_id" lay-verify="required" >
+						 <option value="1" <c:if test="${user.dept_id eq '1' }">selected</c:if>>1</option>
+						 <option value="2" <c:if test="${user.dept_id eq '2' }">selected</c:if>>2</option>
+						 <option value="3" <c:if test="${user.dept_id eq '3' }">selected</c:if>>3</option>
+					</select>
 				</div>
 			</div>
 		</div>
-		<div class="user_right">
+		<!-- <div class="user_right">
 			<input name="headpic" id="headpic" type="file" name="dddd"
 				class="layui-upload-file" lay-title="换个头像"> <img src=""
 				class="layui-circle" id="userFace">
-		</div>
+		</div> -->
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">

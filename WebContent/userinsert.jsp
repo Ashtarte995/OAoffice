@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +16,8 @@
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script type="text/javascript">
-   function checkUname(){
-	    var uname = $("#uname").val();
+	function checkUname() {
+		var uname = $("#uname").val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -25,19 +26,68 @@
 				"oper" : "checkAjax"
 			},
 			url : "UserServlet.do",
-			dataType:"json",
+			dataType : "json",
 			async : true,
 			success : function(data) {
-				var flag=data.isCheck;
-				if (flag=="1") {
-				    $("#msg").html("用户已经存在,不能添加");
+				var flag = data.isCheck;
+				if (flag == "1") {
+					$("#msg").html("用户已经存在,不能添加");
 				} else {
 					$("#msg").html("用户不存在,可以添加");
 				}
 			}
 		});
-   }
+	}
 
+	function addAjax() {
+		var id = $("#id").val();
+		var uname = $("#uname").val();
+		var realname = $("#realname").val();
+		var pwd = $("#pwd").val();
+		var gender = $("#gender").val();
+		var phonenumber = $("#phonenumber").val();
+		var born = $("#born").val();
+		var email = $("#email").val();
+		var dept_id = $("#dept_id").val();
+		var headpic = $("#headpic").val();
+
+		var province = $('#province option:selected').text();
+		var city = $('#city option:selected').text();
+		var area = $('#area option:selected').text();
+		alert(city);
+		$.ajax({
+			type : "get",
+			data : {
+				"id" : id,
+				"uname" : uname,
+				"realname" : realname,
+				"pwd" : pwd,
+				"gender" : gender,
+				"phonenumber" : phonenumber,
+				"born" : born,
+				"email" : email,
+				"dept_id" : dept_id,
+				"headpic" : headpic,
+
+				"province" : province,
+				"city" : city,
+				"area" : area,
+				"oper" : "add"
+			},
+			url : "UserServlet.do",
+			dataType : "json",
+			async : true,
+			success : function(data) {
+				if (data.status == "1") {
+					alert("添加成功");
+					//进入首页
+					location.href = "UserServlet.do";
+				} else {
+					alert("添加失败");
+				}
+			}
+		});
+	}
 </script>
 </head>
 <body class="childrenBody">
@@ -48,9 +98,10 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户名</label>
 				<div class="layui-input-block">
-					<input onblur="checkUname()" name="uname" id="uname" type="text" value=""
-						placeholder="请输入用户名" lay-verify="required" class="layui-input">
-				<div id=msg></div>
+					<input onblur="checkUname()" name="uname" id="uname" type="text"
+						value="" placeholder="请输入用户名" lay-verify="required"
+						class="layui-input">
+					<div id=msg></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -95,8 +146,8 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">家庭住址</label>
 				<div class="layui-input-inline">
-					<select name="province" lay-filter="province">
-						<option name="city" id="city" value="">请选择省</option>
+					<select name="province" id="province" lay-filter="province">
+						<option value="">请选择省</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
@@ -121,8 +172,13 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">部门id</label>
 				<div class="layui-input-block">
-					<input name="dept_id" id="dept_id" type="text" value=""
-						placeholder="请输入部门id" lay-verify="required" class="layui-input">
+					<!-- <input name="dept_id" id="dept_id" type="text" value=""
+						placeholder="请输入部门id" lay-verify="required" class="layui-input"> -->
+					<select name="dept_id" id="dept_id" lay-verify="required" >
+						 <option value="1">1</option>
+						 <option value="2">2</option>
+						 <option value="3">3</option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -134,7 +190,8 @@
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">
-				<button type="submit" class="layui-btn">提交</button>
+				<button type="button" class="layui-btn" onclick="addAjax();">提交</button>
+				<!-- <button type="submit" class="layui-btn">提交</button> -->
 				<!-- <button class="layui-btn" lay-submit="" lay-filter="changeUser">立即提交</button> -->
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
