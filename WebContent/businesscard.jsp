@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>修改密码--layui后台管理模板</title>
+<title></title>
 <style type="text/css">
 #card{
-	height: 685px;
-	width: 1110px;
+	height: 600px;
+	width: 1000px;
 	overflow: hidden;
 	background: url(images/businesscard.jpg);
 }

@@ -93,7 +93,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">发起人id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text"
+					<input name="user_id" id="user_id" type="text" disabled
 						value="${bulletin.user_id }" placeholder="请输入id" lay-verify="required"
 						class="layui-input">
 				</div>

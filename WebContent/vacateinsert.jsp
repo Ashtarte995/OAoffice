@@ -95,7 +95,7 @@
 				<label class="layui-form-label">请假人id</label>
 				<div class="layui-input-block">
 					<input name="user_id" id="user_id" type="text" value="${loginUser_id }"
-						placeholder="请输入您的id" lay-verify="required" class="layui-input">
+						disabled placeholder="请输入您的id" lay-verify="required" class="layui-input">
 				</div>
 			</div> 
 		</div>

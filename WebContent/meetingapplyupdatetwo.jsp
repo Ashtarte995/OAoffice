@@ -95,7 +95,7 @@
 				<label class="layui-form-label">审批人(二级)</label>
 				<div class="layui-input-block">
 					<input name="twoapprover" id="twoapprover" type="tel"
-						value="${loginUser }" placeholder="" lay-verify="required|phone"
+						disabled value="${loginUser }" placeholder="" lay-verify="required|phone"
 						class="layui-input">
 				</div>
 			</div>

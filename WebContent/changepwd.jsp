@@ -41,14 +41,14 @@
 						"pwdagain" : pwdagain,
 						"oper" : "changePwdAjax"
 					},
-					url : "UserServlet.do",
+					url : "UserServlet.do?powercode=user_pwd",
 					dataType : "json",
 					async : true,
 					success : function(data) {
 						if (data.status == "1") {
 							alert("修改成功,重新登录");
 							//进入首页
-							top.location.href = "UserServlet.do?oper=loginout";
+							top.location.href = "UserServlet.do?powercode=user_pwd&oper=loginout";
 						} else {
 							alert("修改失败");
 						}
@@ -75,7 +75,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">旧密码</label>
 			<div class="layui-input-block">
-				<input id="old" type="password" value="<%=user_pwd%>"
+				<input id="old" type="password" value="<%=user_pwd%>" disabled
 					placeholder="请输入旧密码" lay-verify="required|oldPwd"
 					class="layui-input pwd">
 			</div>

@@ -96,7 +96,7 @@
 				<label class="layui-form-label">审批人</label>
 				<div class="layui-input-block">
 					<input name="approver" id="approver" type="text"
-						value="${loginUser }" placeholder="" lay-verify="required"
+						disabled value="${loginUser }" placeholder="" lay-verify="required"
 						class="layui-input">
 				</div>
 			</div>
