@@ -85,7 +85,7 @@
 				<div class="layui-input-block">
 					<input name="approver" id="approver" type="tel"
 						value="${loginUser }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
+						disabled lay-verify="required|phone" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">

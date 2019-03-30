@@ -56,12 +56,18 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
+				
+				String province = request.getParameter("province");
 				String city = request.getParameter("city");
+				String area = request.getParameter("area");
+				String address=province+city+area;
+				
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
-				User user = new User(uname, realname, pwd, gender, phonenumber, born, city, email, headpic, dept_id);
+				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, email, headpic, dept_id);
 				userService.insert(user);
+				out.println("{\"status\":\"1\"}");
 			}else if (oper.equals("checkAjax")) {
 				String uname = request.getParameter("uname");
 				System.out.println(uname+555555555);
@@ -92,11 +98,15 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
+				
+				String province = request.getParameter("province");
 				String city = request.getParameter("city");
+				String area = request.getParameter("area");
+				String address=province+city+area;
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
-				User user = new User(uname, realname, pwd, gender, phonenumber, born, city, email, headpic, dept_id);
+				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, email, headpic, dept_id);
 				user.setUser_id(Integer.parseInt(id));
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");

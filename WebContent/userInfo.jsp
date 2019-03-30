@@ -215,7 +215,7 @@
 		</div>
 
 		<div class="user_right">
-			<input type="file" id="file" name="file" >
+			<input type="file" id="file" name="file" title="选择头像">
 			<button type="button" onclick="uploadFunction()">上传</button>
 			<img id="pic" src="images/${loginHeadpic }" width="100" height="100">
 			<input name="headpic" id="headpic" type=hidden value="${loginHeadpic }">
