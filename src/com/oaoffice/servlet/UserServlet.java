@@ -56,21 +56,21 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
-				
+
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-				String address=province+city+area;
-				
+				String address = province + city + area;
+
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
 				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, email, headpic, dept_id);
 				userService.insert(user);
 				out.println("{\"status\":\"1\"}");
-			}else if (oper.equals("checkAjax")) {
+			} else if (oper.equals("checkAjax")) {
 				String uname = request.getParameter("uname");
-				System.out.println(uname+555555555);
+				System.out.println(uname + 555555555);
 				boolean flag = userService.checkUser(uname);
 				if (flag) {
 					out.println("{\"isCheck\":\"1\"}");
@@ -98,11 +98,11 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
-				
+
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-				String address=province+city+area;
+				String address = province +" "+ city+" " + area;
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
@@ -119,11 +119,11 @@ public class UserServlet extends HttpServlet {
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
 				String city = request.getParameter("city");
 				String[] hobby = request.getParameterValues("hobby");
-				StringBuffer hobby2= new StringBuffer();
+				StringBuffer hobby2 = new StringBuffer();
 				for (String string : hobby) {
-					hobby2.append(string+" ");
+					hobby2.append(string + " ");
 				}
-			
+
 				String email = request.getParameter("email");
 				String selfassessment = request.getParameter("selfassessment");
 
@@ -141,7 +141,7 @@ public class UserServlet extends HttpServlet {
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
 			} else if (oper.equals("t_userinfo")) {
-				
+
 				request.getRequestDispatcher("userInfo.jsp").forward(request, response);
 			} else if (oper.equals("searchAjax")) {
 				System.out.println("qqqqq");
@@ -176,8 +176,15 @@ public class UserServlet extends HttpServlet {
 						session.setAttribute("loginUser_sex", bean.getUser_sex());
 						session.setAttribute("loginPhonenumber", bean.getPhonenumber());
 						session.setAttribute("loginUser_born", bean.getUser_born());
-						session.setAttribute("loginUser_address", bean.getUser_address());
-						String[] hobby = bean.getUser_hobby().split("\\s+");
+						String[] address = null;
+						if (bean.getUser_address() != null) {
+							address = bean.getUser_address().split("\\s+");
+						}
+						session.setAttribute("loginUser_address",address);
+						String[] hobby = null;
+						if (bean.getUser_hobby() != null) {
+							hobby = bean.getUser_hobby().split("\\s+");
+						}
 						session.setAttribute("loginUser_hobby", hobby);
 						session.setAttribute("loginUser_email", bean.getUser_email());
 						session.setAttribute("loginSelfassessment", bean.getSelfassessment());
@@ -187,7 +194,7 @@ public class UserServlet extends HttpServlet {
 						System.out.println("loginSelfassessment=" + bean.getSelfassessment());
 
 						List<Power> allpowerlist = powerService.list1();
-						
+
 						session.setAttribute("allpowerlist", allpowerlist);
 
 						// 获取权限信息
@@ -239,7 +246,7 @@ public class UserServlet extends HttpServlet {
 		PagingVO page = new PagingVO();
 		page.setPageSize(5);
 		page.setTotalCount(total);
-		System.out.println(curentPageNo+"444444444");
+		System.out.println(curentPageNo + "444444444");
 		if (curentPageNo != null && !curentPageNo.equals("")) {
 			if (curentPageNo.equals("0")) {
 				page.setCurentPageNo(1);
@@ -256,9 +263,8 @@ public class UserServlet extends HttpServlet {
 		request.setAttribute("page", page);
 
 		/*
-		 * HttpSession session = request.getSession(); 
-		 * List<Power> powerlist1 =powerService.list(); 
-		 * session.setAttribute("powerlist1", powerlist1);
+		 * HttpSession session = request.getSession(); List<Power> powerlist1
+		 * =powerService.list(); session.setAttribute("powerlist1", powerlist1);
 		 * System.out.println(powerlist1.size());
 		 */
 

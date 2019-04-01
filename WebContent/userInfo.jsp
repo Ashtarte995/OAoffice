@@ -20,15 +20,16 @@
 	$(function(){
 		var hobby2 = document.getElementsByName("like1");
 		var hobby3 = [];
+		
 			<%
+			if((String[])session.getAttribute("loginUser_hobby")!=null){
 			String[] str=(String[])session.getAttribute("loginUser_hobby");
 			for(String key :str){
 			%>
 			hobby3.push("<%=key%>");
 			<%
-			}
+			}}
 		    %>
-		alert(hobby3.length);
 		for(var i = 0;i<hobby3.length;i++){
 			for(var j = 0 ;j<hobby2.length;j++){
 				if(hobby2[j].value==hobby3[i]){

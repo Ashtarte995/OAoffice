@@ -42,6 +42,7 @@ public class PowerServlet extends HttpServlet {
 			if (oper.equals("update1")) {
 				String id = request.getParameter("id");
 				User_Role bean = powerService.loadByid(id);
+				System.out.println(bean.getUser_id());
 				List<Role> role = powerService.listByRole();
 				request.setAttribute("bean", bean);
 				request.setAttribute("role", role);
