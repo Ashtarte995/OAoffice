@@ -36,27 +36,15 @@
 	       }
 	       
 	       function updatebulletin(id){
-<<<<<<< HEAD
-	    	   //alert(id);
-=======
-	    	   
->>>>>>> refs/remotes/choose_remote_name/master
+	    	   //alert(id);	    	  
 	    	   location.href='BulletinServlet.do?powercode=user_updatenews&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
-	    	   
+    	   
 	       }
 	        function searchAjax(){
-<<<<<<< HEAD
 	    	    //alert(123);
-=======
-	    	   
->>>>>>> refs/remotes/choose_remote_name/master
 	    	    var searchKey=$("#searchKey").val();
-<<<<<<< HEAD
 	    	    //alert(searchKey);
-=======
-	    	    
->>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
