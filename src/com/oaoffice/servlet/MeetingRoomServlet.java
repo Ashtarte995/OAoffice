@@ -46,6 +46,12 @@ public class MeetingRoomServlet extends HttpServlet {
 
 				MeetingRoom vMeetingRoom = new MeetingRoom(roomname, usercount);
 				meetingRoomService.insert(vMeetingRoom);
+				
+				List<MeetingRoom> ulist = new ArrayList<>();
+				ulist = meetingRoomService.list();
+				request.setAttribute("ulist", ulist);
+				request.getRequestDispatcher("meetingroomlist.jsp").forward(request, response);
+				
 			} else if (oper.equals("delete")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				meetingRoomService.delete(id);

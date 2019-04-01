@@ -35,11 +35,6 @@
 						placeholder="请输入会议名称" lay-verify="required" class="layui-input">
 				</div>
 			</div>
-		<div class="user_right">
-			<input name="headpic" id="headpic" type="file" name="dddd"
-				class="layui-upload-file" lay-title="换个头像"> <img src=""
-				class="layui-circle" id="userFace">
-		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">

@@ -23,32 +23,27 @@
 		var time = $("#time").val();
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
-		if(<%=user_id%>!=user_id){
-			alert("您的id不正确不可以申请会议");
-		} else {
-			alert("您的id正确可以申请会议");
-			$.ajax({
-				type : "get",
-				data : {
-					"time" : time,
-					"reason" : reason,
-					"user_id" : user_id,
-					"oper" : "add"
-				},
-				url : "MeetingapplyServlet.do",
-				dataType : "json",
-				async : true,
-				success : function(data) {
-					if (data.status == "1") {
-						alert("申请成功");
-						//进入首页
-						location.href = "MeetingapplyServlet.do";
-					} else {
-						alert("申请失败");
-					}
+		$.ajax({
+			type : "get",
+			data : {
+				"time" : time,
+				"reason" : reason,
+				"user_id" : user_id,
+				"oper" : "add"
+			},
+			url : "MeetingapplyServlet.do",
+			dataType : "json",
+			async : true,
+			success : function(data) {
+				if (data.status == "1") {
+					alert("申请成功");
+					//进入首页
+					location.href = "MeetingapplyServlet.do";
+				} else {
+					alert("申请失败");
 				}
-			});
-		}
+			}
+		});
 
 	}
 </script>
@@ -70,11 +65,11 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议申请原因</label>
 				<div class="layui-input-block">
-					<input name="reason" id="reason" type="text" value="" placeholder="请输入请假原因"
-						lay-verify="required" class="layui-input">
+					<input name="reason" id="reason" type="text" value=""
+						placeholder="请输入请假原因" lay-verify="required" class="layui-input">
 				</div>
 			</div>
-		   <!-- <div class="layui-form-item">
+			<!-- <div class="layui-form-item">
 				<label class="layui-form-label">发起人名字</label>
 				<div class="layui-input-block">
 					<input name="realname" id="realname" type="tel" value=""
@@ -85,10 +80,11 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">会议申请人id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text" value="${loginUser_id }"
-						disabled placeholder="您的id" lay-verify="required" class="layui-input">
+					<input name="user_id" id="user_id" type="text"
+						value="${loginUser_id }" disabled placeholder="您的id"
+						lay-verify="required" class="layui-input">
 				</div>
-			</div> 
+			</div>
 		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">

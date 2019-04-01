@@ -37,7 +37,7 @@
 	       }
 	       
 	       function updateDothing(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='DothingServlet.do?powercode=Dothing_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   

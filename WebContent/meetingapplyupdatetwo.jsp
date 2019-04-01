@@ -45,11 +45,11 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("修改成功");
+					alert("审批成功");
 					//进入首页
 					location.href = "MeetingapplyServlet.do";
 				} else {
-					alert("修改失败");
+					alert("审批失败");
 				}
 			}
 		});

@@ -32,7 +32,7 @@
 	       }
 	       
 	       function updatecalendar(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='CalendarServlet.do?powercode=calendar_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   

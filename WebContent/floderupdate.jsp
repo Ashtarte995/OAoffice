@@ -89,7 +89,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text" value="${floder.user_id }"
+					<input name="user_id" id="user_id" type="text" value="${floder.user_id }" disabled
 						placeholder="" lay-verify="required" class="layui-input">
 				</div>
 			</div>

@@ -103,7 +103,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text"
+					<input name="user_id" id="user_id" type="text" disabled
 						value="${calendar.user_id }" placeholder="" lay-verify="required"
 						class="layui-input">
 				</div>

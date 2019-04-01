@@ -32,15 +32,15 @@
 	       }
 	       
 	       function updateFloder(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='FloderServlet.do?powercode=Floder_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
-	    	    alert(123);
+	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    //alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

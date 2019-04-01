@@ -48,7 +48,7 @@
 	        function searchAjax(){
 	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    //alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

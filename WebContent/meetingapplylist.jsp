@@ -54,7 +54,7 @@
 	        function searchAjax(){
 	    	    //alert(123);
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    //alert(searchKey);
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -153,7 +153,7 @@
 					<th>id</th>
 					<th>会议申请时间</th>
 					<th>会议申请原因</th>
-					<th>请假人</th>
+					<th>申请人</th>
 					<th>审批人(一级)</th>
 					<th>审批结果</th>
 					<th>审批人(二级)</th>

@@ -32,7 +32,7 @@
 	    	   }
 	       }
 	       function updateUser(id){
-	    	   alert(id);
+	    	   //alert(id);
 	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   

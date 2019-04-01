@@ -18,7 +18,6 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 	function updateAjax() {
-		alert(11);
 		var id = $("#id").val();
 		var uname = $("#uname").val();
 		var date = $("#date").val();
@@ -114,7 +113,7 @@
 				<label class="layui-form-label">会议室ID</label>
 				<div class="layui-input-block">
 					<input name="roomid" id="roomid" type="text"
-						value="${vMeeting.meetingroom_id }" placeholder="请输入会议室ID"
+						value="${vMeeting.meetingroom_id }" placeholder="请输入会议室ID" disabled
 						lay-verify="required" class="layui-input">
 				</div>
 			</div>

@@ -103,7 +103,7 @@ public class UserServlet extends HttpServlet {
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-				String address=province+city+area;
+				String address = province +" "+ city+" " + area;
 				String hobby = request.getParameter("hobby");
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
@@ -123,16 +123,18 @@ public class UserServlet extends HttpServlet {
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
 				String address=province+city+area;
+				
 				String[] hobby = request.getParameterValues("hobby");
 				StringBuffer hobby2= new StringBuffer();
+				if (hobby!=null) {
 				for (String string : hobby) {
 					hobby2.append(string+" ");
 				}
-			
+				}
 				String email = request.getParameter("email");
 				String selfassessment = request.getParameter("selfassessment");
-
-				String headpic = request.getParameter("headpic");
+                String headpic = request.getParameter("headpic");
+                
 				User user = userService.loadByNo(uname);
 				user.setUser_realname(realname);
 				user.setUser_sex(gender);
