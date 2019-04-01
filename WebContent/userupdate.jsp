@@ -29,10 +29,12 @@
 		var province=$('#province option:selected').text();
 		var city=$('#city option:selected').text();
 		var area=$('#area option:selected').text();
-
+		var hobby = $("#hobby").val();
+		alert(hobby);
 		var email = $("#email").val();
 		var dept_id = $('#dept_id option:selected').val();
 		var headpic = $("#headpic").val();
+		alert(headpic);
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -47,6 +49,7 @@
 				"province" : province,
 				"city" : city,
 				"area" : area,
+				"hobby" : hobby,
 				"email" : email,
 				"dept_id" : dept_id,
 				"headpic" : headpic,
@@ -137,6 +140,11 @@
 					</select>
 				</div>
 			</div>
+			
+			<div class="user_right">
+			<input name="hobby" id="hobby" type=hidden
+				value="${user.user_hobby }" lay-title=""> 
+		    </div>
 
 			<div class="layui-form-item">
 				<label class="layui-form-label">邮箱</label>
@@ -159,11 +167,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="user_right">
-			<input name="headpic" id="headpic" type="file" name="dddd"
-				class="layui-upload-file" lay-title="换个头像"> <img src=""
-				class="layui-circle" id="userFace">
-		</div> -->
+		
+		<div class="user_right">
+			<input name="headpic" id="headpic" type=hidden
+				value="${user.headpic }" class="layui-upload-file" lay-title=""> 
+		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">
 			<div class="layui-input-block">

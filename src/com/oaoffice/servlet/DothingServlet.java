@@ -11,11 +11,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.oaoffice.bean.Dothing;
+import com.oaoffice.bean.User;
 import com.oaoffice.service.DothingService;
+import com.oaoffice.service.UserService;
 import com.oaoffice.service.impl.DothingServiceImpl;
+import com.oaoffice.service.impl.UserServiceImpl;
 import com.oaoffice.util.Datetransform;
 
 public class DothingServlet extends HttpServlet {
@@ -24,7 +28,7 @@ public class DothingServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	DothingService dothingService = new DothingServiceImpl();
-
+	UserService userService = new UserServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,10 +54,19 @@ public class DothingServlet extends HttpServlet {
 				String result = request.getParameter("result");
 				int user_id = Integer.parseInt(request.getParameter("user_id"));
 				Dothing dothing = new Dothing(name, end,priority, result, user_id);
+				
 				dothingService.insert(dothing);
 				out.println("{\"status\":\"1\"}");
 				
-			} else if (oper.equals("delete")) {
+			}else if (oper.equals("arrange")) {
+				/*String Role_name="普通员工";
+				HttpSession session = request.getSession();
+				session.setAttribute("Role_name", Role_name);*/
+				
+				List<User> ulist = userService.list();
+				request.setAttribute("ulist", ulist);
+				request.getRequestDispatcher("dothingarrange.jsp").forward(request, response);
+			}else if (oper.equals("delete")) {
 				String id = request.getParameter("id");
 				System.out.println(id);
 				dothingService.delete(Integer.parseInt(id));

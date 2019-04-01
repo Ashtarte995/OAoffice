@@ -16,16 +16,33 @@ public class User {
 	private String selfassessment;
 	private String headpic;
 	private Integer dept_id;
-	
+
 	// 冗余字段
 	private Integer role_id;
 	private String dept_name;
+	private String role_name;
 
 	public User(String user_pwd) {
 		super();
 		this.user_pwd = user_pwd;
 	}
-	
+
+	public User(String user_name, String user_realname, String user_pwd, String user_sex, String phonenumber,
+			Date user_born, String user_address, String user_hobby, String user_email, String headpic,
+			Integer dept_id) {
+		super();
+		this.user_name = user_name;
+		this.user_realname = user_realname;
+		this.user_pwd = user_pwd;
+		this.user_sex = user_sex;
+		this.phonenumber = phonenumber;
+		this.user_born = user_born;
+		this.user_address = user_address;
+		this.user_hobby = user_hobby;
+		this.user_email = user_email;
+		this.headpic = headpic;
+		this.dept_id = dept_id;
+	}
 
 	public User(String user_name, String user_realname, String user_sex, String phonenumber, Date user_born,
 			String user_address, String user_hobby, String user_email, String selfassessment, String headpic) {
@@ -207,14 +224,22 @@ public class User {
 		this.role_id = role_id;
 	}
 
-
 	public String getDept_name() {
 		return dept_name;
 	}
 
-
 	public void setDept_name(String dept_name) {
 		this.dept_name = dept_name;
 	}
+
+	public String getRole_name() {
+		return role_name;
+	}
+
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
+	}
 	
+	
+
 }

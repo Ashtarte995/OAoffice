@@ -52,7 +52,7 @@ public class powerFilter implements Filter {
 					chain.doFilter(req, resp);
 				}
 
-			} else if (uri.contains("VacateServlet.do")&&powercode != null) {
+			} else if (uri.contains("VacateServlet.do") && powercode != null) {
 				if (!isApproval(powercode, list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -61,7 +61,7 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			}else if (uri.contains("MeetingapplyServlet.do")&&powercode != null) {
+			} else if (uri.contains("MeetingapplyServlet.do") && powercode != null) {
 				if (!isApproval(powercode, list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -70,7 +70,16 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			} else if (uri.contains("BulletinServlet.do")&&powercode != null) {
+			} else if (uri.contains("BulletinServlet.do") && powercode != null) {
+				if (!isApproval(powercode, list)) {
+					request.setAttribute("message", "对不起你没有权限！");
+					request.getRequestDispatcher("/message.jsp").forward(request, response);
+					return;
+
+				} else {
+					chain.doFilter(req, resp);
+				}
+			} else if (uri.contains("DothingServlet.do") && powercode != null) {
 				if (!isApproval(powercode, list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -88,7 +97,7 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			}else if (uri.contains("MeetingRoomServlet.do")) {
+			} else if (uri.contains("MeetingRoomServlet.do")) {
 				if (!isUser_meetingroom(list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -97,7 +106,7 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			}else if (uri.contains("DeptServlet.do")) {
+			} else if (uri.contains("DeptServlet.do")) {
 				if (!isUser_dept(list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -106,7 +115,7 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			}else if (uri.contains("PowerServlet.do")) {
+			} else if (uri.contains("PowerServlet.do")) {
 				if (!isUser_poro(list)) {
 					request.setAttribute("message", "对不起你没有权限！");
 					request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -115,7 +124,7 @@ public class powerFilter implements Filter {
 				} else {
 					chain.doFilter(req, resp);
 				}
-			}else {
+			} else {
 
 				// if (list != null && powercode != null) {
 				// if (!isPower(powercode, list)) {
@@ -146,7 +155,7 @@ public class powerFilter implements Filter {
 		}
 		return flag;
 	}
-	
+
 	public boolean isUser_dept(List<Power> list) {
 		boolean flag = false;
 		for (Power power : list) {
@@ -158,7 +167,7 @@ public class powerFilter implements Filter {
 		}
 		return flag;
 	}
-	
+
 	public boolean isUser_poro(List<Power> list) {
 		boolean flag = false;
 		for (Power power : list) {
@@ -170,7 +179,7 @@ public class powerFilter implements Filter {
 		}
 		return flag;
 	}
-	
+
 	public boolean isUser_meeting(List<Power> list) {
 		boolean flag = false;
 		for (Power power : list) {
@@ -182,7 +191,7 @@ public class powerFilter implements Filter {
 		}
 		return flag;
 	}
-	
+
 	public boolean isUser_meetingroom(List<Power> list) {
 		boolean flag = false;
 		for (Power power : list) {

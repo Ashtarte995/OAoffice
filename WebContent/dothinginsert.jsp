@@ -62,14 +62,14 @@
 		<input type=hidden name="oper" value="add" />
 		<div class="user_left">
 			<div class="layui-form-item">
-				<label class="layui-form-label">代办事宜描述</label>
+				<label class="layui-form-label">事宜描述</label>
 				<div class="layui-input-block">
 					<input name="name" id="name" type="text" value=""
 						placeholder="请输入代办事宜" lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">事件到期日</label>
+				<label class="layui-form-label">到期日</label>
 				<div class="layui-input-block">
 					<input name="end" id="end" type="text" value=""
 						placeholder="请输入事件到期日" lay-verify="required|date"
@@ -77,14 +77,14 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">事情优先级</label>
+				<label class="layui-form-label">优先级</label>
 				<div class="layui-input-block">
 					<input name="priority" id="priority" type="text" value="" placeholder="请输入事件优先级"
 						lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">事情是否完成</label>
+				<label class="layui-form-label">是否完成</label>
 				<div class="layui-input-block">
 					<input name="result" id="result" type="tel" value=""
 						placeholder="事情是否完成" lay-verify="required|phone"
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">事情对象id</label>
+				<label class="layui-form-label">对象id</label>
 				<div class="layui-input-block">
 					<input name="user_id" id="user_id" type="text" value=""
 						placeholder="请输入用户id" lay-verify="required" class="layui-input">

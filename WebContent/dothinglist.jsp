@@ -21,10 +21,15 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	        function addDothing(){
+	       function addDothing(){
 	    	   location.href='dothinginsert.jsp';
 	       }
-	         function deleteDothing(id){
+	       
+	       function arrangeDothing(){
+	    	   location.href='DothingServlet.do?powercode=user_arrangedothing&oper=arrange';
+	       }
+	       
+	       function deleteDothing(id){
 	    	   //alert(id);
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='DothingServlet.do?oper=delete&id='+id;  
@@ -104,6 +109,9 @@
 			<a onclick="addDothing()"
 				class="layui-btn layui-btn-normal DothingsAdd_btn">添加事宜</a>
 		</div>
+		<div class="layui-inline">
+			<a onclick="arrangeDothing()" class="layui-btn layui-btn-warm">安排事情</a>
+		</div>
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
@@ -120,23 +128,23 @@
 			</thead>
 			<tbody id=ulist class="Dothings_content">
 				<c:forEach items="${ulist }" var="s">
-				<c:set var="User_id" scope="session" value="${loginUser_id }"/>
-				   <c:if test="${s.user_id==User_id }">
-					<tr>
-						<td>${s.dothing_id }</td>
-						<td>${s.dothing_describe }</td>
-						<td>${s.dothing_enddate }</td>
-						<td>${s.dothing_priority }</td>
-						<td>${s.dothing_result }</td>
-						<%-- <td>${s.user_id }</td> --%>
-						<td>
-							<button onclick="updateDothing(${s.dothing_id })"
-								class="layui-btn layui-btn-xs">修改</button>
-							<button onclick="deleteDothing(${s.dothing_id })"
-								class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
-						</td>
-					</tr>
-				  </c:if>
+					<c:set var="User_id" scope="session" value="${loginUser_id }" />
+					<c:if test="${s.user_id==User_id }">
+						<tr>
+							<td>${s.dothing_id }</td>
+							<td>${s.dothing_describe }</td>
+							<td>${s.dothing_enddate }</td>
+							<td>${s.dothing_priority }</td>
+							<td>${s.dothing_result }</td>
+							<%-- <td>${s.user_id }</td> --%>
+							<td>
+								<button onclick="updateDothing(${s.dothing_id })"
+									class="layui-btn layui-btn-xs">修改</button>
+								<button onclick="deleteDothing(${s.dothing_id })"
+									class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
+							</td>
+						</tr>
+					</c:if>
 				</c:forEach>
 
 			</tbody>

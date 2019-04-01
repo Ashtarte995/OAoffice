@@ -105,7 +105,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text" value=""
+					<input name="user_id" id="user_id" type="text" value="" disabled
 						placeholder="请输入您的id" lay-verify="required" class="layui-input">
 				</div>
 			</div>

@@ -45,7 +45,11 @@
 		var gender = $('input[type=radio][id=gender]:checked').val();
 		var phonenumber = $("#phonenumber").val();
 		var born = $("#born").val();
-		var city = $("#city").val();
+		
+		var province=$('#province option:selected').text();
+		var city=$('#city option:selected').text();
+		var area=$('#area option:selected').text();
+		
 		var hobby2 = document.getElementsByName("like1");
 		var hobby3 = [];
 		for(k in hobby2){
@@ -68,7 +72,9 @@
 				"gender" : gender,
 				"phonenumber" : phonenumber,
 				"born" : born,
+				"province" : province,
 				"city" : city,
+				"area" : area,
 				"hobby" : hobby3,
 				"email" : email,
 				"selfassessment" : selfassessment,
@@ -162,20 +168,20 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">家庭住址</label>
 				<div class="layui-input-inline">
-					<select name="province" lay-filter="province">
-						<option name="city" id="city" value="${loginUser_address }">请选择市</option>
+					<select name="province" id="province" lay-filter="province">
+						<option value="">请选择省</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="area" id="area" lay-filter="city">
-						<option value="area">请选择县</option>
+					<select name="city" id="city" lay-filter="city" disabled>
+						<option value="">请选择市</option>
 					</select>
 				</div>
-				<!-- <div class="layui-input-inline">
+				<div class="layui-input-inline">
 					<select name="area" id="area" lay-filter="area" disabled>
 						<option value="">请选择县/区</option>
 					</select>
-				</div> -->
+				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">兴趣爱好</label>

@@ -62,7 +62,16 @@ public class DothingDaoImpl implements DothingDao {
 	public List<Dothing> list() {
 		List<Dothing> list = new ArrayList<Dothing>();
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select * from Dothing ");
+		sb.append(" SELECT" ); 
+		sb.append("  a.*," ); 
+		sb.append("	b.user_realname," ); 
+		sb.append("	d.role_name" ); 
+		sb.append(" FROM" ); 
+		sb.append("	`dothing` as a" ); 
+		sb.append("	LEFT JOIN user b ON a.user_id = b.user_id" ); 
+		sb.append("	LEFT JOIN user_role c ON c.user_id = b.user_id" ); 
+		sb.append("	LEFT JOIN role d ON c.role_id = d.role_id ");
+		
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -77,7 +86,14 @@ public class DothingDaoImpl implements DothingDao {
 			Dothing tmpbean = null;
 			while (rs.next()) {
 				tmpbean = new Dothing();
-				show(tmpbean, rs);
+				tmpbean.setDothing_id(rs.getInt("dothing_id"));
+				tmpbean.setDothing_describe(rs.getString("dothing_describe"));
+				tmpbean.setDothing_enddate(rs.getDate("dothing_enddate"));
+				tmpbean.setDothing_priority(rs.getString("dothing_priority"));
+				tmpbean.setDothing_result(rs.getString("dothing_result"));
+				tmpbean.setUser_id(rs.getInt("user_id"));
+				tmpbean.setUser_realname(rs.getString("user_realname"));
+				tmpbean.setRole_name(rs.getString("role_name"));
 
 				list.add(tmpbean);
 			}

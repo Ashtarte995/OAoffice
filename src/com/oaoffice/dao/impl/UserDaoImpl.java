@@ -75,10 +75,13 @@ public class UserDaoImpl implements UserDao{
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT"); 
 		sb.append("	a.*,");
+		sb.append("	d.role_name,");
 		sb.append(" b.dept_name");
 		sb.append(" FROM" ); 
 		sb.append("	USER AS a");
 		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
+		sb.append("	LEFT JOIN user_role c ON c.user_id = a.user_id ");
+		sb.append("	LEFT JOIN role d ON c.role_id = d.role_id ");
 		String sql = sb.toString();
 
 		Connection conn = null;
@@ -108,6 +111,7 @@ public class UserDaoImpl implements UserDao{
 				tmpbean.setHeadpic(rs.getString("headpic"));
 				tmpbean.setDept_id(rs.getInt("dept_id"));
 				tmpbean.setDept_name(rs.getString("dept_name"));
+				tmpbean.setRole_name(rs.getString("role_name"));
 				
 				list.add(tmpbean);
 			}
@@ -239,6 +243,7 @@ public class UserDaoImpl implements UserDao{
 				bean.setPhonenumber(rs.getString("phonenumber"));
 			    bean.setUser_born(rs.getDate("user_born"));
 				bean.setUser_address(rs.getString("user_address"));
+				bean.setUser_hobby(rs.getString("user_hobby"));
 				bean.setUser_email(rs.getString("user_email"));
 				bean.setHeadpic(rs.getString("headpic"));
 				bean.setDept_id(rs.getInt("dept_id"));

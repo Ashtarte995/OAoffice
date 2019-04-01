@@ -62,6 +62,7 @@ public class UserServlet extends HttpServlet {
 				String area = request.getParameter("area");
 				String address=province+city+area;
 				
+				//String hobby = request.getParameter("hobby");
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
@@ -103,10 +104,11 @@ public class UserServlet extends HttpServlet {
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
 				String address=province+city+area;
+				String hobby = request.getParameter("hobby");
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
-				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, email, headpic, dept_id);
+				User user = new User(uname, realname, pwd, gender, phonenumber, born, address,hobby, email, headpic, dept_id);
 				user.setUser_id(Integer.parseInt(id));
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
@@ -117,7 +119,10 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
+				String province = request.getParameter("province");
 				String city = request.getParameter("city");
+				String area = request.getParameter("area");
+				String address=province+city+area;
 				String[] hobby = request.getParameterValues("hobby");
 				StringBuffer hobby2= new StringBuffer();
 				for (String string : hobby) {
@@ -133,7 +138,7 @@ public class UserServlet extends HttpServlet {
 				user.setUser_sex(gender);
 				user.setPhonenumber(phonenumber);
 				user.setUser_born(born);
-				user.setUser_address(city);
+				user.setUser_address(address);
 				user.setUser_hobby(hobby2.toString());
 				user.setUser_email(email);
 				user.setSelfassessment(selfassessment);
@@ -177,8 +182,6 @@ public class UserServlet extends HttpServlet {
 						session.setAttribute("loginPhonenumber", bean.getPhonenumber());
 						session.setAttribute("loginUser_born", bean.getUser_born());
 						session.setAttribute("loginUser_address", bean.getUser_address());
-						String[] hobby = bean.getUser_hobby().split("\\s+");
-						session.setAttribute("loginUser_hobby", hobby);
 						session.setAttribute("loginUser_email", bean.getUser_email());
 						session.setAttribute("loginSelfassessment", bean.getSelfassessment());
 						session.setAttribute("loginHeadpic", bean.getHeadpic());

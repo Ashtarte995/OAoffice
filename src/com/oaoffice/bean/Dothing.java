@@ -10,6 +10,10 @@ public class Dothing {
 	private String dothing_result;
 	private Integer user_id;
 
+	//冗余字段
+	private String user_realname;
+	private String role_name;
+	
 	public Dothing() {
 		super();
 	}
@@ -82,5 +86,23 @@ public class Dothing {
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}
+
+	public String getUser_realname() {
+		return user_realname;
+	}
+
+	public void setUser_realname(String user_realname) {
+		this.user_realname = user_realname;
+	}
+
+	public String getRole_name() {
+		return role_name;
+	}
+
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
+	}
+	
+	
 
 }
