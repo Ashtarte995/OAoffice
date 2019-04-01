@@ -50,11 +50,11 @@
 		var city=$('#city option:selected').text();
 		var area=$('#area option:selected').text();
 		var hobby = $("#hobby").val();
-		alert(hobby);
+		//alert(hobby);
 		var email = $("#email").val();
 		var dept_id = $('#dept_id option:selected').val();
 		var headpic = $("#headpic").val();
-		alert(headpic);
+		//alert(headpic);
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
