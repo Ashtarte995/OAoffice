@@ -18,15 +18,16 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function provingId() {
 		var time = $("#time").val();
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
 		if(<%=user_id%>!=user_id){
-			alert("您的id不正确不可以申请会议");
+			layer.msg("您的id不正确不可以申请会议");
 		} else {
-			alert("您的id正确可以申请会议");
+			layer.msg("您的id正确可以申请会议");
 			$.ajax({
 				type : "get",
 				data : {
@@ -40,11 +41,11 @@
 				async : true,
 				success : function(data) {
 					if (data.status == "1") {
-						alert("申请成功");
+						layer.msg("申请成功");
 						//进入首页
 						location.href = "MeetingapplyServlet.do";
 					} else {
-						alert("申请失败");
+						layer.msg("申请失败");
 					}
 				}
 			});

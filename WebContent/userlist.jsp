@@ -26,21 +26,21 @@
 	    	   location.href='userinsert.jsp';
 	       }
 	       function deleteUser(id){
-	    	   //alert(id);
+	    	   
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='UserServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       function updateUser(id){
-	    	   //alert(id);
+	    	   
 	    	   location.href='UserServlet.do?powercode=user_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	       function searchAjax(){
-	    	    //alert(123);
+	    	  
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

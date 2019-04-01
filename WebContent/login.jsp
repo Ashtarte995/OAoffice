@@ -36,11 +36,13 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("登录成功");
+					layer.alert('登录成功');
 					//进入首页
 					location.href = "index.jsp";
 				} else {
-					alert(data.msg);
+					layer.msg(data.msg, function(){
+						//关闭后的操作
+						});
 				}
 			}
 		});
@@ -80,5 +82,6 @@
 	<script src="static/js/easepack.min.js"></script>
 	<script src="static/js/raf.js"></script>
 	<script src="static/js/demo-1.js"></script>
+	<script src="layer/layer.js"></script>
 </body>
 </html>

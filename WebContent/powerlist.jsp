@@ -24,15 +24,15 @@
 	       }
 	       
 	       function updateUser(id){
-	    	   alert(id);
+	    	   
 	    	   location.href='PowerServlet.do?oper=update1&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	       function searchAjax(){
-	    	    alert(123);
+	    	    
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	   
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -42,7 +42,7 @@
 					success:function(data){
 						//列表展示
 						var dlist=data;
-						alert(dlist.length);
+						
 						//拼接HTML
 						var cont="";
 						for(var i=0;i<dlist.length;i++){
@@ -95,7 +95,7 @@
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
-		<table class="layui-table">
+		<table class="layui-table" lay-filter="demo">
 		    <colgroup>
 				<col width="5%">
 				<col width="10%">
@@ -132,5 +132,7 @@
 	<div id="page"></div>
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/allUsers.js"></script>
+	<script type="text/javascript">
+	</script>
 </body>
 </html>

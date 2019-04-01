@@ -21,7 +21,7 @@
 <script type="text/javascript">
      
 	       function insert(){
-	    	   //alert(id);
+	    	   
 	    	   //location.href='studentupdate.jsp';
 	    	   var powerid= $('#powerid').val();
 	    	   var role_id='${list[0].role_id}'
@@ -32,9 +32,9 @@
 					dataType:"json",
 					async:true,
 					success:function(date){
-						alert(date.msg)
+						layer.msg(date.msg)
 						if(date.msg=="2"){
-							alert("数据已存在");
+							layer.msg("数据已存在");
 						}
 						if(date.msg=="1"){
 							location.reload();
@@ -52,9 +52,9 @@
 	    	   }
 	       }
 	       function searchAjax(){
-	    	    alert(123);
+	    	    
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -64,7 +64,7 @@
 					success:function(data){
 						//列表展示
 						var dlist=data;
-						alert(dlist.length);
+					
 						//拼接HTML
 						var cont="";
 						for(var i=0;i<dlist.length;i++){

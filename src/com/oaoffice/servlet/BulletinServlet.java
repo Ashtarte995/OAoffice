@@ -103,6 +103,8 @@ public class BulletinServlet extends HttpServlet {
 		}
 		else {
 		List<Bulletin> ulist = bulletinService.list();
+		String msg = ulist.get(ulist.size()-1).getBulletin_content();
+		request.setAttribute("msg", msg);
 		request.setAttribute("ulist", ulist);
 		request.getRequestDispatcher("bulletinlist.jsp").forward(request, response);
 		}

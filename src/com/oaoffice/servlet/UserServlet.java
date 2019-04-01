@@ -117,13 +117,17 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
+				String province = request.getParameter("province");
 				String city = request.getParameter("city");
+				String area = request.getParameter("area");
+				String address = province +" "+ city+" " + area;
 				String[] hobby = request.getParameterValues("hobby");
 				StringBuffer hobby2 = new StringBuffer();
+				if (hobby !=null) {
 				for (String string : hobby) {
 					hobby2.append(string + " ");
 				}
-
+				}
 				String email = request.getParameter("email");
 				String selfassessment = request.getParameter("selfassessment");
 
@@ -133,7 +137,7 @@ public class UserServlet extends HttpServlet {
 				user.setUser_sex(gender);
 				user.setPhonenumber(phonenumber);
 				user.setUser_born(born);
-				user.setUser_address(city);
+				user.setUser_address(address);
 				user.setUser_hobby(hobby2.toString());
 				user.setUser_email(email);
 				user.setSelfassessment(selfassessment);

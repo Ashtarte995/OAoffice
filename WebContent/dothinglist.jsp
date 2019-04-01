@@ -20,26 +20,27 @@
 <link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	        function addDothing(){
 	    	   location.href='dothinginsert.jsp';
 	       }
 	         function deleteDothing(id){
-	    	   //alert(id);
+	    	   
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='DothingServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       
 	       function updateDothing(id){
-	    	   alert(id);
+	    	  
 	    	   location.href='DothingServlet.do?powercode=Dothing_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

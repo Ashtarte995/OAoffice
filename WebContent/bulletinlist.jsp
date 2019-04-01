@@ -17,27 +17,34 @@
 <link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
+	$(function(){
+		layer.alert("${msg}");
+	})
+	function msg(str){
+		layer.alert(str);
+	}
 	        function addbulletin(){
 	    	   location.href='BulletinServlet.do?powercode=user_news&oper=t_add';
 	       }
 	         function deletebulletin(id){
-	    	   //alert(id);
+	    	  
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='BulletinServlet.do?powercode=user_deletenews&oper=delete&id='+id;  
 	    	   }
 	       }
 	       
 	       function updatebulletin(id){
-	    	   alert(id);
+	    	   
 	    	   location.href='BulletinServlet.do?powercode=user_updatenews&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
-	    	    alert(123);
+	    	   
 	    	    var searchKey=$("#searchKey").val();
-	    	    alert(searchKey);
+	    	    
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -105,14 +112,14 @@
 	</blockquote>
 	<div class="layui-form news_list">
 		<table class="layui-table">
-		    <colgroup>
+			<colgroup>
 				<col width="5%">
 				<col width="10%">
 				<col width="20%">
 				<col width="12%">
 				<col width="7%">
 				<col width="15%">
-		    </colgroup>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>id</th>
@@ -126,7 +133,7 @@
 			</thead>
 			<tbody id=ulist class="bulletins_content">
 				<c:forEach items="${ulist }" var="s">
-					<tr>
+					<tr onclick="msg('${s.bulletin_content }')">
 						<td>${s.bulletin_id }</td>
 						<td>${s.bulletin_title }</td>
 						<td>${s.bulletin_content }</td>
@@ -148,5 +155,6 @@
 	<div id="page"></div>
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/allUsers.js"></script>
+
 </body>
 </html>
