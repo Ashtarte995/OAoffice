@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script src="layer/layer.js"></script>
 
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -32,9 +33,9 @@
 					dataType:"json",
 					async:true,
 					success:function(date){
-						alert(date.msg)
+						layer.msg(date.msg)
 						if(date.msg=="2"){
-							alert("数据已存在");
+							layer.msg("数据已存在");
 						}
 						if(date.msg=="1"){
 							location.reload();
@@ -64,7 +65,6 @@
 					success:function(data){
 						//列表展示
 						var dlist=data;
-						alert(dlist.length);
 						//拼接HTML
 						var cont="";
 						for(var i=0;i<dlist.length;i++){

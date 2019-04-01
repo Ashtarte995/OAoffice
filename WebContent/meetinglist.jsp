@@ -22,7 +22,7 @@
 	    	   location.href='meetinginsert.jsp';
 	       }
 	       function deleteMeeting(id){
-	    	   //alert(id);
+	    	   
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='MeetingServlet.do?oper=delete&id='+id;  
 	    	   }

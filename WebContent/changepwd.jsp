@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function changePwd() {
 		var id = $("#id").val();
@@ -29,7 +30,7 @@
 		var pwdagain = $("#pwdagain").val();
 		if(<%=user_pwd%>==old&&old!=null){
 		if (pwd != pwdagain) {
-				alert("修改失败！两次密码不一致");
+				layer.msg("修改失败！两次密码不一致");
 			} else {
 				//采用Ajax方式进行访问服务器
 				$.ajax({
@@ -46,17 +47,17 @@
 					async : true,
 					success : function(data) {
 						if (data.status == "1") {
-							alert("修改成功,重新登录");
+							layer.msg("修改成功,重新登录");
 							//进入首页
 							top.location.href = "UserServlet.do?powercode=user_pwd&oper=loginout";
 						} else {
-							alert("修改失败");
+							layer.msg("修改失败");
 						}
 					}
 				});
 			}
 		} else {
-			alert("原始密码不正确或密码为空！不能修改");
+			layer.msg("原始密码不正确或密码为空！不能修改");
 		}
 
 	}

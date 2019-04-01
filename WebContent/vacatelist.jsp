@@ -33,22 +33,26 @@
 	    	   location.href='vacateinsert.jsp';
 	       }
 	         function deletevacate(id){
-	    	   //alert(id);
+	    	   
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='VacateServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       
 	       function updatevacate(id){
-	    	   //alert(id);
+	    	   
 	    	   location.href='VacateServlet.do?powercode=user_vacateapproval&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
-	    	    //alert(123);
+	    	    
 	    	    var searchKey=$("#searchKey").val();
+<<<<<<< HEAD
 	    	    //alert(searchKey);
+=======
+	    	    
+>>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.oaoffice.bean.User"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -18,26 +19,35 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		var hobby2 = document.getElementsByName("like1");
-		var hobby3 = [];
+		var address = []
+		<%if ((String[]) session.getAttribute("loginUser_address") != null) {
+			String[] str = (String[]) session.getAttribute("loginUser_address");
+		for(String key :str){
+		%>
+		address.push("<%=key%>");
+		<%
+		}}
+	    %>
+	    $("#province").append("<option value='"+address[0]+"'selected >"+address[0]+"</option>");
+	    $("#city").append("<option value='"+address[1]+"'selected >"+address[1]+"</option>").removeAttr("disabled");
+	    $("#area").append("<option value='"+address[2]+"'selected >"+address[2]+"</option>").removeAttr("disabled");
 		
-			<%
-			if((String[])session.getAttribute("loginUser_hobby")!=null){
-			String[] str=(String[])session.getAttribute("loginUser_hobby");
-			for(String key :str){
-			%>
+		var hobby2 = document.getElementsByName("like1");
+		var hobby3 = [];	    
+			<%if ((String[]) session.getAttribute("loginUser_hobby") != null) {
+				String[] str = (String[]) session.getAttribute("loginUser_hobby");
+				for (String key : str) {%>
 			hobby3.push("<%=key%>");
-			<%
-			}}
-		    %>
-		for(var i = 0;i<hobby3.length;i++){
-			for(var j = 0 ;j<hobby2.length;j++){
-				if(hobby2[j].value==hobby3[i]){
-					hobby[j].checked=true;
+<%}
+			}%>
+	for (var i = 0; i < hobby3.length; i++) {
+			for (var j = 0; j < hobby2.length; j++) {
+				if (hobby2[j].value == hobby3[i]) {
+					hobby[j].checked = true;
 				}
 			}
 		}
-		
+
 	});
 	function userinfo() {
 		var id = $("#id").val();
@@ -46,23 +56,20 @@
 		var gender = $('input[type=radio][id=gender]:checked').val();
 		var phonenumber = $("#phonenumber").val();
 		var born = $("#born").val();
-		
 		var province=$('#province option:selected').text();
 		var city=$('#city option:selected').text();
 		var area=$('#area option:selected').text();
-		
 		var hobby2 = document.getElementsByName("like1");
 		var hobby3 = [];
-		for(k in hobby2){
-			if (hobby2[k].checked){
+		for (k in hobby2) {
+			if (hobby2[k].checked) {
 				hobby3.push(hobby2[k].value);
 			}
 		}
-		alert(hobby3);
 		var email = $("#email").val();
 		var selfassessment = $("#selfassessment").val();
 		var headpic = $("#headpic").val()
-		alert(headpic);
+		
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -84,15 +91,15 @@
 			},
 			url : "UserServlet.do?powercode=user_update",
 			dataType : "json",
-			traditional: true,
+			traditional : true,
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("修改成功");
-					
+					layer.msg("修改成功");
+
 					//location.href = "UserServlet.do?";
 				} else {
-					alert("修改失败");
+					layer.msg("修改失败");
 				}
 			}
 		});
@@ -112,7 +119,7 @@
 		}).done(function(res) {
 			console.log(res);
 			if (res.status == "1") {
-				$("#headpic").attr("value",res.fpath);
+				$("#headpic").attr("value", res.fpath);
 				$("#pic").attr("src", "images/" + res.fpath);
 			}
 		});
@@ -188,19 +195,14 @@
 				<label class="layui-form-label">兴趣爱好</label>
 				<div class="layui-input-block">
 					<input id="hobby" type="checkbox" name="like1" title="运动"
-						value="运动" >
-					<input id="hobby" type="checkbox" name="like1" title="旅游"
-						value="旅游" >
-					<input id="hobby" type="checkbox" name="like1" title="阅读"
-						value="阅读" >
-					<input id="hobby" type="checkbox" name="like1" title="玩游戏"
-						value="玩游戏" >			
-					<input id="hobby" type="checkbox" name="like1" title="听音乐"
-						value="听音乐" >
+						value="运动"> <input id="hobby" type="checkbox" name="like1"
+						title="旅游" value="旅游"> <input id="hobby" type="checkbox"
+						name="like1" title="阅读" value="阅读"> <input id="hobby"
+						type="checkbox" name="like1" title="玩游戏" value="玩游戏"> <input
+						id="hobby" type="checkbox" name="like1" title="听音乐" value="听音乐">
 					<input id="hobby" type="checkbox" name="like1" title="饮食"
-						value="饮食" >
-					<input id="hobby" type="checkbox" name="like1" title="影视"
-						value="影视" >
+						value="饮食"> <input id="hobby" type="checkbox" name="like1"
+						title="影视" value="影视">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -222,10 +224,11 @@
 		</div>
 
 		<div class="user_right">
-			<input type="file" id="file" name="file">
+			<input type="file" id="file" name="file" title="选择头像">
 			<button type="button" onclick="uploadFunction()">上传</button>
 			<img id="pic" src="images/${loginHeadpic }" width="100" height="100">
-			<input name="headpic" id="headpic" type=hidden value="${loginHeadpic }">
+			<input name="headpic" id="headpic" type=hidden
+				value="${loginHeadpic }">
 		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">
@@ -238,5 +241,6 @@
 	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/address.js"></script>
 	<script type="text/javascript" src="js/user.js"></script>
+	<script src="layer/layer.js"></script>
 </body>
 </html>

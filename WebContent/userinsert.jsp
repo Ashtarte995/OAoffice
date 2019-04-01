@@ -15,6 +15,7 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function checkUname() {
 		var uname = $("#uname").val();
@@ -54,7 +55,7 @@
 		var province = $('#province option:selected').text();
 		var city = $('#city option:selected').text();
 		var area = $('#area option:selected').text();
-		alert(city);
+		
 		$.ajax({
 			type : "get",
 			data : {
@@ -79,11 +80,11 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("添加成功");
+					layer.msg("添加成功");
 					//进入首页
 					location.href = "UserServlet.do";
 				} else {
-					alert("添加失败");
+					layer.msg("添加失败");
 				}
 			}
 		});

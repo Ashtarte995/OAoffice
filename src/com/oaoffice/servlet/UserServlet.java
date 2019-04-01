@@ -60,16 +60,14 @@ public class UserServlet extends HttpServlet {
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-				String address=province+city+area;
-				
-				//String hobby = request.getParameter("hobby");
+String address = province + city + area;
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
 				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, email, headpic, dept_id);
 				userService.insert(user);
 				out.println("{\"status\":\"1\"}");
-			}else if (oper.equals("checkAjax")) {
+			} else if (oper.equals("checkAjax")) {
 				String uname = request.getParameter("uname");
 				System.out.println(uname+555555555);
 				boolean flag = userService.checkUser(uname);
@@ -121,14 +119,13 @@ public class UserServlet extends HttpServlet {
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
-				String area = request.getParameter("area");
-				String address=province+city+area;
-				
+			String area = request.getParameter("area");
+				String address = province +" "+ city+" " + area;
 				String[] hobby = request.getParameterValues("hobby");
-				StringBuffer hobby2= new StringBuffer();
-				if (hobby!=null) {
+				StringBuffer hobby2 = new StringBuffer();
+				if (hobby !=null) {
 				for (String string : hobby) {
-					hobby2.append(string+" ");
+					hobby2.append(string + " ");
 				}
 				}
 				String email = request.getParameter("email");

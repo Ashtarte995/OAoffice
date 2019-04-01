@@ -42,7 +42,6 @@
 					success:function(data){
 						//列表展示
 						var dlist=data;
-						alert(dlist.length);
 						//拼接HTML
 						var cont="";
 						for(var i=0;i<dlist.length;i++){

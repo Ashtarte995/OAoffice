@@ -17,26 +17,35 @@
 <link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	       function addUser(){
 	    	   location.href='deptinsert.jsp';
 	       }
 	       function deleteUser(id){
-	    	   //alert(id);
+	    	   
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='DeptServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       function updateUser(id){
-	    	   //alert(id);
+	    	   
 	    	   location.href='DeptServlet.do?oper=update1&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	       function searchAjax(){
+<<<<<<< HEAD
 	    	    //alert(123);
+=======
+	    	    
+>>>>>>> refs/remotes/choose_remote_name/master
 	    	    var searchKey=$("#searchKey").val();
+<<<<<<< HEAD
 	    	    //alert(searchKey);
+=======
+	    	    
+>>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -46,7 +55,7 @@
 					success:function(data){
 						//列表展示
 						var dlist=data;
-						alert(dlist.length);
+						
 						//拼接HTML
 						var cont="";
 						for(var i=0;i<dlist.length;i++){

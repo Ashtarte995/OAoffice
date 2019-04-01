@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function updateAjaxTwo() {
 		var id = $("#id").val();
@@ -45,11 +46,11 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("审批成功");
+					layer.msg("审批成功");
 					//进入首页
 					location.href = "MeetingapplyServlet.do";
 				} else {
-					alert("审批失败");
+					layer.msg("审批失败");
 				}
 			}
 		});

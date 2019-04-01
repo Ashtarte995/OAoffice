@@ -33,28 +33,32 @@
 	    	   location.href='meetingapplyinsert.jsp';
 	       }
 	         function deletemeetingapply(id){
-	    	   //alert(id);
+	    	  
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='MeetingapplyServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       
 	       function updatemeetingapply(id){
-	    	   //alert(id);
+	    	   
 	    	   location.href='MeetingapplyServlet.do?powercode=user_meetingapproval&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	       function updatemeetingapplytwo(id){
-	    	   //alert(id);
+	    	  
 	    	   location.href='MeetingapplyServlet.do?powercode=user_two&oper=t_updateTwo&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }
 	        function searchAjax(){
-	    	    //alert(123);
+	    	   
 	    	    var searchKey=$("#searchKey").val();
+<<<<<<< HEAD
 	    	    //alert(searchKey);
+=======
+	    	    
+>>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

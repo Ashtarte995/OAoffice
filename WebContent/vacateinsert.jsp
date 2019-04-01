@@ -18,12 +18,14 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function provingId() {
 		var start = $("#start").val();
 		var time = $("#time").val();
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
+<<<<<<< HEAD
 		$.ajax({
 			type : "get",
 			data : {
@@ -43,6 +45,32 @@
 					location.href = "VacateServlet.do";
 				} else {
 					alert("申请失败");
+=======
+		if(<%=user_id%>!=user_id){
+			layer.msg("您的id不正确不可以申请请假");
+		} else {
+			layer.msg("您的id正确可以申请请假");
+			$.ajax({
+				type : "get",
+				data : {
+					"start" : start,
+					"time" : time,
+					"reason" : reason,
+					"user_id" : user_id,
+					"oper" : "add"
+				},
+				url : "VacateServlet.do",
+				dataType : "json",
+				async : true,
+				success : function(data) {
+					if (data.status == "1") {
+						layer.msg("申请成功");
+						//进入首页
+						location.href = "VacateServlet.do";
+					} else {
+						layer.msg("申请失败");
+					}
+>>>>>>> refs/remotes/choose_remote_name/master
 				}
 			}
 		});

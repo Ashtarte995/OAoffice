@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript">
 	function updateAjax() {
 		var id = $("#id").val();
@@ -41,11 +42,11 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("修改成功");
+					layer.msg("修改成功");
 					//进入首页
 					location.href = "FloderServlet.do";
 				} else {
-					alert("修改失败");
+					layer.msg("修改失败");
 				}
 			}
 		});

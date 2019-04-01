@@ -36,11 +36,11 @@
 			async : true,
 			success : function(data) {
 				if (data.status == "1") {
-					alert("申请成功");
+					layer.msg("申请成功");
 					//进入首页
 					location.href = "MeetingapplyServlet.do";
 				} else {
-					alert("申请失败");
+					layer.msg("申请失败");
 				}
 			}
 		});

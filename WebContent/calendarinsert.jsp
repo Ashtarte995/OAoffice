@@ -17,6 +17,7 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="css/user.css" media="all" />
+<script src="layer/layer.js"></script>
 </head>
 <script type="text/javascript">
 	function provingId() {
@@ -27,9 +28,9 @@
 		var content = $("#content").val();
 		var user_id = $("#user_id").val();
 		if(<%=user_id%>!=user_id){
-			alert("您的id不正确不可以添加事件");
+			layer.msg("您的id不正确不可以添加事件");
 		} else {
-			alert("您的id正确可以添加事件");
+			layer.msg("您的id正确可以添加事件");
 			$.ajax({
 				type : "get",
 				data : {
@@ -46,11 +47,11 @@
 				async : true,
 				success : function(data) {
 					if (data.status == "1") {
-						alert("添加成功");
+						layer.msg("添加成功");
 						//进入首页
 						location.href = "CalendarServlet.do";
 					} else {
-						alert("添加失败");
+						layer.msg("添加失败");
 					}
 				}
 			});
