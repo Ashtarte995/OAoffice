@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.oaoffice.bean.User"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -20,13 +21,16 @@
 	$(function(){
 		var address = []
 		<%
-		if((String[])session.getAttribute("loginUser_address")!=null){
-		String[] str=(String[])session.getAttribute("loginUser_address");
-		for(String key :str){
+		User bean = (User)request.getAttribute("user");
+		String[] add = null;
+		if (bean.getUser_address() != null) {
+			add = bean.getUser_address().split("\\s+");
+		}
+		for(String key :add){
 		%>
 		address.push("<%=key%>");
 		<%
-		}}
+		}
 	    %>
 	    $("#province").append("<option value='"+address[0]+"'selected >"+address[0]+"</option>");
 	    $("#city").append("<option value='"+address[1]+"'selected >"+address[1]+"</option>").removeAttr("disabled");
