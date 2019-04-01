@@ -128,7 +128,7 @@ public class PowerDaoImpl implements PowerDao {
 	@Override
 	public User_Role loadByid(String id) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select u.user_realname,urr.* ");
+		sb.append(" select u.user_realname,u.user_id,urr.role_id,urr.role_name ");
 		sb.append(" FROM user u LEFT JOIN ");
 		sb.append(" (select ur.*,r.role_name ");
 		sb.append(" from  user_role ur LEFT JOIN role r on ur.role_id=r. ");
@@ -202,6 +202,7 @@ public class PowerDaoImpl implements PowerDao {
 		sb.append(" update user_role  set  ");
 		sb.append(" role_id = ? ");
 		sb.append(" where user_id = ? ");
+		System.out.println(bean.getRole_id()+bean.getUser_id());
 		String sql = sb.toString();
 
 		Connection conn = null;

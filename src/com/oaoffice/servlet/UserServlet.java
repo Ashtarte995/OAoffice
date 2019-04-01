@@ -181,7 +181,16 @@ public class UserServlet extends HttpServlet {
 						session.setAttribute("loginUser_sex", bean.getUser_sex());
 						session.setAttribute("loginPhonenumber", bean.getPhonenumber());
 						session.setAttribute("loginUser_born", bean.getUser_born());
-						session.setAttribute("loginUser_address", bean.getUser_address());
+						String[] address = null;
+						if (bean.getUser_address() != null) {
+							address = bean.getUser_address().split("\\s+");
+						}
+						session.setAttribute("loginUser_address",address);
+						String[] hobby = null;
+						if (bean.getUser_hobby() != null) {
+							hobby = bean.getUser_hobby().split("\\s+");
+						}
+						session.setAttribute("loginUser_hobby", hobby);
 						session.setAttribute("loginUser_email", bean.getUser_email());
 						session.setAttribute("loginSelfassessment", bean.getSelfassessment());
 						session.setAttribute("loginHeadpic", bean.getHeadpic());

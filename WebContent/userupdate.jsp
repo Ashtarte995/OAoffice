@@ -17,6 +17,22 @@
 <link rel="stylesheet" href="css/user.css" media="all" />
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
+	$(function(){
+		var address = []
+		<%
+		if((String[])session.getAttribute("loginUser_address")!=null){
+		String[] str=(String[])session.getAttribute("loginUser_address");
+		for(String key :str){
+		%>
+		address.push("<%=key%>");
+		<%
+		}}
+	    %>
+	    $("#province").append("<option value='"+address[0]+"'selected >"+address[0]+"</option>");
+	    $("#city").append("<option value='"+address[1]+"'selected >"+address[1]+"</option>").removeAttr("disabled");
+	    $("#area").append("<option value='"+address[2]+"'selected >"+address[2]+"</option>").removeAttr("disabled");
+	    
+	})
 	function updateAjax() {
 		var id = $("#id").val();
 		var uname = $("#uname").val();
@@ -170,7 +186,7 @@
 		
 		<div class="user_right">
 			<input name="headpic" id="headpic" type=hidden
-				value="${user.headpic }" class="layui-upload-file" lay-title=""> 
+				value="${user.headpic }" class="" lay-title=""> 
 		</div>
 
 		<div class="layui-form-item" style="margin-left: 5%;">

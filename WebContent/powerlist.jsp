@@ -24,7 +24,7 @@
 	       }
 	       
 	       function updateUser(id){
-	    	   //alert(id);
+	    	   alert(id);
 	    	   location.href='PowerServlet.do?oper=update1&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
