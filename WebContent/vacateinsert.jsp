@@ -25,31 +25,6 @@
 		var time = $("#time").val();
 		var reason = $("#reason").val();
 		var user_id = $("#user_id").val();
-<<<<<<< HEAD
-		$.ajax({
-			type : "get",
-			data : {
-				"start" : start,
-				"time" : time,
-				"reason" : reason,
-				"user_id" : user_id,
-				"oper" : "add"
-			},
-			url : "VacateServlet.do",
-			dataType : "json",
-			async : true,
-			success : function(data) {
-				if (data.status == "1") {
-					alert("申请成功");
-					//进入首页
-					location.href = "VacateServlet.do";
-				} else {
-					alert("申请失败");
-=======
-		if(<%=user_id%>!=user_id){
-			layer.msg("您的id不正确不可以申请请假");
-		} else {
-			layer.msg("您的id正确可以申请请假");
 			$.ajax({
 				type : "get",
 				data : {
@@ -70,7 +45,6 @@
 					} else {
 						layer.msg("申请失败");
 					}
->>>>>>> refs/remotes/choose_remote_name/master
 				}
 			}
 		});

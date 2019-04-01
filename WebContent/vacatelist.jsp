@@ -48,11 +48,6 @@
 	        function searchAjax(){
 	    	    
 	    	    var searchKey=$("#searchKey").val();
-<<<<<<< HEAD
-	    	    //alert(searchKey);
-=======
-	    	    
->>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},
@@ -63,7 +58,7 @@
 						//列表展示
 						var ulist=data.list;
 						var msg=data.msg;
-						//拼接HTML
+					    //拼接HTML
 						var cont="";
 						for(var i=0;i<ulist.length;i++){
 							var s=ulist[i];

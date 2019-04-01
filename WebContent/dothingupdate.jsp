@@ -22,8 +22,8 @@
 		var id = $("#id").val();
 		var name = $("#name").val();
 		var end = $("#end").val();
-		var priority = $("#priority").val();
-		var result = $("#result").val();
+		var priority = $('input[type=radio][id=priority]:checked').val();
+		var result = $('input[type=radio][id=result]:checked').val();
 		var user_id = $("#user_id").val();
 		//采用Ajax方式进行访问服务器
 		$.ajax({
@@ -77,21 +77,26 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">优先级</label>
 				<div class="layui-input-block">
-					<input name="priority" id="priority" type="text" value="${dothing.dothing_priority }"
-						placeholder="请输入事件优先级" lay-verify="required" class="layui-input">
+					<%-- <input name="priority" id="priority" type="text" value="${dothing.dothing_priority }"
+						placeholder="请输入事件优先级" lay-verify="required" class="layui-input"> --%>
+						<input type="radio" name="priority" id="priority" value="低" title="低" <c:if test="${dothing.dothing_priority eq '低' }">checked</c:if>>
+					<input type="radio" name="priority" id="priority" value="中" title="中" <c:if test="${dothing.dothing_priority eq '中' }">checked</c:if>>
+					<input type="radio" name="priority" id="priority" value="高" title="高" <c:if test="${dothing.dothing_priority eq '高' }">checked</c:if>>	
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否完成</label>
 				<div class="layui-input-block">
-					<input name="result" id="result" type="tel" value="${dothing.dothing_result }" placeholder=""
-						lay-verify="required|phone" class="layui-input">
+					<%-- <input name="result" id="result" type="tel" value="${dothing.dothing_result }" placeholder=""
+						lay-verify="required|phone" class="layui-input"> --%>
+					<input type="radio" name="result" id="result" value="未完成" title="未完成" <c:if test="${dothing.dothing_result eq '未完成' }">checked</c:if>>
+					<input type="radio" name="result" id="result" value="完成" title="完成" <c:if test="${dothing.dothing_result eq '完成' }">checked</c:if>>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">分配对象id</label>
 				<div class="layui-input-block">
-					<input name="user_id" id="user_id" type="text" value="${dothing.user_id }"
+					<input name="user_id" id="user_id" type="text" value="${dothing.user_id }" disabled
 						placeholder="请输入用户id" lay-verify="required" class="layui-input">
 				</div>
 			</div>

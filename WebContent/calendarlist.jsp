@@ -33,11 +33,8 @@
 	       }
 	       
 	       function updatecalendar(id){
-<<<<<<< HEAD
+
 	    	   //alert(id);
-=======
-	    	  
->>>>>>> refs/remotes/choose_remote_name/master
 	    	   location.href='CalendarServlet.do?powercode=calendar_update&oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   

@@ -25,30 +25,24 @@
 	       function addDothing(){
 	    	   location.href='dothinginsert.jsp';
 	       }
-<<<<<<< HEAD
-	       
+
 	       function arrangeDothing(){
 	    	   location.href='DothingServlet.do?powercode=user_arrangedothing&oper=arrange';
 	       }
 	       
+
+
 	       function deleteDothing(id){
-	    	   //alert(id);
-=======
-	         function deleteDothing(id){
 	    	   
->>>>>>> refs/remotes/choose_remote_name/master
 	    	   if(confirm("确定要删除吗")){
 	    		   location.href='DothingServlet.do?oper=delete&id='+id;  
 	    	   }
 	       }
 	       
 	       function updateDothing(id){
-<<<<<<< HEAD
 	    	   //alert(id);
-=======
 	    	  
->>>>>>> refs/remotes/choose_remote_name/master
-	    	   location.href='DothingServlet.do?powercode=Dothing_update&oper=t_update&id='+id;
+	    	   location.href='DothingServlet.do?oper=t_update&id='+id;
 	    	   //location.href='studentupdate.jsp';
 	    	   
 	       }

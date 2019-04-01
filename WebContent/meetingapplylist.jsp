@@ -54,11 +54,8 @@
 	        function searchAjax(){
 	    	   
 	    	    var searchKey=$("#searchKey").val();
-<<<<<<< HEAD
 	    	    //alert(searchKey);
-=======
 	    	    
->>>>>>> refs/remotes/choose_remote_name/master
 				$.ajax({
 					type:"post",
 					data:{"searchKey":searchKey,"oper":"searchAjax"},

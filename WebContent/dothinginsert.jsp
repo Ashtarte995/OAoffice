@@ -22,8 +22,8 @@
 	function provingId() {
 		var name = $("#name").val();
 		var end = $("#end").val();
-		var priority = $("#priority").val();
-		var result = $("#result").val();
+		var priority = $('input[type=radio][id=priority]:checked').val();
+		var result = $('input[type=radio][id=result]:checked').val();
 		var user_id = $("#user_id").val();
 		if(<%=user_id%>!=user_id){
 			layer.msg("您的id不正确不可以添加日程");
@@ -80,16 +80,21 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">优先级</label>
 				<div class="layui-input-block">
-					<input name="priority" id="priority" type="text" value="" placeholder="请输入事件优先级"
-						lay-verify="required" class="layui-input">
+					<!-- <input name="priority" id="priority" type="text" value="" placeholder="请输入事件优先级"
+						lay-verify="required" class="layui-input"> -->
+					<input type="radio" name="priority" id="priority" value="低" title="低" checked>
+					<input type="radio" name="priority" id="priority" value="中" title="中">
+					<input type="radio" name="priority" id="priority" value="高" title="高">	
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否完成</label>
 				<div class="layui-input-block">
-					<input name="result" id="result" type="tel" value=""
+					<!-- <input name="result" id="result" type="tel" value=""
 						placeholder="事情是否完成" lay-verify="required|phone"
-						class="layui-input">
+						class="layui-input"> -->
+					<input type="radio" name="result" id="result" value="未完成" title="未完成" checked>
+					<input type="radio" name="result" id="result" value="完成" title="完成">
 				</div>
 			</div>
 			<div class="layui-form-item">
