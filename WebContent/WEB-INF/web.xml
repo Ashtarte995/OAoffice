@@ -13,6 +13,15 @@
 		<servlet-name>userServlet</servlet-name>
 		<url-pattern>/UserServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>userlistServlet</servlet-name>
+		<servlet-class>com.oaoffice.servlet.UserListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userlistServlet</servlet-name>
+		<url-pattern>/UserListServlet.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>calendarServlet</servlet-name>

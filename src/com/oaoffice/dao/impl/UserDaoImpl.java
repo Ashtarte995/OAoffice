@@ -360,7 +360,7 @@ public class UserDaoImpl implements UserDao{
 		sb.append(" FROM" ); 
 		sb.append("	USER AS a");
 		sb.append("	LEFT JOIN dept b ON a.dept_id = b.dept_id ");
-		sb.append(" where user_name like ?");
+		sb.append(" where user_name like ? or user_realname like ?");
 		String sql = sb.toString();
 		
 		name ="%" + name + "%";
@@ -373,6 +373,7 @@ public class UserDaoImpl implements UserDao{
 			conn = DbFun.getConn();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setObject(1, name);
+			pstmt.setObject(2, name);
 			
 			rs = pstmt.executeQuery();
 

@@ -76,7 +76,7 @@
 				<div class="layui-input-block">
 					<input name="start" id="start" type="text" value=""
 						placeholder="请输入日程开始时间" lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()})" class="layui-input">
+						onclick="layui.laydate({elem: this})" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -84,7 +84,7 @@
 				<div class="layui-input-block">
 					<input name="end" id="end" type="text" value="" placeholder="请输入日程结束时间"
 						lay-verify="required|date"
-						onclick="layui.laydate({elem: this,max: laydate.now()})" class="layui-input">
+						onclick="layui.laydate({elem: this})" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
