@@ -245,6 +245,7 @@ public class UserDaoImpl implements UserDao{
 				bean.setUser_address(rs.getString("user_address"));
 				bean.setUser_hobby(rs.getString("user_hobby"));
 				bean.setUser_email(rs.getString("user_email"));
+				bean.setSelfassessment(rs.getString("selfassessment"));
 				bean.setHeadpic(rs.getString("headpic"));
 				bean.setDept_id(rs.getInt("dept_id"));
 				bean.setDept_name(rs.getString("dept_name"));

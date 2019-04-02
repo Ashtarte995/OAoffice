@@ -55,7 +55,8 @@
 		var email = $("#email").val();
 		var dept_id = $('#dept_id option:selected').val();
 		var headpic = $("#headpic").val();
-		//alert(headpic);
+		var selfassessment = $("#selfassessment").val();
+		alert(selfassessment);
 		//采用Ajax方式进行访问服务器
 		$.ajax({
 			type : "get",
@@ -74,6 +75,7 @@
 				"email" : email,
 				"dept_id" : dept_id,
 				"headpic" : headpic,
+				"selfassessment" : selfassessment,
 				"oper" : "updateAjax"
 			},
 			url : "UserServlet.do",
@@ -189,6 +191,10 @@
 			</div>
 		</div>
 		
+		<div class="user_right">
+			<input name="selfassessment" id="selfassessment" type=hidden
+				value="${user.selfassessment }" class="" lay-title=""> 
+		</div>
 		<div class="user_right">
 			<input name="headpic" id="headpic" type=hidden
 				value="${user.headpic }" class="" lay-title=""> 

@@ -70,7 +70,7 @@
 				<label class="layui-form-label">会议申请原因</label>
 				<div class="layui-input-block">
 					<input name="reason" id="reason" type="text" value="${meetingapply.meetingapply_reason }"
-					 placeholder="请输入请假原因" lay-verify="required" class="layui-input">
+					 disabled placeholder="请输入请假原因" lay-verify="required" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">

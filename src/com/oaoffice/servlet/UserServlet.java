@@ -56,11 +56,11 @@ public class UserServlet extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
-				
+
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-String address = province + city + area;
+				String address = province + city + area;
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
@@ -69,7 +69,7 @@ String address = province + city + area;
 				out.println("{\"status\":\"1\"}");
 			} else if (oper.equals("checkAjax")) {
 				String uname = request.getParameter("uname");
-				System.out.println(uname+555555555);
+				System.out.println(uname + 555555555);
 				boolean flag = userService.checkUser(uname);
 				if (flag) {
 					out.println("{\"isCheck\":\"1\"}");
@@ -97,16 +97,18 @@ String address = province + city + area;
 				String gender = request.getParameter("gender");
 				String phonenumber = request.getParameter("phonenumber");
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
-				
+
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
 				String area = request.getParameter("area");
-				String address = province +" "+ city+" " + area;
+				String address = province + " " + city + " " + area;
 				String hobby = request.getParameter("hobby");
 				String email = request.getParameter("email");
 				String headpic = request.getParameter("headpic");
+				String selfassessment = request.getParameter("selfassessment");
 				int dept_id = Integer.parseInt(request.getParameter("dept_id"));
-				User user = new User(uname, realname, pwd, gender, phonenumber, born, address,hobby, email, headpic, dept_id);
+				User user = new User(uname, realname, pwd, gender, phonenumber, born, address, hobby, email,selfassessment, headpic,
+						dept_id);
 				user.setUser_id(Integer.parseInt(id));
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
@@ -119,19 +121,19 @@ String address = province + city + area;
 				Date born = Datetransform.parse(request.getParameter("born"), "yyyy-MM-dd");
 				String province = request.getParameter("province");
 				String city = request.getParameter("city");
-			String area = request.getParameter("area");
-				String address = province +" "+ city+" " + area;
+				String area = request.getParameter("area");
+				String address = province + " " + city + " " + area;
 				String[] hobby = request.getParameterValues("hobby");
 				StringBuffer hobby2 = new StringBuffer();
-				if (hobby !=null) {
-				for (String string : hobby) {
-					hobby2.append(string + " ");
-				}
+				if (hobby != null) {
+					for (String string : hobby) {
+						hobby2.append(string + " ");
+					}
 				}
 				String email = request.getParameter("email");
 				String selfassessment = request.getParameter("selfassessment");
-                String headpic = request.getParameter("headpic");
-                
+				String headpic = request.getParameter("headpic");
+
 				User user = userService.loadByNo(uname);
 				user.setUser_realname(realname);
 				user.setUser_sex(gender);
@@ -145,7 +147,7 @@ String address = province + city + area;
 				userService.update(user);
 				out.println("{\"status\":\"1\"}");
 			} else if (oper.equals("t_userinfo")) {
-				
+
 				request.getRequestDispatcher("userInfo.jsp").forward(request, response);
 			} else if (oper.equals("searchAjax")) {
 				System.out.println("qqqqq");
@@ -184,7 +186,7 @@ String address = province + city + area;
 						if (bean.getUser_address() != null) {
 							address = bean.getUser_address().split("\\s+");
 						}
-						session.setAttribute("loginUser_address",address);
+						session.setAttribute("loginUser_address", address);
 						String[] hobby = null;
 						if (bean.getUser_hobby() != null) {
 							hobby = bean.getUser_hobby().split("\\s+");
@@ -198,7 +200,7 @@ String address = province + city + area;
 						System.out.println("loginSelfassessment=" + bean.getSelfassessment());
 
 						List<Power> allpowerlist = powerService.list1();
-						
+
 						session.setAttribute("allpowerlist", allpowerlist);
 
 						// 获取权限信息
@@ -250,7 +252,7 @@ String address = province + city + area;
 		PagingVO page = new PagingVO();
 		page.setPageSize(5);
 		page.setTotalCount(total);
-		System.out.println(curentPageNo+"444444444");
+		System.out.println(curentPageNo + "444444444");
 		if (curentPageNo != null && !curentPageNo.equals("")) {
 			if (curentPageNo.equals("0")) {
 				page.setCurentPageNo(1);
@@ -267,9 +269,8 @@ String address = province + city + area;
 		request.setAttribute("page", page);
 
 		/*
-		 * HttpSession session = request.getSession(); 
-		 * List<Power> powerlist1 =powerService.list(); 
-		 * session.setAttribute("powerlist1", powerlist1);
+		 * HttpSession session = request.getSession(); List<Power> powerlist1
+		 * =powerService.list(); session.setAttribute("powerlist1", powerlist1);
 		 * System.out.println(powerlist1.size());
 		 */
 
